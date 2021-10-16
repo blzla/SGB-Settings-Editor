@@ -423,7 +423,7 @@ namespace SGB_Palette_Editor
             // 
             // buttonStore1
             // 
-            this.buttonStore1.Location = new System.Drawing.Point(24, 189);
+            this.buttonStore1.Location = new System.Drawing.Point(24, 143);
             this.buttonStore1.Name = "buttonStore1";
             this.buttonStore1.Size = new System.Drawing.Size(44, 23);
             this.buttonStore1.TabIndex = 17;
@@ -510,7 +510,7 @@ namespace SGB_Palette_Editor
             // 
             // buttonStore2
             // 
-            this.buttonStore2.Location = new System.Drawing.Point(74, 189);
+            this.buttonStore2.Location = new System.Drawing.Point(74, 143);
             this.buttonStore2.Name = "buttonStore2";
             this.buttonStore2.Size = new System.Drawing.Size(44, 23);
             this.buttonStore2.TabIndex = 18;
@@ -520,7 +520,7 @@ namespace SGB_Palette_Editor
             // 
             // buttonLoad1
             // 
-            this.buttonLoad1.Location = new System.Drawing.Point(24, 143);
+            this.buttonLoad1.Location = new System.Drawing.Point(24, 189);
             this.buttonLoad1.Name = "buttonLoad1";
             this.buttonLoad1.Size = new System.Drawing.Size(44, 23);
             this.buttonLoad1.TabIndex = 14;
@@ -530,7 +530,7 @@ namespace SGB_Palette_Editor
             // 
             // buttonLoad2
             // 
-            this.buttonLoad2.Location = new System.Drawing.Point(74, 143);
+            this.buttonLoad2.Location = new System.Drawing.Point(74, 189);
             this.buttonLoad2.Name = "buttonLoad2";
             this.buttonLoad2.Size = new System.Drawing.Size(44, 23);
             this.buttonLoad2.TabIndex = 15;
@@ -540,7 +540,7 @@ namespace SGB_Palette_Editor
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "SNES ROM files|*.sfc|All files|*.*";
+            this.openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
             this.openFileDialog.Title = "Select \"Super Game Boy 2 (Japan).sfc\"";
             // 
             // buttonImport
@@ -981,7 +981,7 @@ namespace SGB_Palette_Editor
             // 
             // buttonStore3
             // 
-            this.buttonStore3.Location = new System.Drawing.Point(124, 189);
+            this.buttonStore3.Location = new System.Drawing.Point(124, 143);
             this.buttonStore3.Name = "buttonStore3";
             this.buttonStore3.Size = new System.Drawing.Size(44, 23);
             this.buttonStore3.TabIndex = 19;
@@ -991,7 +991,7 @@ namespace SGB_Palette_Editor
             // 
             // buttonLoad3
             // 
-            this.buttonLoad3.Location = new System.Drawing.Point(124, 143);
+            this.buttonLoad3.Location = new System.Drawing.Point(124, 189);
             this.buttonLoad3.Name = "buttonLoad3";
             this.buttonLoad3.Size = new System.Drawing.Size(44, 23);
             this.buttonLoad3.TabIndex = 16;
@@ -1007,12 +1007,12 @@ namespace SGB_Palette_Editor
             this.groupBoxPalette.Controls.Add(this.buttonStore1);
             this.groupBoxPalette.Controls.Add(this.buttonStore2);
             this.groupBoxPalette.Controls.Add(this.labelLoad);
-            this.groupBoxPalette.Controls.Add(this.buttonLoad3);
             this.groupBoxPalette.Controls.Add(this.comboBoxPaletteslot);
-            this.groupBoxPalette.Controls.Add(this.buttonLoad1);
-            this.groupBoxPalette.Controls.Add(this.buttonLoad2);
+            this.groupBoxPalette.Controls.Add(this.buttonLoad3);
             this.groupBoxPalette.Controls.Add(this.labelPalette);
+            this.groupBoxPalette.Controls.Add(this.buttonLoad2);
             this.groupBoxPalette.Controls.Add(this.panelPalettebg);
+            this.groupBoxPalette.Controls.Add(this.buttonLoad1);
             this.groupBoxPalette.Controls.Add(this.labelClick);
             this.groupBoxPalette.Location = new System.Drawing.Point(371, 14);
             this.groupBoxPalette.Name = "groupBoxPalette";
@@ -1036,7 +1036,7 @@ namespace SGB_Palette_Editor
             // labelStore
             // 
             this.labelStore.AutoSize = true;
-            this.labelStore.Location = new System.Drawing.Point(12, 172);
+            this.labelStore.Location = new System.Drawing.Point(12, 126);
             this.labelStore.Name = "labelStore";
             this.labelStore.Size = new System.Drawing.Size(89, 13);
             this.labelStore.TabIndex = 99;
@@ -1045,7 +1045,7 @@ namespace SGB_Palette_Editor
             // labelLoad
             // 
             this.labelLoad.AutoSize = true;
-            this.labelLoad.Location = new System.Drawing.Point(12, 126);
+            this.labelLoad.Location = new System.Drawing.Point(12, 172);
             this.labelLoad.Name = "labelLoad";
             this.labelLoad.Size = new System.Drawing.Size(100, 13);
             this.labelLoad.TabIndex = 99;
