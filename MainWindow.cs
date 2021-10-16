@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Windows.Forms;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -11,22 +14,28 @@ namespace SGB_Palette_Editor
     public partial class MainWindow : Form
     {
 
+        private int activePaletteSlot = 0;
+
         private Color[] ActivePalette = new Color[]
         {
             Color.White, Color.LightGray, Color.DarkGray, Color.Black
         };
 
-        private readonly Bitmap[] screenshots =
+        private static Color[] defaultPalette = new Color[] {
+            Color.FromArgb(255, 255, 255), Color.FromArgb(173, 173, 173), Color.FromArgb(82, 82, 82), Color.FromArgb(0, 0, 0)
+        };
+
+        private List<(Bitmap image, Color[] colors)> screenshots = new List<(Bitmap, Color[])> 
         {
-            Properties.Resources.Tetris,
-            Properties.Resources.Mario,
-            Properties.Resources.MysticQuest,
-            Properties.Resources.MetroidII,
-            Properties.Resources.NinjaGaiden,
-            Properties.Resources.Mario2,
-            Properties.Resources.TripWorld,
-            Properties.Resources.Zelda,
-            Properties.Resources.WarioLand
+            ( Properties.Resources.Tetris, defaultPalette),
+            ( Properties.Resources.Mario, defaultPalette),
+            ( Properties.Resources.MysticQuest, defaultPalette),
+            ( Properties.Resources.MetroidII, defaultPalette),
+            ( Properties.Resources.NinjaGaiden, defaultPalette),
+            ( Properties.Resources.Mario2, defaultPalette),
+            ( Properties.Resources.TripWorld, defaultPalette),
+            ( Properties.Resources.Zelda, defaultPalette),
+            ( Properties.Resources.WarioLand, defaultPalette)
         };
 
         private DateTime timer = new DateTime();
@@ -40,6 +49,7 @@ namespace SGB_Palette_Editor
         {
             getPalette(0);
             setColorinputs(ActivePalette[0]);
+            loadScreenshots();
         }
 
         // #####################################################################################
@@ -270,19 +280,26 @@ namespace SGB_Palette_Editor
             }
             
             pictureBox.Refresh();
-            buttonSetPalette.Enabled = false;
+            buttonResetPalette.Enabled = false;
         }
 
         // Save palette in Program.palettes
-        private void setPalette(int i)
+        private bool setPalette(int i)
         {
-            (int r, int g, int b)[] palette = new (int, int, int)[4];
-            for (int j=0; j<4; j++)
+            if (buttonResetPalette.Enabled)
             {
-                palette[j] = (ActivePalette[j].R, ActivePalette[j].G, ActivePalette[j].B);
+                (int r, int g, int b)[] palette = new (int, int, int)[4];
+                for (int j = 0; j < 4; j++)
+                {
+                    palette[j] = (ActivePalette[j].R, ActivePalette[j].G, ActivePalette[j].B);
+                }
+                Program.SetPaletteRGB(i, palette);
+                toolStripStatusLabel.Text = "Saved changes to palette " + comboBoxPaletteslot.Items[activePaletteSlot];
+                resetStatusText(5000);
+                buttonResetPalette.Enabled = false;
+                return true;
             }
-            Program.SetPaletteRGB(i, palette);
-            buttonSetPalette.Enabled = false;
+            return false;
         }
 
         // Move edited color to palette
@@ -292,7 +309,7 @@ namespace SGB_Palette_Editor
             ActivePalette[i] = panelActiveColor.BackColor;
             panelPalettebg.Controls[i].BackColor = panelActiveColor.BackColor;
             pictureBox.Refresh();
-            buttonSetPalette.Enabled = true;
+            buttonResetPalette.Enabled = true;
         }
 
         // Move colors from palette to edit
@@ -304,29 +321,15 @@ namespace SGB_Palette_Editor
         // Palette slot selection changed
         private void comboBoxPaletteslot_SelectedValueChanged(object sender, EventArgs e)
         {
-            getPalette(comboBoxPaletteslot.SelectedIndex);
-            buttonSetPalette.Text = "Set as " + comboBoxPaletteslot.Text;
-            toolStripStatusLabel.Text = "Switched to palette " + comboBoxPaletteslot.SelectedItem;
-            resetStatusText(3000);
-        }
-
-        // Store edited palette
-        private void buttonSetPalette_Click(object sender, EventArgs e)
-        {
-            setPalette(comboBoxPaletteslot.SelectedIndex);
-            buttonSetPalette.Enabled = false;
-        }
-
-        // Couple Set and Reset button states
-        private void buttonSetPalette_EnabledChanged(object sender, EventArgs e)
-        {
-            buttonReset.Enabled = buttonSetPalette.Enabled;
+            setPalette(activePaletteSlot);
+            activePaletteSlot = comboBoxPaletteslot.SelectedIndex;
+            getPalette(activePaletteSlot);
         }
 
         // Undo changes
-        private void buttonReset_Click(object sender, EventArgs e)
+        private void buttonResetPalette_Click(object sender, EventArgs e)
         {
-            getPalette(comboBoxPaletteslot.SelectedIndex);
+            getPalette(activePaletteSlot);
         }
 
         // #####################################################################################
@@ -359,7 +362,7 @@ namespace SGB_Palette_Editor
                 ActivePalette[j] = groupBoxClipboard.Controls[i * 4 + j].BackColor;
                 panelPalettebg.Controls[j].BackColor = ActivePalette[j];
             }
-            buttonSetPalette.Enabled = true;
+            buttonResetPalette.Enabled = true;
             pictureBox.Refresh();
         }
 
@@ -379,42 +382,119 @@ namespace SGB_Palette_Editor
         // Game selection changed
         private void comboBoxGame_SelectedValueChanged(object sender, EventArgs e)
         { // switch screenshot
-            pictureBox.Image = screenshots[comboBoxGame.SelectedIndex];
+            pictureBox.Image = screenshots[comboBoxGame.SelectedIndex].image;
             //pictureBox.Refresh();
         }
 
         // Replace colors with currently active palette while drawing the screenshot
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
+            if (comboBoxGame.SelectedIndex < 0)
+                return;
+
             Graphics g = e.Graphics;
-            using (Bitmap bmp = new Bitmap(screenshots[comboBoxGame.SelectedIndex]))
+            Bitmap image = screenshots[comboBoxGame.SelectedIndex].image;
+
+            Color[] colors = screenshots[comboBoxGame.SelectedIndex].colors;
+            ColorMap[] colorMap = new ColorMap[] {
+                    new ColorMap {
+                        OldColor = colors[0],
+                        NewColor = ActivePalette[0]
+                    }, new ColorMap {
+                        OldColor = colors[1],
+                        NewColor = ActivePalette[1]
+                    }, new ColorMap {
+                        OldColor = colors[2],
+                        NewColor = ActivePalette[2]
+                    }, new ColorMap {
+                        OldColor = colors[3],
+                        NewColor = ActivePalette[3]
+                    }
+                };
+            ImageAttributes attr = new ImageAttributes();
+            attr.SetRemapTable(colorMap);
+            Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
+            g.DrawImage(image, rect, 0, 0, rect.Width, rect.Height, GraphicsUnit.Pixel, attr);
+            
+        }
+
+        // #####################################################################################
+        // Load screenshots
+
+        // Load screenshots from screenshot folder
+        private void loadScreenshots(bool append = true)
+        {
+            if (!append)
             {
-                ColorMap[] colorMap = new ColorMap[4];
-                colorMap[0] = new ColorMap
-                {
-                    OldColor = Color.White,
-                    NewColor = ActivePalette[0]
-                };
-                colorMap[1] = new ColorMap
-                {
-                    OldColor = Color.FromArgb(173, 173, 173),
-                    NewColor = ActivePalette[1]
-                };
-                colorMap[2] = new ColorMap
-                {
-                    OldColor = Color.FromArgb(82, 82, 82),
-                    NewColor = ActivePalette[2]
-                };
-                colorMap[3] = new ColorMap
-                {
-                    OldColor = Color.Black,
-                    NewColor = ActivePalette[3]
-                };
-                ImageAttributes attr = new ImageAttributes();
-                attr.SetRemapTable(colorMap);
-                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-                g.DrawImage(bmp, rect, 0, 0, rect.Width, rect.Height, GraphicsUnit.Pixel, attr);
+                screenshots = new List<(Bitmap, Color[])> { };
+                comboBoxGame.Items.Clear();
             }
+
+            try
+            {
+                DirectoryInfo screenshotFolder = new DirectoryInfo("screenshots/");
+                string[] filetypes = new[] { "*.png", "*.bmp" };
+                List<FileInfo> files = filetypes.SelectMany(screenshotFolder.EnumerateFiles).Take(32).OrderBy(o => o.Name).ToList();
+
+                foreach (FileInfo file in files)
+                {
+                    if (file.Name.Length > 4 && file.Length > 500 && file.Length <= 69174) // 69174 = uncompressed 24 bit bmp
+                    {
+                        try
+                        {
+                            Bitmap screenshot = new Bitmap(file.FullName);
+                            if (screenshot.Width == 160 && screenshot.Height == 144)
+                            {
+                                Color[] screenshotColors = getBitmapColors(screenshot).OrderByDescending(c => c.GetBrightness()).ToArray();
+                                screenshots.Add((screenshot, screenshotColors));
+                                comboBoxGame.Items.Add(file.Name.Substring(0, file.Name.Length - 4));
+                            }
+                        }
+                        catch { }
+                    }
+                }
+            }
+            catch
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory("screenshots");
+                    System.IO.File.WriteAllText("screenshots/add_screenshots_here.txt", "Add your own screenshots here!\r\n\r\nFormat: 160 x 144 pixels png or bmp\r\n");
+                }
+                catch { }
+            }
+
+            /*if (screenshots.Count == 0)
+            {
+                comboBoxGame.Items.Add("None found");
+                screenshots.Add((Properties.Resources.blank, new Color[] { Color.White, Color.FromArgb(182, 182, 182), Color.FromArgb(91, 91, 91), Color.Black }));
+            }*/
+            //comboBoxGame.SelectedIndex = 0;
+            pictureBox.Refresh();
+        }
+
+        // Get a list of the first 4 colors used in bitmap
+        private List<Color> getBitmapColors(Bitmap b)
+        {
+            List<Color> colors = new List<Color> { };
+            for (int x = 0; x < b.Width; x++)
+            {
+                for (int y = 0; y < b.Height; y++)
+                {
+                    Color pixelColor = b.GetPixel(x, y);
+                    if (!colors.Contains(pixelColor))
+                    {
+                        colors.Add(pixelColor);
+                        if (colors.Count == 4)
+                            return colors;
+                    }
+                }
+            }
+            if (colors.Count < 4) // pad list with invisible color
+            {
+                colors.AddRange(Enumerable.Repeat(Color.FromArgb(0, 1, 2, 3), 4 - colors.Count));
+            }
+            return colors;
         }
 
         // #####################################################################################
@@ -422,7 +502,7 @@ namespace SGB_Palette_Editor
 
         // Import data from SGB rom file
         private void buttonImport_Click(object sender, EventArgs e)
-        {
+            {
             openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\"";
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -438,7 +518,7 @@ namespace SGB_Palette_Editor
                             break;
                         }
                     }
-                    getPalette(comboBoxPaletteslot.SelectedIndex);
+                    getPalette(activePaletteSlot);
                     checkBoxControls.Checked = buttonTypeA;
                     toolStripStatusLabel.Text = "Successfully loaded palettes from file.";
                 }
@@ -453,7 +533,7 @@ namespace SGB_Palette_Editor
         // Export as IPS patch
         private void buttonIps_Click(object sender, EventArgs e)
         {
-            setPalette(comboBoxPaletteslot.SelectedIndex); // make sure current palette is saved
+            setPalette(activePaletteSlot); // make sure current palette is saved
             bool success = Program.SaveIPS(comboBoxVersion.SelectedIndex, checkBoxControls.Checked);
             toolStripStatusLabel.Text = success ? "Saved patch as \"" + comboBoxVersion.Text + " (Custom Palette).ips\"." : "Could not save ips file.";
             resetStatusText();
@@ -462,7 +542,7 @@ namespace SGB_Palette_Editor
         // Modify SGB rom file with palette and control mode
         private void buttonModify_Click(object sender, EventArgs e)
         {
-            setPalette(comboBoxPaletteslot.SelectedIndex); // make sure current palette is saved
+            setPalette(activePaletteSlot); // make sure current palette is saved
             openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\" - FILE WILL BE MODIFIED";
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)

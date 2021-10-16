@@ -39,7 +39,6 @@ namespace SGB_Palette_Editor
             this.comboBoxPaletteslot = new System.Windows.Forms.ComboBox();
             this.buttonColor2 = new System.Windows.Forms.Button();
             this.buttonColor4 = new System.Windows.Forms.Button();
-            this.buttonSetPalette = new System.Windows.Forms.Button();
             this.panelPalettebg = new System.Windows.Forms.Panel();
             this.panelColor1 = new System.Windows.Forms.Panel();
             this.panelColor2 = new System.Windows.Forms.Panel();
@@ -62,7 +61,6 @@ namespace SGB_Palette_Editor
             this.labelPalette = new System.Windows.Forms.Label();
             this.labelHexcolor = new System.Windows.Forms.Label();
             this.labelSnescolor = new System.Windows.Forms.Label();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.trackBarRed = new System.Windows.Forms.TrackBar();
             this.trackBarGreen = new System.Windows.Forms.TrackBar();
             this.trackBarBlue = new System.Windows.Forms.TrackBar();
@@ -73,6 +71,7 @@ namespace SGB_Palette_Editor
             this.buttonImport = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.screenshotPanel = new System.Windows.Forms.Panel();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.textBoxRDec = new System.Windows.Forms.TextBox();
             this.textBoxRHex = new System.Windows.Forms.TextBox();
             this.textBoxGDec = new System.Windows.Forms.TextBox();
@@ -112,7 +111,7 @@ namespace SGB_Palette_Editor
             this.buttonStore3 = new System.Windows.Forms.Button();
             this.buttonLoad3 = new System.Windows.Forms.Button();
             this.groupBoxPalette = new System.Windows.Forms.GroupBox();
-            this.buttonReset = new System.Windows.Forms.Button();
+            this.buttonResetPalette = new System.Windows.Forms.Button();
             this.labelStore = new System.Windows.Forms.Label();
             this.labelLoad = new System.Windows.Forms.Label();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
@@ -120,11 +119,11 @@ namespace SGB_Palette_Editor
             this.groupBoxExport = new System.Windows.Forms.GroupBox();
             this.labelVersion = new System.Windows.Forms.Label();
             this.panelPalettebg.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
             this.screenshotPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBoxEditColor.SuspendLayout();
             this.tabControlColorformat.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -252,18 +251,6 @@ namespace SGB_Palette_Editor
             this.toolTip.SetToolTip(this.buttonColor4, "Darkest");
             this.buttonColor4.UseVisualStyleBackColor = true;
             this.buttonColor4.Click += new System.EventHandler(this.buttonSetColor_Click);
-            // 
-            // buttonSetPalette
-            // 
-            this.buttonSetPalette.Enabled = false;
-            this.buttonSetPalette.Location = new System.Drawing.Point(106, 50);
-            this.buttonSetPalette.Name = "buttonSetPalette";
-            this.buttonSetPalette.Size = new System.Drawing.Size(70, 23);
-            this.buttonSetPalette.TabIndex = 12;
-            this.buttonSetPalette.Text = "Set as 1-A";
-            this.buttonSetPalette.UseVisualStyleBackColor = true;
-            this.buttonSetPalette.EnabledChanged += new System.EventHandler(this.buttonSetPalette_EnabledChanged);
-            this.buttonSetPalette.Click += new System.EventHandler(this.buttonSetPalette_Click);
             // 
             // panelPalettebg
             // 
@@ -406,6 +393,7 @@ namespace SGB_Palette_Editor
             // 
             // comboBoxGame
             // 
+            this.comboBoxGame.DisplayMember = "None found";
             this.comboBoxGame.FormattingEnabled = true;
             this.comboBoxGame.Items.AddRange(new object[] {
             "Tetris",
@@ -419,7 +407,7 @@ namespace SGB_Palette_Editor
             "Wario Land"});
             this.comboBoxGame.Location = new System.Drawing.Point(58, 19);
             this.comboBoxGame.Name = "comboBoxGame";
-            this.comboBoxGame.Size = new System.Drawing.Size(123, 21);
+            this.comboBoxGame.Size = new System.Drawing.Size(119, 21);
             this.comboBoxGame.TabIndex = 20;
             this.comboBoxGame.Text = "Tetris";
             this.comboBoxGame.SelectedValueChanged += new System.EventHandler(this.comboBoxGame_SelectedValueChanged);
@@ -463,11 +451,11 @@ namespace SGB_Palette_Editor
             // 
             this.labelPalette.AutoSize = true;
             this.labelPalette.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPalette.Location = new System.Drawing.Point(12, 22);
+            this.labelPalette.Location = new System.Drawing.Point(14, 22);
             this.labelPalette.Name = "labelPalette";
-            this.labelPalette.Size = new System.Drawing.Size(88, 13);
+            this.labelPalette.Size = new System.Drawing.Size(62, 13);
             this.labelPalette.TabIndex = 99;
-            this.labelPalette.Text = "Load palette slot:";
+            this.labelPalette.Text = "Palette slot:";
             // 
             // labelHexcolor
             // 
@@ -486,18 +474,6 @@ namespace SGB_Palette_Editor
             this.labelSnescolor.Size = new System.Drawing.Size(133, 13);
             this.labelSnescolor.TabIndex = 99;
             this.labelSnescolor.Text = "SNES color code (BGR15)";
-            // 
-            // pictureBox
-            // 
-            this.pictureBox.BackColor = System.Drawing.Color.Black;
-            this.pictureBox.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox.Image")));
-            this.pictureBox.InitialImage = null;
-            this.pictureBox.Location = new System.Drawing.Point(1, 1);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(160, 144);
-            this.pictureBox.TabIndex = 99;
-            this.pictureBox.TabStop = false;
-            this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
             // 
             // trackBarRed
             // 
@@ -597,6 +573,18 @@ namespace SGB_Palette_Editor
             this.screenshotPanel.Name = "screenshotPanel";
             this.screenshotPanel.Size = new System.Drawing.Size(162, 146);
             this.screenshotPanel.TabIndex = 99;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.BackColor = System.Drawing.Color.Black;
+            this.pictureBox.Image = global::SGB_Palette_Editor.Properties.Resources.Tetris;
+            this.pictureBox.InitialImage = null;
+            this.pictureBox.Location = new System.Drawing.Point(1, 1);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(160, 144);
+            this.pictureBox.TabIndex = 99;
+            this.pictureBox.TabStop = false;
+            this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
             // 
             // textBoxRDec
             // 
@@ -1013,7 +1001,7 @@ namespace SGB_Palette_Editor
             // 
             // groupBoxPalette
             // 
-            this.groupBoxPalette.Controls.Add(this.buttonReset);
+            this.groupBoxPalette.Controls.Add(this.buttonResetPalette);
             this.groupBoxPalette.Controls.Add(this.buttonStore3);
             this.groupBoxPalette.Controls.Add(this.labelStore);
             this.groupBoxPalette.Controls.Add(this.buttonStore1);
@@ -1025,7 +1013,6 @@ namespace SGB_Palette_Editor
             this.groupBoxPalette.Controls.Add(this.buttonLoad2);
             this.groupBoxPalette.Controls.Add(this.labelPalette);
             this.groupBoxPalette.Controls.Add(this.panelPalettebg);
-            this.groupBoxPalette.Controls.Add(this.buttonSetPalette);
             this.groupBoxPalette.Controls.Add(this.labelClick);
             this.groupBoxPalette.Location = new System.Drawing.Point(371, 14);
             this.groupBoxPalette.Name = "groupBoxPalette";
@@ -1034,16 +1021,17 @@ namespace SGB_Palette_Editor
             this.groupBoxPalette.TabStop = false;
             this.groupBoxPalette.Text = "Palette";
             // 
-            // buttonReset
+            // buttonResetPalette
             // 
-            this.buttonReset.Enabled = false;
-            this.buttonReset.Location = new System.Drawing.Point(106, 80);
-            this.buttonReset.Name = "buttonReset";
-            this.buttonReset.Size = new System.Drawing.Size(70, 23);
-            this.buttonReset.TabIndex = 13;
-            this.buttonReset.Text = "Reset";
-            this.buttonReset.UseVisualStyleBackColor = true;
-            this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
+            this.buttonResetPalette.Enabled = false;
+            this.buttonResetPalette.Location = new System.Drawing.Point(106, 54);
+            this.buttonResetPalette.Name = "buttonResetPalette";
+            this.buttonResetPalette.Size = new System.Drawing.Size(70, 23);
+            this.buttonResetPalette.TabIndex = 13;
+            this.buttonResetPalette.Text = "Reset";
+            this.toolTip.SetToolTip(this.buttonResetPalette, "Reset current palette.");
+            this.buttonResetPalette.UseVisualStyleBackColor = true;
+            this.buttonResetPalette.Click += new System.EventHandler(this.buttonResetPalette_Click);
             // 
             // labelStore
             // 
@@ -1118,11 +1106,11 @@ namespace SGB_Palette_Editor
             this.Text = "SGB Palette Editor";
             this.Load += new System.EventHandler(this.Form_Load);
             this.panelPalettebg.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
             this.screenshotPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.groupBoxEditColor.ResumeLayout(false);
             this.groupBoxEditColor.PerformLayout();
             this.tabControlColorformat.ResumeLayout(false);
@@ -1157,7 +1145,6 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Button buttonColor2;
         private System.Windows.Forms.Button buttonColor4;
-        private System.Windows.Forms.Button buttonSetPalette;
         private System.Windows.Forms.Panel panelPalettebg;
         private System.Windows.Forms.Panel panelColor3;
         private System.Windows.Forms.Panel panelColor4;
@@ -1219,7 +1206,7 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.Label labelStore;
         private System.Windows.Forms.Label labelLoad;
-        private System.Windows.Forms.Button buttonReset;
+        private System.Windows.Forms.Button buttonResetPalette;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox groupBoxExport;
         private System.Windows.Forms.TrackBar trackBarH;

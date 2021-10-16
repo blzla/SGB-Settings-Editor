@@ -10,7 +10,7 @@ namespace SGB_Palette_Editor
     public static class Program
     {
 
-        /// SGB palette colors in 15bit BGR format
+        // SGB palette colors in 15bit BGR format
         private static Int32[] palettes = new Int32[] {
             26559, 9819, 4277, 10342, 25467, 15065, 2390, 0, 32543, 10877, 12531, 19687, 22527, 9752, 31, 106,
             23423, 16143, 8749, 4331, 32699, 10812, 21, 2304, 10240, 30336, 495, 12287, 29631, 18175, 272, 102,
