@@ -95,5 +95,15 @@ namespace SGB_Palette_Editor
             }
         }
         #endregion
+
+        private void AboutBox_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/blzla/SGB-Settings-Editor");
+        }
     }
 }

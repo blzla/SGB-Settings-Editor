@@ -37,7 +37,7 @@ namespace SGB_Palette_Editor
         {
             byte[] control = new byte[] { data[0], data[1] };
             int dataLength = BitConverter.ToInt16(data, 2);
-            int messageLength = BitConverter.ToInt16(data, 4); // todo: verify
+            int messageLength = BitConverter.ToInt16(data, 4); // I didn't actually verify that this is the length, but it looks reasonable and works
 
             List<byte> message = new List<byte>();
 

@@ -21,10 +21,6 @@ namespace SGB_Palette_Editor
             Color.White, Color.LightGray, Color.DarkGray, Color.Black
         };
 
-        private static Color[] defaultPalette = new Color[] {
-            Color.FromArgb(255, 255, 255), Color.FromArgb(173, 173, 173), Color.FromArgb(82, 82, 82), Color.FromArgb(0, 0, 0)
-        };
-
         private List<(Bitmap image, Color[] colors)> screenshots = new List<(Bitmap, Color[])>
         {
             /*( Properties.Resources.Tetris, defaultPalette),
@@ -37,6 +33,13 @@ namespace SGB_Palette_Editor
             ( Properties.Resources.Zelda, defaultPalette),
             ( Properties.Resources.WarioLand, defaultPalette)*/
         };
+
+        private (Bitmap image, Color[] colors) fallbackScreenshot = (
+            Properties.Resources.fallback,
+            new Color[] { Color.FromArgb(245, 245, 245), Color.FromArgb(172, 171, 177), Color.FromArgb(82, 83, 98), Color.FromArgb(12, 12, 12) }
+        );
+
+        static protected internal int sgb_rev = 0;
 
         private DateTime timer = new DateTime();
 
@@ -51,7 +54,6 @@ namespace SGB_Palette_Editor
             setColorinputs(ActivePalette[0]);
             loadScreenshots();
             refreshPresetData();
-            displayStatusText("Testing version");
         }
 
         // #####################################################################################
@@ -384,16 +386,12 @@ namespace SGB_Palette_Editor
         // Game selection changed
         private void comboBoxGame_SelectedValueChanged(object sender, EventArgs e)
         { // switch screenshot
-            pictureBox.Image = screenshots[comboBoxGame.SelectedIndex].image;
-            //pictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         // Replace colors with currently active palette while drawing the screenshot
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            if (comboBoxGame.SelectedIndex < 0)
-                return;
-
             Graphics g = e.Graphics;
             Bitmap image = screenshots[comboBoxGame.SelectedIndex].image;
 
@@ -418,6 +416,13 @@ namespace SGB_Palette_Editor
             Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
             g.DrawImage(image, rect, 0, 0, rect.Width, rect.Height, GraphicsUnit.Pixel, attr);
 
+        }
+
+        // Easter egg
+        private void pictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            screenshots[comboBoxGame.SelectedIndex] = fallbackScreenshot;
+            pictureBox.Refresh();
         }
 
         // #####################################################################################
@@ -469,12 +474,14 @@ namespace SGB_Palette_Editor
             }
 
             if (screenshots.Count == 0)
-            {   // fallback image
+            {
                 comboBoxGame.Items.Add("No screenshots found");
-                screenshots.Add((Properties.Resources.fallback, new Color[] { Color.FromArgb(245, 245, 245), Color.FromArgb(172, 171, 177), Color.FromArgb(82, 83, 98), Color.FromArgb(12, 12, 12) }));
+                screenshots.Add(fallbackScreenshot);
             }
+
             if (comboBoxGame.SelectedIndex < 0)
                 comboBoxGame.SelectedIndex = 0;
+
             pictureBox.Refresh();
         }
 
@@ -505,25 +512,27 @@ namespace SGB_Palette_Editor
         // #####################################################################################
         // Import / Export section
 
+        // Store SGB version in variable so it's accessible in the dialog
+        private void comboBoxVersion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sgb_rev = comboBoxVersion.SelectedIndex;
+        }
+
+        // Sync controls check box with menu 
+        private void checkBoxControls_CheckedChanged(object sender, EventArgs e)
+        {
+            controlTypeAToolStripMenuItem.Checked = checkBoxControls.Checked;
+        }
+
         // Import data from SGB rom file
         private void buttonImport_Click(object sender, EventArgs e)
         {
             openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\"";
             openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 UseWaitCursor = true;
-#if DEBUG
-                var stopwatch = new System.Diagnostics.Stopwatch();
-                stopwatch.Start();
-#endif
-                (bool success, bool buttonTypeA, int border, string text) = Program.LoadfromFile(openFileDialog.FileName);
-
-#if DEBUG
-                stopwatch.Stop();
-                Console.WriteLine(stopwatch.ElapsedMilliseconds);
-#endif
+                (bool success, bool buttonTypeA, int border, string text) = Program.LoadDatafromFile(openFileDialog.FileName);
                 if (success)
                 {
                     for (int i = 0; i < Program.sgbRevisions.Length; i++)
@@ -535,19 +544,55 @@ namespace SGB_Palette_Editor
                         }
                     }
                     getPalette(activePaletteSlot);
-                    toolStripStatusLabel.Text = "Successfully loaded data from file.";
+                    displayStatusText("Successfully loaded data from file.");
                     checkBoxControls.Checked = buttonTypeA;
                     refreshPresetData();
                     refreshBorderCombobox();
-                    comboBoxBorder.SelectedIndex = border;
+                    if (border < comboBoxBorder.Items.Count)
+                    {
+                        comboBoxBorder.SelectedIndex = border;
+                    }
+                    else
+                    {
+                        displayStatusText("Error loading border.");
+                        comboBoxBorder.SelectedIndex = 0;
+                    }
                 }
                 else
                 {
-                    toolStripStatusLabel.Text = "Error loading data from file: " + text;
+                    displayStatusText("Error loading data from file: " + text);
                 }
-                resetStatusText();
                 UseWaitCursor = false;
-                //GC.Collect();
+            }
+        }
+
+        // Import border images from SGB rom file without changing any settings
+        private void buttonImportImages_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\"";
+            openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                UseWaitCursor = true;
+#if DEBUG
+                var stopwatch = new System.Diagnostics.Stopwatch();
+                stopwatch.Start();
+#endif
+                bool success = Program.loadImagesfromFile(openFileDialog.FileName);
+#if DEBUG
+                stopwatch.Stop();
+                Console.WriteLine($"Loading data took {stopwatch.ElapsedMilliseconds}ms.");
+#endif
+                if (success)
+                {
+                    refreshBorderCombobox();
+                    displayStatusText("Successfully loaded border images.");
+                }
+                else
+                {
+                    displayStatusText("Error loading border images.");
+                }
+                UseWaitCursor = false;
             }
         }
 
@@ -555,8 +600,19 @@ namespace SGB_Palette_Editor
         private void buttonIps_Click(object sender, EventArgs e)
         {
             setPalette(activePaletteSlot); // make sure current palette is saved
-            bool success = Program.SaveIPS(comboBoxVersion.SelectedIndex, checkBoxControls.Checked);
-            displayStatusText(success ? "Saved patch as \"" + comboBoxVersion.Text + " (Custom Palette).ips\"." : "Could not save ips file.");
+            ConfirmationDialog dialog = new ConfirmationDialog();
+            if (comboBoxBorder.SelectedIndex > 0)
+            {
+                dialog.ShowDialog();
+                comboBoxVersion.SelectedIndex = sgb_rev;
+            }
+            if (dialog.DialogResult != DialogResult.Cancel)
+            {
+                (bool success, string message) = Program.SaveIPS(comboBoxVersion.SelectedIndex, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
+                displayStatusText(success ? "Saved patch as \"" + message + "\"." : message);
+            }
+            else
+                displayStatusText("Action cancelled, patch was not saved.");
         }
 
         // Modify SGB rom file with palette and control mode
@@ -568,7 +624,7 @@ namespace SGB_Palette_Editor
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                (bool success, string text) = Program.SavetoFile(openFileDialog.FileName, checkBoxControls.Checked, comboBoxBorder.SelectedIndex);
+                (bool success, string text) = Program.SavetoFile(openFileDialog.FileName, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
                 if (success)
                 {
                     toolStripStatusLabel.Text = "Successfully saved changes to file. " + text;
@@ -583,12 +639,83 @@ namespace SGB_Palette_Editor
         }
 
         // #####################################################################################
+        // Menu strip
+
+        private void importToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Import palettes, game presets, button config and border data from an SGB rom file.", 60000);
+        }
+
+        private void modifyToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Modify SGB rom file with your custom palettes, game presets, button config and border selection.", 60000);
+        }
+
+        private void savePatchToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Generate an ips patch and share it!", 60000);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void presetsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedIndex = 1;
+            paletteEditorToolStripMenuItem.Checked = false;
+            startupBorderToolStripMenuItem.Checked = false;
+        }
+
+        private void paletteEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedIndex = 0;
+            presetsToolStripMenuItem.Checked = false;
+            startupBorderToolStripMenuItem.Checked = false;
+        }
+
+        private void startupBorderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //refreshBorderCombobox();
+            pictureBoxGameinBorder.Image = pictureBox.Image;
+            tabControlMain.SelectedIndex = 2;
+            paletteEditorToolStripMenuItem.Checked = false;
+            presetsToolStripMenuItem.Checked = false;
+        }
+        private void controlTypeAToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxControls.Checked = controlTypeAToolStripMenuItem.Checked;
+        }
+
+        private void controlTypeAToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Change default controls to Type A.", 60000);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutBox().ShowDialog();
+        }
+
+        private void toolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            hideStatusText();
+        }
+
+        // #####################################################################################
         // Status bar
 
         private void displayStatusText(string msg, int duration = 6000)
         {
             toolStripStatusLabel.Text = msg;
             resetStatusText(duration);
+        }
+
+        private void hideStatusText()
+        {
+            toolStripStatusLabel.Text = "";
+            timer = DateTime.Now;
         }
 
         // Reset status bar text without blocking the UI
@@ -602,45 +729,24 @@ namespace SGB_Palette_Editor
         }
 
         // #####################################################################################
-        // Todo
+        // Game presets
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        // Write game presets to the text boxes
+        private void refreshPresetData()
         {
-            new AboutBox().ShowDialog();
-        }
-
-        private void buttonReadGB_Click(object sender, EventArgs e)
-        {
-            openFileDialog.Title = "Select Game Boy file";
-            openFileDialog.Filter = "Game Boy ROM files|*.gb; *.gbc|All files|*.*";
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            for (int i = 0; i < Program.gamePresets.Count; i++)
             {
-                (bool success, string gbTitle) = Program.ReadGBName(openFileDialog.FileName);
-                if (!success)
-                {
-                    displayStatusText("Unsupported game: " + gbTitle);
-                }
-                else
-                {
-                    for (int i = 0; i < 32; i++)
-                    {
-                        if (groupBoxPresets.Controls[2 * i].Text == gbTitle)
-                        {
-                            displayStatusText("Game already in list.");
-                            return;
-                        }
-                        if (groupBoxPresets.Controls[2 * i].Text == "")
-                        {
-                            groupBoxPresets.Controls[2 * i].Text = gbTitle;
-                            groupBoxPresets.Controls[2 * i + 1].Text = "1-A";
-                            Program.gamePresets.Add((gbTitle, 2));
-                            break;
-                        }
-                    }
-                }
+                groupBoxPresets.Controls[2 * i + 1].Text = (Program.gamePresets[i].n - 1) / 8 + 1 + "-" + (char)('A' + ((Program.gamePresets[i].n - 1) % 8));
+                groupBoxPresets.Controls[2 * i].Text = Program.gamePresets[i].game;
+            };
+            for (int i = Program.gamePresets.Count; i < 36; i++)
+            {
+                groupBoxPresets.Controls[2 * i + 1].Text = "";
+                groupBoxPresets.Controls[2 * i].Text = "";
             }
         }
 
+        // Handle changes to the titles
         private void textBoxTitle_TextChanged(object sender, EventArgs e)
         {
             try
@@ -671,76 +777,22 @@ namespace SGB_Palette_Editor
 
                 if (((TextBox)sender).Text == "")
                 {
-                    Program.gamePresets.RemoveAt(presetslot);
+                    Program.RemoveGamePreset(presetslot);
                     groupBoxPresets.Controls[2 * Program.gamePresets.Count()].Text = "";
                     refreshPresetData();
                 }
                 else
                 {
                     if (presetslot < Program.gamePresets.Count())
-                        Program.gamePresets[presetslot] = (groupBoxPresets.Controls[i].Text, Program.ConvertSlottoNumber(groupBoxPresets.Controls[i + 1].Text));
+                        Program.SetGamePreset((groupBoxPresets.Controls[i].Text, Program.ConvertSlottoNumber(groupBoxPresets.Controls[i + 1].Text)), presetslot);
                     else
-                        Program.gamePresets.Add((groupBoxPresets.Controls[i].Text, Program.ConvertSlottoNumber(groupBoxPresets.Controls[i + 1].Text)));
+                        Program.SetGamePreset((groupBoxPresets.Controls[i].Text, Program.ConvertSlottoNumber(groupBoxPresets.Controls[i + 1].Text)));
                 }
             }
             catch { }
         }
 
-        private void presetsToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            tabControlMain.SelectedIndex = 1;
-            paletteEditorToolStripMenuItem.Checked = false;
-            startupBorderToolStripMenuItem.Checked = false;
-        }
-
-        private void refreshPresetData()
-        {
-            for (int i = 0; i < Program.gamePresets.Count; i++)
-            {
-                groupBoxPresets.Controls[2 * i + 1].Text = (Program.gamePresets[i].slot - 1) / 8 + 1 + "-" + (char)('A' + ((Program.gamePresets[i].slot - 1) % 8));
-                groupBoxPresets.Controls[2 * i].Text = Program.gamePresets[i].game;
-            };
-            for (int i = Program.gamePresets.Count; i < 36; i++)
-            {
-                groupBoxPresets.Controls[2 * i + 1].Text = "";
-                groupBoxPresets.Controls[2 * i].Text = "";
-            }
-        }
-
-        private void paletteEditorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tabControlMain.SelectedIndex = 0;
-            presetsToolStripMenuItem.Checked = false;
-            startupBorderToolStripMenuItem.Checked = false;
-        }
-
-        private void startupBorderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            refreshBorderCombobox();
-            pictureBoxGameinBorder.Image = pictureBox.Image;
-            tabControlMain.SelectedIndex = 2;
-            paletteEditorToolStripMenuItem.Checked = false;
-            presetsToolStripMenuItem.Checked = false;
-            displayStatusText("Experimental feature.");
-        }
-
-        private void refreshBorderCombobox()
-        {
-            string[] borderNames = Program.loadedBorders.Select(b => b.name).ToArray();
-            if (Program.loadedBorders.Count == 0)
-            {
-                //comboBoxBorder.Items.Clear();
-                //labelBordersInfo.Visible = true;
-            }
-            else if (!Enumerable.SequenceEqual(comboBoxBorder.Items.OfType<string>(), borderNames))
-            {
-                comboBoxBorder.Items.Clear();
-                comboBoxBorder.Items.AddRange(borderNames);
-                comboBoxBorder.SelectedIndex = 0;
-                //labelBordersInfo.Visible = false;
-            }
-        }
-
+        // Save the selected palette after leaving the text box
         private void textBoxPreset_Leave(object sender, EventArgs e)
         {
             TextBox slotBox = (TextBox)sender;
@@ -761,39 +813,76 @@ namespace SGB_Palette_Editor
                         convertedNumber = 1;
                         slotBox.Text = "1-A";
                     }
-                    if (presetslot < Program.gamePresets.Count())
+                    if (presetslot < Program.gamePresets.Count()) // ignore if there's no game title
                         Program.gamePresets[presetslot] = (groupBoxPresets.Controls[i - 1].Text, convertedNumber);
                 }
             }
         }
 
+        // Read game title from internal header in .gb or .gbc rom file
+        private void buttonReadGB_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Title = "Select Game Boy file";
+            openFileDialog.Filter = "Game Boy ROM files|*.gb; *.gbc|All files|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                (bool success, string gbTitle) = Program.ReadGBName(openFileDialog.FileName);
+                if (!success)
+                {
+                    displayStatusText("Unsupported game: " + gbTitle);
+                }
+                else
+                {
+                    for (int i = 0; i < 32; i++)
+                    {
+                        if (groupBoxPresets.Controls[2 * i].Text == gbTitle)
+                        {
+                            displayStatusText("Game already in list.");
+                            return;
+                        }
+                        if (groupBoxPresets.Controls[2 * i].Text == "")
+                        {
+                            groupBoxPresets.Controls[2 * i].Text = gbTitle;
+                            groupBoxPresets.Controls[2 * i + 1].Text = "1-A";
+                            Program.SetGamePreset((gbTitle, 2));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // #####################################################################################
+        // Borders
+
+        // Update combo box if loadedBorders changed
+        private void refreshBorderCombobox()
+        {
+            string[] borderNames = Program.loadedBorders.Select(b => b.name).ToArray();
+            int selectedBorderIndex = Program.loadedBorders.FindIndex(b => b.name == (string)comboBoxBorder.SelectedItem);
+            if (Program.loadedBorders.Count > 0)
+            {
+                if (!Enumerable.SequenceEqual(comboBoxBorder.Items.OfType<string>(), borderNames))
+                {
+                    comboBoxBorder.Items.Clear();
+                    comboBoxBorder.Items.AddRange(borderNames);
+                }
+                comboBoxBorder.SelectedIndex = selectedBorderIndex < 0 ? 0 : selectedBorderIndex;
+                drawBorder();
+            }
+        }
+
+        // Display selected border
         private void comboBoxBorder_SelectedIndexChanged(object sender, EventArgs e)
         {
+            drawBorder();
+        }
+
+        private void drawBorder()
+        {
             //pictureBoxBorder.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("sgb_borders"+(((ComboBox)sender).SelectedIndex + 1));
-            if (Program.loadedBorders.Count == 0)
-                return;
-            if (Program.loadedBorders[((ComboBox)sender).SelectedIndex].image != null)
-                pictureBoxBorder.Image = Program.loadedBorders[((ComboBox)sender).SelectedIndex].image;
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        private void importToolStripMenuItem_MouseEnter(object sender, EventArgs e)
-        {
-            displayStatusText("Import palettes, game presets, button config and border data from an SGB rom file.", 15000);
-        }
-
-        private void modifyToolStripMenuItem_MouseEnter(object sender, EventArgs e)
-        {
-            displayStatusText("Modify SGB rom file with your custom palettes, game presets, button config and border selection.", 15000);
-        }
-
-        private void savePatchToolStripMenuItem_MouseEnter(object sender, EventArgs e)
-        {
-            displayStatusText("Generate an ips patch and share it! (doesn't include border selection)", 15000);
+            if (Program.loadedBorders.Count > comboBoxBorder.SelectedIndex && Program.loadedBorders[comboBoxBorder.SelectedIndex].image != null)
+                pictureBoxBorder.Image = Program.loadedBorders[comboBoxBorder.SelectedIndex].image;
         }
     }
 }

@@ -117,18 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="linkLabel.Text" xml:space="preserve">
-    <value>This tool is not affiliated with Nintendo. Game Boy is a registered trademark of Nintendo.
-
-In memory of Near. Without their work on bsnes this tool would not have been possible.
-
-Shoutout to The Boat.
-
-SGB Settings Editor is released under GPL 3.0 license.
-The commented source code is available at: https://github.com/blzla/SGB-Settings-Editor
-Check it out to find an easter egg. ;)
-
-by blizzz, 2021
-</value>
-  </data>
 </root>

@@ -127,6 +127,7 @@ namespace SGB_Palette_Editor
             this.labelLoad = new System.Windows.Forms.Label();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.buttonReadGB = new System.Windows.Forms.Button();
             this.groupBoxExport = new System.Windows.Forms.GroupBox();
             this.labelVersion = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -139,6 +140,8 @@ namespace SGB_Palette_Editor
             this.paletteEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.presetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startupBorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.controlTypeAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlMain = new System.Windows.Forms.TabControl();
@@ -217,7 +220,6 @@ namespace SGB_Palette_Editor
             this.textBoxPreset70 = new System.Windows.Forms.TextBox();
             this.textBoxPreset71 = new System.Windows.Forms.TextBox();
             this.textBoxPreset72 = new System.Windows.Forms.TextBox();
-            this.buttonReadGB = new System.Windows.Forms.Button();
             this.tabBorders = new System.Windows.Forms.TabPage();
             this.groupBoxBorder = new System.Windows.Forms.GroupBox();
             this.labelBordersInfo = new System.Windows.Forms.Label();
@@ -225,6 +227,7 @@ namespace SGB_Palette_Editor
             this.pictureBoxGameinBorder = new System.Windows.Forms.PictureBox();
             this.comboBoxBorder = new System.Windows.Forms.ComboBox();
             this.pictureBoxBorder = new System.Windows.Forms.PictureBox();
+            this.groupBoxBorderInfo = new System.Windows.Forms.GroupBox();
             this.trackBarRed = new SGB_Palette_Editor.NoFocusTrackBar();
             this.trackBarBlue = new SGB_Palette_Editor.NoFocusTrackBar();
             this.trackBarGreen = new SGB_Palette_Editor.NoFocusTrackBar();
@@ -252,6 +255,7 @@ namespace SGB_Palette_Editor
             this.groupBoxBorder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).BeginInit();
+            this.groupBoxBorderInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
@@ -537,7 +541,7 @@ namespace SGB_Palette_Editor
             this.buttonStore1.Location = new System.Drawing.Point(24, 143);
             this.buttonStore1.Name = "buttonStore1";
             this.buttonStore1.Size = new System.Drawing.Size(44, 23);
-            this.buttonStore1.TabIndex = 17;
+            this.buttonStore1.TabIndex = 14;
             this.buttonStore1.Text = "Slot 1";
             this.buttonStore1.UseVisualStyleBackColor = true;
             this.buttonStore1.Click += new System.EventHandler(this.buttonStorePalette_Click);
@@ -557,6 +561,7 @@ namespace SGB_Palette_Editor
             this.comboBoxVersion.TabIndex = 22;
             this.comboBoxVersion.Text = "Super Game Boy 2 (Japan)";
             this.toolTip.SetToolTip(this.comboBoxVersion, "Optional, only used for patch export.");
+            this.comboBoxVersion.SelectedIndexChanged += new System.EventHandler(this.comboBoxVersion_SelectedIndexChanged);
             // 
             // labelPalette
             // 
@@ -591,7 +596,7 @@ namespace SGB_Palette_Editor
             this.buttonStore2.Location = new System.Drawing.Point(74, 143);
             this.buttonStore2.Name = "buttonStore2";
             this.buttonStore2.Size = new System.Drawing.Size(44, 23);
-            this.buttonStore2.TabIndex = 18;
+            this.buttonStore2.TabIndex = 15;
             this.buttonStore2.Text = "Slot 2";
             this.buttonStore2.UseVisualStyleBackColor = true;
             this.buttonStore2.Click += new System.EventHandler(this.buttonStorePalette_Click);
@@ -601,7 +606,7 @@ namespace SGB_Palette_Editor
             this.buttonLoad1.Location = new System.Drawing.Point(24, 189);
             this.buttonLoad1.Name = "buttonLoad1";
             this.buttonLoad1.Size = new System.Drawing.Size(44, 23);
-            this.buttonLoad1.TabIndex = 14;
+            this.buttonLoad1.TabIndex = 17;
             this.buttonLoad1.Text = "Slot 1";
             this.buttonLoad1.UseVisualStyleBackColor = true;
             this.buttonLoad1.Click += new System.EventHandler(this.buttonLoadPalette_Click);
@@ -611,7 +616,7 @@ namespace SGB_Palette_Editor
             this.buttonLoad2.Location = new System.Drawing.Point(74, 189);
             this.buttonLoad2.Name = "buttonLoad2";
             this.buttonLoad2.Size = new System.Drawing.Size(44, 23);
-            this.buttonLoad2.TabIndex = 15;
+            this.buttonLoad2.TabIndex = 18;
             this.buttonLoad2.Text = "Slot 2";
             this.buttonLoad2.UseVisualStyleBackColor = true;
             this.buttonLoad2.Click += new System.EventHandler(this.buttonLoadPalette_Click);
@@ -662,6 +667,7 @@ namespace SGB_Palette_Editor
             this.pictureBox.TabIndex = 99;
             this.pictureBox.TabStop = false;
             this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
+            this.pictureBox.DoubleClick += new System.EventHandler(this.pictureBox_DoubleClick);
             // 
             // textBoxRDec
             // 
@@ -947,6 +953,7 @@ namespace SGB_Palette_Editor
             this.checkBoxControls.Text = "Change default controls to Type A";
             this.toolTip.SetToolTip(this.checkBoxControls, "Type A: SNES B button = Game Boy A button");
             this.checkBoxControls.UseVisualStyleBackColor = true;
+            this.checkBoxControls.CheckedChanged += new System.EventHandler(this.checkBoxControls_CheckedChanged);
             // 
             // groupBoxClipboard
             // 
@@ -1027,7 +1034,7 @@ namespace SGB_Palette_Editor
             this.buttonStore3.Location = new System.Drawing.Point(124, 143);
             this.buttonStore3.Name = "buttonStore3";
             this.buttonStore3.Size = new System.Drawing.Size(44, 23);
-            this.buttonStore3.TabIndex = 19;
+            this.buttonStore3.TabIndex = 16;
             this.buttonStore3.Text = "Slot 3";
             this.buttonStore3.UseVisualStyleBackColor = true;
             this.buttonStore3.Click += new System.EventHandler(this.buttonStorePalette_Click);
@@ -1037,7 +1044,7 @@ namespace SGB_Palette_Editor
             this.buttonLoad3.Location = new System.Drawing.Point(124, 189);
             this.buttonLoad3.Name = "buttonLoad3";
             this.buttonLoad3.Size = new System.Drawing.Size(44, 23);
-            this.buttonLoad3.TabIndex = 16;
+            this.buttonLoad3.TabIndex = 19;
             this.buttonLoad3.Text = "Slot 3";
             this.buttonLoad3.UseVisualStyleBackColor = true;
             this.buttonLoad3.Click += new System.EventHandler(this.buttonLoadPalette_Click);
@@ -1106,6 +1113,17 @@ namespace SGB_Palette_Editor
             this.groupBoxPreview.TabStop = false;
             this.groupBoxPreview.Text = "Preview";
             // 
+            // buttonReadGB
+            // 
+            this.buttonReadGB.Location = new System.Drawing.Point(16, 341);
+            this.buttonReadGB.Name = "buttonReadGB";
+            this.buttonReadGB.Size = new System.Drawing.Size(192, 23);
+            this.buttonReadGB.TabIndex = 111;
+            this.buttonReadGB.Text = "Read game id from file";
+            this.toolTip.SetToolTip(this.buttonReadGB, "Read game id from a Game Boy rom file.");
+            this.buttonReadGB.UseVisualStyleBackColor = true;
+            this.buttonReadGB.Click += new System.EventHandler(this.buttonReadGB_Click);
+            // 
             // groupBoxExport
             // 
             this.groupBoxExport.Controls.Add(this.labelVersion);
@@ -1136,6 +1154,7 @@ namespace SGB_Palette_Editor
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewsToolStripMenuItem,
+            this.optionsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -1161,22 +1180,25 @@ namespace SGB_Palette_Editor
             this.importToolStripMenuItem.Text = "Load Data";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.buttonImport_Click);
             this.importToolStripMenuItem.MouseEnter += new System.EventHandler(this.importToolStripMenuItem_MouseEnter);
+            this.importToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
             this.modifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.modifyToolStripMenuItem.Text = "Modify .sfc";
+            this.modifyToolStripMenuItem.Text = "Modify Rom File";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.buttonModify_Click);
             this.modifyToolStripMenuItem.MouseEnter += new System.EventHandler(this.modifyToolStripMenuItem_MouseEnter);
+            this.modifyToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
             // savePatchToolStripMenuItem
             // 
             this.savePatchToolStripMenuItem.Name = "savePatchToolStripMenuItem";
             this.savePatchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.savePatchToolStripMenuItem.Text = "Save Patch";
+            this.savePatchToolStripMenuItem.Text = "Save IPS Patch";
             this.savePatchToolStripMenuItem.Click += new System.EventHandler(this.buttonIps_Click);
             this.savePatchToolStripMenuItem.MouseEnter += new System.EventHandler(this.savePatchToolStripMenuItem_MouseEnter);
+            this.savePatchToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
             // exitToolStripMenuItem
             // 
@@ -1203,7 +1225,7 @@ namespace SGB_Palette_Editor
             this.paletteEditorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.paletteEditorToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.paletteEditorToolStripMenuItem.Name = "paletteEditorToolStripMenuItem";
-            this.paletteEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paletteEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.paletteEditorToolStripMenuItem.Text = "Palette Editor";
             this.paletteEditorToolStripMenuItem.Click += new System.EventHandler(this.paletteEditorToolStripMenuItem_Click);
             // 
@@ -1212,7 +1234,7 @@ namespace SGB_Palette_Editor
             this.presetsToolStripMenuItem.CheckOnClick = true;
             this.presetsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.presetsToolStripMenuItem.Name = "presetsToolStripMenuItem";
-            this.presetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.presetsToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.presetsToolStripMenuItem.Text = "Game Presets";
             this.presetsToolStripMenuItem.Click += new System.EventHandler(this.presetsToolStripMenuItem1_Click);
             // 
@@ -1221,9 +1243,27 @@ namespace SGB_Palette_Editor
             this.startupBorderToolStripMenuItem.CheckOnClick = true;
             this.startupBorderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.startupBorderToolStripMenuItem.Name = "startupBorderToolStripMenuItem";
-            this.startupBorderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startupBorderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.startupBorderToolStripMenuItem.Text = "Startup Border";
             this.startupBorderToolStripMenuItem.Click += new System.EventHandler(this.startupBorderToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.controlTypeAToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // controlTypeAToolStripMenuItem
+            // 
+            this.controlTypeAToolStripMenuItem.CheckOnClick = true;
+            this.controlTypeAToolStripMenuItem.Name = "controlTypeAToolStripMenuItem";
+            this.controlTypeAToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.controlTypeAToolStripMenuItem.Text = "Control Type A";
+            this.controlTypeAToolStripMenuItem.CheckedChanged += new System.EventHandler(this.controlTypeAToolStripMenuItem_CheckedChanged);
+            this.controlTypeAToolStripMenuItem.MouseEnter += new System.EventHandler(this.controlTypeAToolStripMenuItem_MouseEnter);
+            this.controlTypeAToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
             // helpToolStripMenuItem
             // 
@@ -1358,7 +1398,7 @@ namespace SGB_Palette_Editor
             this.groupBoxPresets.Controls.Add(this.buttonReadGB);
             this.groupBoxPresets.Location = new System.Drawing.Point(11, 4);
             this.groupBoxPresets.Name = "groupBoxPresets";
-            this.groupBoxPresets.Size = new System.Drawing.Size(663, 375);
+            this.groupBoxPresets.Size = new System.Drawing.Size(663, 373);
             this.groupBoxPresets.TabIndex = 112;
             this.groupBoxPresets.TabStop = false;
             this.groupBoxPresets.Text = "Game Presets";
@@ -2011,17 +2051,6 @@ namespace SGB_Palette_Editor
             this.textBoxPreset72.TabIndex = 109;
             this.textBoxPreset72.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
-            // buttonReadGB
-            // 
-            this.buttonReadGB.Location = new System.Drawing.Point(16, 343);
-            this.buttonReadGB.Name = "buttonReadGB";
-            this.buttonReadGB.Size = new System.Drawing.Size(192, 23);
-            this.buttonReadGB.TabIndex = 111;
-            this.buttonReadGB.Text = "Read game id from file";
-            this.toolTip.SetToolTip(this.buttonReadGB, "Read game id from a Game Boy rom file.");
-            this.buttonReadGB.UseVisualStyleBackColor = true;
-            this.buttonReadGB.Click += new System.EventHandler(this.buttonReadGB_Click);
-            // 
             // tabBorders
             // 
             this.tabBorders.BackColor = System.Drawing.SystemColors.Control;
@@ -2035,14 +2064,14 @@ namespace SGB_Palette_Editor
             // 
             // groupBoxBorder
             // 
-            this.groupBoxBorder.Controls.Add(this.labelBordersInfo);
+            this.groupBoxBorder.Controls.Add(this.groupBoxBorderInfo);
             this.groupBoxBorder.Controls.Add(this.buttonBoarderImportFile);
             this.groupBoxBorder.Controls.Add(this.pictureBoxGameinBorder);
             this.groupBoxBorder.Controls.Add(this.comboBoxBorder);
             this.groupBoxBorder.Controls.Add(this.pictureBoxBorder);
-            this.groupBoxBorder.Location = new System.Drawing.Point(45, 36);
+            this.groupBoxBorder.Location = new System.Drawing.Point(11, 4);
             this.groupBoxBorder.Name = "groupBoxBorder";
-            this.groupBoxBorder.Size = new System.Drawing.Size(581, 312);
+            this.groupBoxBorder.Size = new System.Drawing.Size(663, 372);
             this.groupBoxBorder.TabIndex = 2;
             this.groupBoxBorder.TabStop = false;
             this.groupBoxBorder.Text = "Startup Border";
@@ -2050,27 +2079,27 @@ namespace SGB_Palette_Editor
             // labelBordersInfo
             // 
             this.labelBordersInfo.AutoSize = true;
-            this.labelBordersInfo.Location = new System.Drawing.Point(337, 56);
+            this.labelBordersInfo.Location = new System.Drawing.Point(6, 19);
             this.labelBordersInfo.Name = "labelBordersInfo";
-            this.labelBordersInfo.Size = new System.Drawing.Size(206, 91);
+            this.labelBordersInfo.Size = new System.Drawing.Size(217, 91);
             this.labelBordersInfo.TabIndex = 4;
-            this.labelBordersInfo.Text = "Import data from your SGB rom file to see\r\nthe available borders.\r\n\r\nBorders can " +
-    "only be saved by directly\r\nmodifying an SGB2 rom file at the moment.\r\n\r\nBorder r" +
-    "esets to default after a soft reset.";
+            this.labelBordersInfo.Text = "Import data from your SGB rom file to see the\r\navailable borders. (optional)\r\n\r\nS" +
+    "uper Game Boy 2 can have any border.\r\n\r\nSGB enhanced games will still show their" +
+    "\r\noriginal special borders.";
             // 
             // buttonBoarderImportFile
             // 
-            this.buttonBoarderImportFile.Location = new System.Drawing.Point(374, 216);
+            this.buttonBoarderImportFile.Location = new System.Drawing.Point(65, 282);
             this.buttonBoarderImportFile.Name = "buttonBoarderImportFile";
-            this.buttonBoarderImportFile.Size = new System.Drawing.Size(120, 23);
+            this.buttonBoarderImportFile.Size = new System.Drawing.Size(160, 23);
             this.buttonBoarderImportFile.TabIndex = 3;
-            this.buttonBoarderImportFile.Text = "Import from .sfc";
+            this.buttonBoarderImportFile.Text = "Import border images from rom";
             this.buttonBoarderImportFile.UseVisualStyleBackColor = true;
-            this.buttonBoarderImportFile.Click += new System.EventHandler(this.buttonImport_Click);
+            this.buttonBoarderImportFile.Click += new System.EventHandler(this.buttonImportImages_Click);
             // 
             // pictureBoxGameinBorder
             // 
-            this.pictureBoxGameinBorder.Location = new System.Drawing.Point(64, 96);
+            this.pictureBoxGameinBorder.Location = new System.Drawing.Point(65, 92);
             this.pictureBoxGameinBorder.Name = "pictureBoxGameinBorder";
             this.pictureBoxGameinBorder.Size = new System.Drawing.Size(160, 144);
             this.pictureBoxGameinBorder.TabIndex = 2;
@@ -2093,19 +2122,19 @@ namespace SGB_Palette_Editor
             "Palm Trees",
             "Stone Mosaic",
             "Gears",
-            "River",
+            "Swamp",
             "Dolphins",
             "Chess Arena",
             "GB (SGB1)",
             "Black (SGB1)",
             "Windows (SGB1)",
             "Cork Board (SGB1)",
-            "Cabin (SGB1)",
-            "Theater (SGB1)",
+            "Log Cabin In The Countryside (SGB1)",
+            "Movie Theater (SGB1)",
             "Cats (SGB1)",
-            "Chess Drawing Board (SGB1)",
+            "Chequered Desk With Pencils (SGB1)",
             "Escher (SGB1)"});
-            this.comboBoxBorder.Location = new System.Drawing.Point(16, 29);
+            this.comboBoxBorder.Location = new System.Drawing.Point(17, 25);
             this.comboBoxBorder.Name = "comboBoxBorder";
             this.comboBoxBorder.Size = new System.Drawing.Size(256, 21);
             this.comboBoxBorder.TabIndex = 0;
@@ -2116,11 +2145,21 @@ namespace SGB_Palette_Editor
             // 
             this.pictureBoxBorder.BackColor = System.Drawing.Color.Black;
             this.pictureBoxBorder.InitialImage = null;
-            this.pictureBoxBorder.Location = new System.Drawing.Point(16, 56);
+            this.pictureBoxBorder.Location = new System.Drawing.Point(17, 52);
             this.pictureBoxBorder.Name = "pictureBoxBorder";
             this.pictureBoxBorder.Size = new System.Drawing.Size(256, 224);
             this.pictureBoxBorder.TabIndex = 1;
             this.pictureBoxBorder.TabStop = false;
+            // 
+            // groupBoxBorderInfo
+            // 
+            this.groupBoxBorderInfo.Controls.Add(this.labelBordersInfo);
+            this.groupBoxBorderInfo.Location = new System.Drawing.Point(291, 25);
+            this.groupBoxBorderInfo.Name = "groupBoxBorderInfo";
+            this.groupBoxBorderInfo.Size = new System.Drawing.Size(229, 121);
+            this.groupBoxBorderInfo.TabIndex = 5;
+            this.groupBoxBorderInfo.TabStop = false;
+            this.groupBoxBorderInfo.Text = "Info";
             // 
             // trackBarRed
             // 
@@ -2233,9 +2272,10 @@ namespace SGB_Palette_Editor
             this.groupBoxPresets.PerformLayout();
             this.tabBorders.ResumeLayout(false);
             this.groupBoxBorder.ResumeLayout(false);
-            this.groupBoxBorder.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).EndInit();
+            this.groupBoxBorderInfo.ResumeLayout(false);
+            this.groupBoxBorderInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
@@ -2275,7 +2315,6 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.ComboBox comboBoxGame;
         private System.Windows.Forms.Label labelClick;
         private System.Windows.Forms.Button buttonStore1;
-        private System.Windows.Forms.ComboBox comboBoxVersion;
         private System.Windows.Forms.Label labelPalette;
         private System.Windows.Forms.Label labelHexcolor;
         private System.Windows.Forms.Label labelSnescolor;
@@ -2431,6 +2470,10 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.ToolStripMenuItem savePatchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label labelBordersInfo;
+        private System.Windows.Forms.ComboBox comboBoxVersion;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem controlTypeAToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBoxBorderInfo;
     }
 }
 
