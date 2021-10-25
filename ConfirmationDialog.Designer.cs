@@ -41,7 +41,7 @@ namespace SGB_Palette_Editor
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(102, 126);
+            this.buttonOK.Location = new System.Drawing.Point(102, 132);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 1;
@@ -52,7 +52,7 @@ namespace SGB_Palette_Editor
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(230, 126);
+            this.buttonCancel.Location = new System.Drawing.Point(230, 132);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
@@ -68,7 +68,7 @@ namespace SGB_Palette_Editor
             "Super Game Boy (Japan, USA) (Rev 1)",
             "Super Game Boy (Japan)",
             "Super Game Boy (Japan, USA) (Beta)"});
-            this.comboBoxVersion.Location = new System.Drawing.Point(97, 68);
+            this.comboBoxVersion.Location = new System.Drawing.Point(97, 60);
             this.comboBoxVersion.Name = "comboBoxVersion";
             this.comboBoxVersion.Size = new System.Drawing.Size(262, 21);
             this.comboBoxVersion.TabIndex = 0;
@@ -80,19 +80,20 @@ namespace SGB_Palette_Editor
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(21, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(342, 26);
+            this.label1.Size = new System.Drawing.Size(342, 78);
             this.label1.TabIndex = 102;
             this.label1.Text = "IPS patches that change the border are not interchangeable between\r\nSGB1 and 2. P" +
-    "lease make sure the selected version matches your rom.\r\n";
+    "lease make sure the selected version matches your rom.\r\n\r\n\r\n\r\nApply to a clean r" +
+    "om file.";
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.comboBoxVersion);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.comboBoxVersion);
             this.groupBox1.Location = new System.Drawing.Point(12, 7);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(380, 113);
+            this.groupBox1.Size = new System.Drawing.Size(380, 118);
             this.groupBox1.TabIndex = 103;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Attention";
@@ -100,7 +101,7 @@ namespace SGB_Palette_Editor
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 71);
+            this.label2.Location = new System.Drawing.Point(21, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 13);
             this.label2.TabIndex = 103;
@@ -112,14 +113,14 @@ namespace SGB_Palette_Editor
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(404, 161);
+            this.ClientSize = new System.Drawing.Size(404, 166);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximumSize = new System.Drawing.Size(420, 200);
-            this.MinimumSize = new System.Drawing.Size(420, 200);
+            this.MaximumSize = new System.Drawing.Size(420, 205);
+            this.MinimumSize = new System.Drawing.Size(420, 205);
             this.Name = "ConfirmationDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

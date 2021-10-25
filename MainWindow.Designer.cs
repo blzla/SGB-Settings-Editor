@@ -100,6 +100,9 @@ namespace SGB_Palette_Editor
             this.groupBoxEditColor = new System.Windows.Forms.GroupBox();
             this.tabControlColorformat = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.trackBarRed = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarBlue = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarGreen = new SGB_Palette_Editor.NoFocusTrackBar();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.labelV = new System.Windows.Forms.Label();
             this.textBoxV = new System.Windows.Forms.TextBox();
@@ -107,6 +110,9 @@ namespace SGB_Palette_Editor
             this.labelH = new System.Windows.Forms.Label();
             this.textBoxS = new System.Windows.Forms.TextBox();
             this.textBoxH = new System.Windows.Forms.TextBox();
+            this.trackBarH = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarS = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarV = new SGB_Palette_Editor.NoFocusTrackBar();
             this.labelSet = new System.Windows.Forms.Label();
             this.buttonColor3 = new System.Windows.Forms.Button();
             this.panelColorbg = new System.Windows.Forms.Panel();
@@ -222,25 +228,25 @@ namespace SGB_Palette_Editor
             this.textBoxPreset72 = new System.Windows.Forms.TextBox();
             this.tabBorders = new System.Windows.Forms.TabPage();
             this.groupBoxBorder = new System.Windows.Forms.GroupBox();
+            this.groupBoxBorderInfo = new System.Windows.Forms.GroupBox();
             this.labelBordersInfo = new System.Windows.Forms.Label();
             this.buttonBoarderImportFile = new System.Windows.Forms.Button();
             this.pictureBoxGameinBorder = new System.Windows.Forms.PictureBox();
             this.comboBoxBorder = new System.Windows.Forms.ComboBox();
             this.pictureBoxBorder = new System.Windows.Forms.PictureBox();
-            this.groupBoxBorderInfo = new System.Windows.Forms.GroupBox();
-            this.trackBarRed = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarBlue = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarGreen = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarH = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarS = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarV = new SGB_Palette_Editor.NoFocusTrackBar();
             this.panelPalettebg.SuspendLayout();
             this.screenshotPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBoxEditColor.SuspendLayout();
             this.tabControlColorformat.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.groupBoxClipboard.SuspendLayout();
             this.groupBoxPalette.SuspendLayout();
@@ -253,15 +259,9 @@ namespace SGB_Palette_Editor
             this.groupBoxPresets.SuspendLayout();
             this.tabBorders.SuspendLayout();
             this.groupBoxBorder.SuspendLayout();
+            this.groupBoxBorderInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).BeginInit();
-            this.groupBoxBorderInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).BeginInit();
             this.SuspendLayout();
             // 
             // panelClipboard1
@@ -826,6 +826,39 @@ namespace SGB_Palette_Editor
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "RGB";
             // 
+            // trackBarRed
+            // 
+            this.trackBarRed.Location = new System.Drawing.Point(46, 22);
+            this.trackBarRed.Maximum = 255;
+            this.trackBarRed.Name = "trackBarRed";
+            this.trackBarRed.Size = new System.Drawing.Size(173, 45);
+            this.trackBarRed.TabIndex = 99;
+            this.trackBarRed.TabStop = false;
+            this.trackBarRed.TickFrequency = 16;
+            this.trackBarRed.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarBlue
+            // 
+            this.trackBarBlue.Location = new System.Drawing.Point(46, 102);
+            this.trackBarBlue.Maximum = 255;
+            this.trackBarBlue.Name = "trackBarBlue";
+            this.trackBarBlue.Size = new System.Drawing.Size(173, 45);
+            this.trackBarBlue.TabIndex = 99;
+            this.trackBarBlue.TabStop = false;
+            this.trackBarBlue.TickFrequency = 16;
+            this.trackBarBlue.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarGreen
+            // 
+            this.trackBarGreen.Location = new System.Drawing.Point(46, 62);
+            this.trackBarGreen.Maximum = 255;
+            this.trackBarGreen.Name = "trackBarGreen";
+            this.trackBarGreen.Size = new System.Drawing.Size(173, 45);
+            this.trackBarGreen.TabIndex = 99;
+            this.trackBarGreen.TabStop = false;
+            this.trackBarGreen.TickFrequency = 16;
+            this.trackBarGreen.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Menu;
@@ -898,6 +931,40 @@ namespace SGB_Palette_Editor
             this.textBoxH.Size = new System.Drawing.Size(34, 20);
             this.textBoxH.TabIndex = 4;
             this.textBoxH.TextChanged += new System.EventHandler(this.textBoxHSV_TextChanged);
+            // 
+            // trackBarH
+            // 
+            this.trackBarH.LargeChange = 10;
+            this.trackBarH.Location = new System.Drawing.Point(67, 22);
+            this.trackBarH.Maximum = 360;
+            this.trackBarH.Name = "trackBarH";
+            this.trackBarH.Size = new System.Drawing.Size(184, 45);
+            this.trackBarH.TabIndex = 99;
+            this.trackBarH.TabStop = false;
+            this.trackBarH.TickFrequency = 20;
+            this.trackBarH.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
+            // trackBarS
+            // 
+            this.trackBarS.Location = new System.Drawing.Point(67, 62);
+            this.trackBarS.Maximum = 100;
+            this.trackBarS.Name = "trackBarS";
+            this.trackBarS.Size = new System.Drawing.Size(184, 45);
+            this.trackBarS.TabIndex = 99;
+            this.trackBarS.TabStop = false;
+            this.trackBarS.TickFrequency = 5;
+            this.trackBarS.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
+            // trackBarV
+            // 
+            this.trackBarV.Location = new System.Drawing.Point(67, 102);
+            this.trackBarV.Maximum = 100;
+            this.trackBarV.Name = "trackBarV";
+            this.trackBarV.Size = new System.Drawing.Size(184, 45);
+            this.trackBarV.TabIndex = 99;
+            this.trackBarV.TabStop = false;
+            this.trackBarV.TickFrequency = 5;
+            this.trackBarV.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
             // 
             // labelSet
             // 
@@ -1176,7 +1243,7 @@ namespace SGB_Palette_Editor
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.importToolStripMenuItem.Text = "Load Data";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.buttonImport_Click);
             this.importToolStripMenuItem.MouseEnter += new System.EventHandler(this.importToolStripMenuItem_MouseEnter);
@@ -1185,7 +1252,7 @@ namespace SGB_Palette_Editor
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.modifyToolStripMenuItem.Text = "Modify Rom File";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.buttonModify_Click);
             this.modifyToolStripMenuItem.MouseEnter += new System.EventHandler(this.modifyToolStripMenuItem_MouseEnter);
@@ -1194,7 +1261,7 @@ namespace SGB_Palette_Editor
             // savePatchToolStripMenuItem
             // 
             this.savePatchToolStripMenuItem.Name = "savePatchToolStripMenuItem";
-            this.savePatchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.savePatchToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.savePatchToolStripMenuItem.Text = "Save IPS Patch";
             this.savePatchToolStripMenuItem.Click += new System.EventHandler(this.buttonIps_Click);
             this.savePatchToolStripMenuItem.MouseEnter += new System.EventHandler(this.savePatchToolStripMenuItem_MouseEnter);
@@ -1203,7 +1270,7 @@ namespace SGB_Palette_Editor
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -2071,10 +2138,20 @@ namespace SGB_Palette_Editor
             this.groupBoxBorder.Controls.Add(this.pictureBoxBorder);
             this.groupBoxBorder.Location = new System.Drawing.Point(11, 4);
             this.groupBoxBorder.Name = "groupBoxBorder";
-            this.groupBoxBorder.Size = new System.Drawing.Size(663, 372);
+            this.groupBoxBorder.Size = new System.Drawing.Size(663, 368);
             this.groupBoxBorder.TabIndex = 2;
             this.groupBoxBorder.TabStop = false;
             this.groupBoxBorder.Text = "Startup Border";
+            // 
+            // groupBoxBorderInfo
+            // 
+            this.groupBoxBorderInfo.Controls.Add(this.labelBordersInfo);
+            this.groupBoxBorderInfo.Location = new System.Drawing.Point(291, 25);
+            this.groupBoxBorderInfo.Name = "groupBoxBorderInfo";
+            this.groupBoxBorderInfo.Size = new System.Drawing.Size(229, 123);
+            this.groupBoxBorderInfo.TabIndex = 5;
+            this.groupBoxBorderInfo.TabStop = false;
+            this.groupBoxBorderInfo.Text = "Info";
             // 
             // labelBordersInfo
             // 
@@ -2151,83 +2228,6 @@ namespace SGB_Palette_Editor
             this.pictureBoxBorder.TabIndex = 1;
             this.pictureBoxBorder.TabStop = false;
             // 
-            // groupBoxBorderInfo
-            // 
-            this.groupBoxBorderInfo.Controls.Add(this.labelBordersInfo);
-            this.groupBoxBorderInfo.Location = new System.Drawing.Point(291, 25);
-            this.groupBoxBorderInfo.Name = "groupBoxBorderInfo";
-            this.groupBoxBorderInfo.Size = new System.Drawing.Size(229, 121);
-            this.groupBoxBorderInfo.TabIndex = 5;
-            this.groupBoxBorderInfo.TabStop = false;
-            this.groupBoxBorderInfo.Text = "Info";
-            // 
-            // trackBarRed
-            // 
-            this.trackBarRed.Location = new System.Drawing.Point(46, 22);
-            this.trackBarRed.Maximum = 255;
-            this.trackBarRed.Name = "trackBarRed";
-            this.trackBarRed.Size = new System.Drawing.Size(173, 45);
-            this.trackBarRed.TabIndex = 99;
-            this.trackBarRed.TabStop = false;
-            this.trackBarRed.TickFrequency = 16;
-            this.trackBarRed.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
-            // trackBarBlue
-            // 
-            this.trackBarBlue.Location = new System.Drawing.Point(46, 102);
-            this.trackBarBlue.Maximum = 255;
-            this.trackBarBlue.Name = "trackBarBlue";
-            this.trackBarBlue.Size = new System.Drawing.Size(173, 45);
-            this.trackBarBlue.TabIndex = 99;
-            this.trackBarBlue.TabStop = false;
-            this.trackBarBlue.TickFrequency = 16;
-            this.trackBarBlue.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
-            // trackBarGreen
-            // 
-            this.trackBarGreen.Location = new System.Drawing.Point(46, 62);
-            this.trackBarGreen.Maximum = 255;
-            this.trackBarGreen.Name = "trackBarGreen";
-            this.trackBarGreen.Size = new System.Drawing.Size(173, 45);
-            this.trackBarGreen.TabIndex = 99;
-            this.trackBarGreen.TabStop = false;
-            this.trackBarGreen.TickFrequency = 16;
-            this.trackBarGreen.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
-            // trackBarH
-            // 
-            this.trackBarH.LargeChange = 10;
-            this.trackBarH.Location = new System.Drawing.Point(67, 22);
-            this.trackBarH.Maximum = 360;
-            this.trackBarH.Name = "trackBarH";
-            this.trackBarH.Size = new System.Drawing.Size(184, 45);
-            this.trackBarH.TabIndex = 99;
-            this.trackBarH.TabStop = false;
-            this.trackBarH.TickFrequency = 20;
-            this.trackBarH.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
-            // 
-            // trackBarS
-            // 
-            this.trackBarS.Location = new System.Drawing.Point(67, 62);
-            this.trackBarS.Maximum = 100;
-            this.trackBarS.Name = "trackBarS";
-            this.trackBarS.Size = new System.Drawing.Size(184, 45);
-            this.trackBarS.TabIndex = 99;
-            this.trackBarS.TabStop = false;
-            this.trackBarS.TickFrequency = 5;
-            this.trackBarS.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
-            // 
-            // trackBarV
-            // 
-            this.trackBarV.Location = new System.Drawing.Point(67, 102);
-            this.trackBarV.Maximum = 100;
-            this.trackBarV.Name = "trackBarV";
-            this.trackBarV.Size = new System.Drawing.Size(184, 45);
-            this.trackBarV.TabIndex = 99;
-            this.trackBarV.TabStop = false;
-            this.trackBarV.TickFrequency = 5;
-            this.trackBarV.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2252,8 +2252,14 @@ namespace SGB_Palette_Editor
             this.tabControlColorformat.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.groupBoxClipboard.ResumeLayout(false);
@@ -2272,16 +2278,10 @@ namespace SGB_Palette_Editor
             this.groupBoxPresets.PerformLayout();
             this.tabBorders.ResumeLayout(false);
             this.groupBoxBorder.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).EndInit();
             this.groupBoxBorderInfo.ResumeLayout(false);
             this.groupBoxBorderInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

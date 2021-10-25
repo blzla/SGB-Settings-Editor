@@ -39,7 +39,7 @@ namespace SGB_Palette_Editor
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(208, 183);
+            this.okButton.Location = new System.Drawing.Point(208, 169);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 24;
@@ -51,7 +51,7 @@ namespace SGB_Palette_Editor
             this.groupBox1.Controls.Add(this.linkLabel);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(464, 163);
+            this.groupBox1.Size = new System.Drawing.Size(464, 146);
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "About";
@@ -59,10 +59,10 @@ namespace SGB_Palette_Editor
             // linkLabel
             // 
             this.linkLabel.AutoSize = true;
-            this.linkLabel.LinkArea = new System.Windows.Forms.LinkArea(308, 44);
-            this.linkLabel.Location = new System.Drawing.Point(6, 16);
+            this.linkLabel.LinkArea = new System.Windows.Forms.LinkArea(283, 44);
+            this.linkLabel.Location = new System.Drawing.Point(6, 19);
             this.linkLabel.Name = "linkLabel";
-            this.linkLabel.Size = new System.Drawing.Size(456, 142);
+            this.linkLabel.Size = new System.Drawing.Size(456, 117);
             this.linkLabel.TabIndex = 26;
             this.linkLabel.TabStop = true;
             this.linkLabel.Text = resources.GetString("linkLabel.Text");
@@ -75,7 +75,7 @@ namespace SGB_Palette_Editor
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(488, 218);
+            this.ClientSize = new System.Drawing.Size(488, 204);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.okButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

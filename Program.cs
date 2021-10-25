@@ -65,7 +65,7 @@ namespace SGB_Palette_Editor
         };
 
         // assembly code to set the button type
-        private static readonly byte[] buttonTypeA = new byte[] { 0xE8, 0x8E, 0x04, 0x0C, 0xCA, 0x9C, 0x4D, 0x0C, 0x9C, 0x4E, 0x0C, 0xEA };
+        private static readonly byte[] buttonTypeA = new byte[] { 0xA9, 0x01, 0x8D, 0x04, 0x0C, 0x9C, 0x4D, 0x0C, 0x9C, 0x4E, 0x0C, 0xEA };
         private static readonly byte[] buttonTypeB = new byte[] { 0x9C, 0x04, 0x0C, 0x9C, 0x4D, 0x0C, 0x9C, 0x4E, 0x0C, 0x9C, 0x2D, 0x0C };
 
         // #####################################################################################
@@ -289,14 +289,9 @@ namespace SGB_Palette_Editor
                         sgb_rev = 0;
 
                     // control type
-                    // stored in 0x50AB if border was changed, otherwise 0x50B1
-                    fs.Seek(0x50AB, SeekOrigin.Begin);
-                    bool buttonTypeA = fs.ReadByte() == 0xE8;
-                    if (!buttonTypeA)
-                    {
-                        fs.Seek(0x05, SeekOrigin.Current);
-                        buttonTypeA = fs.ReadByte() == 0xE8;
-                    }
+                    // the byte at offset 0x50B5 happens to work as an indicator for all versions of the hack
+                    fs.Seek(0x50B5, SeekOrigin.Begin);
+                    bool buttonTypeA = fs.ReadByte() == 0x0C;
 
                     // palettes
                     List<int> colors = new List<int> { };
@@ -382,7 +377,7 @@ namespace SGB_Palette_Editor
             }
         }
 
-        // Load the borders defined in borders from the rom file
+        // Load the borders defined in "borders" from the rom file
         // The rom file FileStream is already opened for read by LoadFromFile()
         private static void loadBorders(FileStream fs, int sgb_rev)
         {
@@ -415,7 +410,7 @@ namespace SGB_Palette_Editor
                     List<byte> tilemap = null;
                     if (border.compressed)
                     {
-                        // We could check the exact amount of data we need to read, but it's faster to always read a save amount of bytes
+                        // We could check the exact amount of data we need to read, but it's faster to always read a safe amount of bytes
                         byte[] data = new byte[0x2000];
                         fs.Seek(border.tilemap, SeekOrigin.Begin);
                         fs.Read(data, 0, 0x1000);
@@ -625,29 +620,29 @@ namespace SGB_Palette_Editor
 
                         fs.Seek(0x03F270, SeekOrigin.Begin);
                         // abort border change if game is SGB enhanced (do all enhanced games have a special border?)
-                        fs.Write(new byte[] { 0xA9, 0x03, 0xED, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00 }, 0, 11); // lda #$03, sbc $064C, bne $f287, jml $00d0bd
+                        fs.Write(new byte[] { 0xA9, 0x03, 0xCD, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00 }, 0, 11); // lda #$03, cmp $064C, bne $f287, jml $00d0bd
                         // enable BG3 for game display
                         fs.Write(new byte[] { 0xA9, 0x16, 0x8D, 0x2C, 0x21 }, 0, 5); // lda #$16, sta $212c
-                        if (sgb_rev == 0)
+                        if (sgb_rev == 0) // 0 = SGB2
                         {
-                            // 7E:07FF 00 = new borders, 01 = old borders
-                            if (sgb_rev == 0 && border > 14)
+                            // 7e07ff 00 = new borders, 01 = old borders
+                            if (border > 14)
                                 fs.Write(new byte[] { 0xA9, 0x01, 0x8D, 0xFF, 0x07 }, 0, 5); // lda #$01; sta $7e07ff
-                            // 7E:03D1 special colors for GB border
-                            if (sgb_rev == 0 && border >= 1 && border <= 6)
+                            // 7e03d1 special colors for GB border
+                            else if (border >= 1 && border <= 6)
                                 fs.Write(new byte[] { 0xA9, BitConverter.GetBytes(border)[0], 0x8D, 0xD1, 0x03 }, 0, 5); // lda #$0x, sta 7e03d1
                         }
                         byte borderByte = 0x01; // GB border #, starts at 1
                         if (border > 6) // 1 to 6 = special color GB, same # as basic border
                             borderByte = BitConverter.GetBytes((border - 6) % 9 + 1)[0];
-                        // set border # to 7E:0C03 and A
-                        fs.Write(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C }, 0, 5); // lda #$0x, sta 7e0c03
-                        // call border change routine, A has to be set to border #
-                        fs.Write(new byte[] { 0x5C, 0x28, 0xDE, 0x00 }, 0, 4); // jml 00de28
-                        if (fs.Position < 0x3F28D) // overwrite potential old patch data with \0
-                            fs.Write(new byte[0x3F28D - (int)fs.Position], 0, 0x3F28D - (int)fs.Position);
+                        // store border # to 7e0c03 and 0 to 7e0341 to disable the sfx
+                        fs.Write(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x9C, 0x41, 0x03 }, 0, 8); // lda #$0x, sta $0c03, stz $0341
+                        // jump into border change routine, after the border and audio selection
+                        fs.Write(new byte[] { 0x5C, 0x30, 0xDE, 0x00 }, 0, 4); // jml 00de28
+                        if (fs.Position < 0x3F290) // overwrite potential old patch data with \0
+                            fs.Write(new byte[0x3F290 - (int)fs.Position], 0, 0x3F290 - (int)fs.Position);
 
-                        // keep BG1 (bottom menu) disabled during border transition (lda #$16, sta $212c), since it's garbled. it gets fixed once the transition is complete
+                        // keep BG1 (bottom menu) disabled during border transition (lda #$16, sta $212c)
                         fs.Seek(sgb_rev == 0 ? 0x441F8 : 0x4E79, SeekOrigin.Begin);
                         fs.WriteByte(0x16);
                     }
@@ -656,7 +651,7 @@ namespace SGB_Palette_Editor
                         fs.Seek(0x50AB, SeekOrigin.Begin);
                         fs.Write(new byte[] { 0xAD, 0x0D, 0x0F, 0xF0, 0x01, 0x60 }, 0, 6);
                         fs.Seek(0x03F270, SeekOrigin.Begin);
-                        byte[] zero = new byte[0x3F28d - (int)fs.Position];
+                        byte[] zero = new byte[0x3F290 - (int)fs.Position];
                         fs.Write(zero, 0, zero.Length);
                         fs.Seek(sgb_rev == 0 ? 0x441F8 : 0x4E79, SeekOrigin.Begin);
                         fs.WriteByte(0x17);
@@ -748,7 +743,7 @@ namespace SGB_Palette_Editor
                         checksum += b;
 
 
-                    borderPart2.AddRange(new byte[] { 0x03, 0xF2, 0x70, 0x00, 0x18, 0xA9, 0x03, 0xED, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00, 0xA9, 0x16, 0x8D, 0x2C, 0x21 });
+                    borderPart2.AddRange(new byte[] { 0x03, 0xF2, 0x70, 0x00, 0x1B, 0xA9, 0x03, 0xED, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00, 0xA9, 0x16, 0x8D, 0x2C, 0x21 });
                     if (sgb_rev == 0)
                     {
                         borderPart2[4] = 0x1D;
@@ -760,7 +755,7 @@ namespace SGB_Palette_Editor
                     byte borderByte = 0x01;
                     if (border > 6)
                         borderByte = BitConverter.GetBytes((border - 6) % 9 + 1)[0];
-                    borderPart2.AddRange(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x5C, 0x28, 0xDE });
+                    borderPart2.AddRange(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x9C, 0x41, 0x03, 0x5C, 0x30, 0xDE });
 
                     foreach (byte b in borderPart2.Skip(5))
                         checksum += b;
