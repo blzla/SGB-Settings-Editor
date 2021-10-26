@@ -21,13 +21,9 @@ namespace SGB_Palette_Editor
             Color.White, Color.LightGray, Color.DarkGray, Color.Black
         };
 
-        private static Color[] defaultPalette = new Color[] {
-            Color.FromArgb(255, 255, 255), Color.FromArgb(173, 173, 173), Color.FromArgb(82, 82, 82), Color.FromArgb(0, 0, 0)
-        };
-
-        private List<(Bitmap image, Color[] colors)> screenshots = new List<(Bitmap, Color[])> 
+        private List<(Bitmap image, Color[] colors)> screenshots = new List<(Bitmap, Color[])>
         {
-            ( Properties.Resources.Tetris, defaultPalette),
+            /*( Properties.Resources.Tetris, defaultPalette),
             ( Properties.Resources.Mario, defaultPalette),
             ( Properties.Resources.MysticQuest, defaultPalette),
             ( Properties.Resources.MetroidII, defaultPalette),
@@ -35,8 +31,15 @@ namespace SGB_Palette_Editor
             ( Properties.Resources.Mario2, defaultPalette),
             ( Properties.Resources.TripWorld, defaultPalette),
             ( Properties.Resources.Zelda, defaultPalette),
-            ( Properties.Resources.WarioLand, defaultPalette)
+            ( Properties.Resources.WarioLand, defaultPalette)*/
         };
+
+        private (Bitmap image, Color[] colors) fallbackScreenshot = (
+            Properties.Resources.fallback,
+            new Color[] { Color.FromArgb(245, 245, 245), Color.FromArgb(172, 171, 177), Color.FromArgb(82, 83, 98), Color.FromArgb(12, 12, 12) }
+        );
+
+        static protected internal int sgb_rev = 0;
 
         private DateTime timer = new DateTime();
 
@@ -50,6 +53,7 @@ namespace SGB_Palette_Editor
             getPalette(0);
             setColorinputs(ActivePalette[0]);
             loadScreenshots();
+            refreshPresetData();
         }
 
         // #####################################################################################
@@ -76,6 +80,7 @@ namespace SGB_Palette_Editor
                 {
                     rgb_input = rgb_input.Substring(0, 6);
                     textboxRGB.Text = rgb_input;
+                    textboxRGB.Select(6, 0);
                 }
                 int rgb24 = Int32.Parse(rgb_input, System.Globalization.NumberStyles.HexNumber);
                 int r = (rgb24 >> 16) % 256;
@@ -105,7 +110,8 @@ namespace SGB_Palette_Editor
                 if (bgr15 > 0x7FFF)
                 {
                     bgr15 = 0x7FFF;
-                    if (textboxBGR15.Text.Length == 4) {
+                    if (textboxBGR15.Text.Length == 4)
+                    {
                         textboxBGR15.Text = "7FFF";
                     }
                 }
@@ -273,12 +279,12 @@ namespace SGB_Palette_Editor
         private void getPalette(int i)
         {
             (int r, int g, int b)[] palette = Program.GetPaletteRGB(i);
-            for (int j=0; j<4; j++)
+            for (int j = 0; j < 4; j++)
             {
                 ActivePalette[j] = Color.FromArgb(palette[j].r, palette[j].g, palette[j].b);
                 panelPalettebg.Controls[j].BackColor = ActivePalette[j];
             }
-            
+
             pictureBox.Refresh();
             buttonResetPalette.Enabled = false;
         }
@@ -294,8 +300,7 @@ namespace SGB_Palette_Editor
                     palette[j] = (ActivePalette[j].R, ActivePalette[j].G, ActivePalette[j].B);
                 }
                 Program.SetPaletteRGB(i, palette);
-                toolStripStatusLabel.Text = "Saved changes to palette " + comboBoxPaletteslot.Items[activePaletteSlot];
-                resetStatusText(5000);
+                displayStatusText("Saved changes to palette " + comboBoxPaletteslot.Items[activePaletteSlot], 5000);
                 buttonResetPalette.Enabled = false;
                 return true;
             }
@@ -349,8 +354,7 @@ namespace SGB_Palette_Editor
         {
             string newMode = groupBoxClipboard.Text == "Clipboard: Load" ? "Store" : "Load";
             groupBoxClipboard.Text = "Clipboard: " + newMode;
-            toolStripStatusLabel.Text = "Clipboard switched to " + newMode + " mode.";
-            resetStatusText(4200);
+            displayStatusText("Clipboard switched to " + newMode + " mode.", 4200);
         }
 
         // Load 4 colors from clipboard to active palette
@@ -382,40 +386,47 @@ namespace SGB_Palette_Editor
         // Game selection changed
         private void comboBoxGame_SelectedValueChanged(object sender, EventArgs e)
         { // switch screenshot
-            pictureBox.Image = screenshots[comboBoxGame.SelectedIndex].image;
-            //pictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         // Replace colors with currently active palette while drawing the screenshot
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
             if (comboBoxGame.SelectedIndex < 0)
-                return;
-
+                comboBoxGame.SelectedIndex = 0;
             Graphics g = e.Graphics;
             Bitmap image = screenshots[comboBoxGame.SelectedIndex].image;
 
             Color[] colors = screenshots[comboBoxGame.SelectedIndex].colors;
             ColorMap[] colorMap = new ColorMap[] {
-                    new ColorMap {
-                        OldColor = colors[0],
-                        NewColor = ActivePalette[0]
-                    }, new ColorMap {
-                        OldColor = colors[1],
-                        NewColor = ActivePalette[1]
-                    }, new ColorMap {
-                        OldColor = colors[2],
-                        NewColor = ActivePalette[2]
-                    }, new ColorMap {
-                        OldColor = colors[3],
-                        NewColor = ActivePalette[3]
-                    }
-                };
+                new ColorMap {
+                    OldColor = colors[0],
+                    NewColor = ActivePalette[0]
+                }, new ColorMap {
+                    OldColor = colors[1],
+                    NewColor = ActivePalette[1]
+                }, new ColorMap {
+                    OldColor = colors[2],
+                    NewColor = ActivePalette[2]
+                }, new ColorMap {
+                    OldColor = colors[3],
+                    NewColor = ActivePalette[3]
+                }
+            };
             ImageAttributes attr = new ImageAttributes();
             attr.SetRemapTable(colorMap);
             Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
             g.DrawImage(image, rect, 0, 0, rect.Width, rect.Height, GraphicsUnit.Pixel, attr);
-            
+
+        }
+
+        // Easter egg
+        private void pictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (comboBoxGame.SelectedIndex < 0)
+                comboBoxGame.SelectedIndex = 0;
+            screenshots[comboBoxGame.SelectedIndex] = fallbackScreenshot;
+            pictureBox.Refresh();
         }
 
         // #####################################################################################
@@ -432,7 +443,7 @@ namespace SGB_Palette_Editor
 
             try
             {
-                DirectoryInfo screenshotFolder = new DirectoryInfo("screenshots/");
+                DirectoryInfo screenshotFolder = new DirectoryInfo("gb_screenshots/");
                 string[] filetypes = new[] { "*.png", "*.bmp" };
                 List<FileInfo> files = filetypes.SelectMany(screenshotFolder.EnumerateFiles).Take(32).OrderBy(o => o.Name).ToList();
 
@@ -448,6 +459,8 @@ namespace SGB_Palette_Editor
                                 Color[] screenshotColors = getBitmapColors(screenshot).OrderByDescending(c => c.GetBrightness()).ToArray();
                                 screenshots.Add((screenshot, screenshotColors));
                                 comboBoxGame.Items.Add(file.Name.Substring(0, file.Name.Length - 4));
+                                if (file.Name == "Tetris.png")
+                                    comboBoxGame.SelectedIndex = comboBoxGame.Items.Count - 1;
                             }
                         }
                         catch { }
@@ -458,18 +471,21 @@ namespace SGB_Palette_Editor
             {
                 try
                 {
-                    System.IO.Directory.CreateDirectory("screenshots");
-                    System.IO.File.WriteAllText("screenshots/add_screenshots_here.txt", "Add your own screenshots here!\r\n\r\nFormat: 160 x 144 pixels png or bmp\r\n");
+                    System.IO.Directory.CreateDirectory("gb_screenshots");
+                    System.IO.File.WriteAllText("gb_screenshots/add_screenshots_here.txt", "Add your own screenshots here!\r\n\r\nFormat: 160 x 144 pixels png or bmp\r\n");
                 }
                 catch { }
             }
 
-            /*if (screenshots.Count == 0)
+            if (screenshots.Count == 0)
             {
-                comboBoxGame.Items.Add("None found");
-                screenshots.Add((Properties.Resources.blank, new Color[] { Color.White, Color.FromArgb(182, 182, 182), Color.FromArgb(91, 91, 91), Color.Black }));
-            }*/
-            //comboBoxGame.SelectedIndex = 0;
+                comboBoxGame.Items.Add("No screenshots found");
+                screenshots.Add(fallbackScreenshot);
+            }
+
+            if (comboBoxGame.SelectedIndex < 0)
+                comboBoxGame.SelectedIndex = 0;
+
             pictureBox.Refresh();
         }
 
@@ -500,14 +516,27 @@ namespace SGB_Palette_Editor
         // #####################################################################################
         // Import / Export section
 
+        // Store SGB version in variable so it's accessible in the dialog
+        private void comboBoxVersion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sgb_rev = comboBoxVersion.SelectedIndex;
+        }
+
+        // Sync controls check box with menu 
+        private void checkBoxControls_CheckedChanged(object sender, EventArgs e)
+        {
+            controlTypeAToolStripMenuItem.Checked = checkBoxControls.Checked;
+        }
+
         // Import data from SGB rom file
         private void buttonImport_Click(object sender, EventArgs e)
-            {
+        {
             openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\"";
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                (bool success, bool buttonTypeA, string text) = Program.LoadfromFile(openFileDialog.FileName);
+                UseWaitCursor = true;
+                (bool success, bool buttonTypeA, int border, string text) = Program.LoadDatafromFile(openFileDialog.FileName);
                 if (success)
                 {
                     for (int i = 0; i < Program.sgbRevisions.Length; i++)
@@ -519,14 +548,55 @@ namespace SGB_Palette_Editor
                         }
                     }
                     getPalette(activePaletteSlot);
+                    displayStatusText("Successfully loaded data from file.");
                     checkBoxControls.Checked = buttonTypeA;
-                    toolStripStatusLabel.Text = "Successfully loaded palettes from file.";
+                    refreshPresetData();
+                    refreshBorderCombobox();
+                    if (border < comboBoxBorder.Items.Count)
+                    {
+                        comboBoxBorder.SelectedIndex = border;
+                    }
+                    else
+                    {
+                        displayStatusText("Error loading border.");
+                        comboBoxBorder.SelectedIndex = 0;
+                    }
                 }
                 else
                 {
-                    toolStripStatusLabel.Text = "Error loading palettes from file: " + text;
+                    displayStatusText("Error loading data from file: " + text);
                 }
-                resetStatusText();
+                UseWaitCursor = false;
+            }
+        }
+
+        // Import border images from SGB rom file without changing any settings
+        private void buttonImportImages_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\"";
+            openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                UseWaitCursor = true;
+#if DEBUG
+                var stopwatch = new System.Diagnostics.Stopwatch();
+                stopwatch.Start();
+#endif
+                bool success = Program.loadImagesfromFile(openFileDialog.FileName);
+#if DEBUG
+                stopwatch.Stop();
+                Console.WriteLine($"Loading data took {stopwatch.ElapsedMilliseconds}ms.");
+#endif
+                if (success)
+                {
+                    refreshBorderCombobox();
+                    displayStatusText("Successfully loaded border images.");
+                }
+                else
+                {
+                    displayStatusText("Error loading border images.");
+                }
+                UseWaitCursor = false;
             }
         }
 
@@ -534,9 +604,19 @@ namespace SGB_Palette_Editor
         private void buttonIps_Click(object sender, EventArgs e)
         {
             setPalette(activePaletteSlot); // make sure current palette is saved
-            bool success = Program.SaveIPS(comboBoxVersion.SelectedIndex, checkBoxControls.Checked);
-            toolStripStatusLabel.Text = success ? "Saved patch as \"" + comboBoxVersion.Text + " (Custom Palette).ips\"." : "Could not save ips file.";
-            resetStatusText();
+            ConfirmationDialog dialog = new ConfirmationDialog();
+            if (comboBoxBorder.SelectedIndex > 0)
+            {
+                dialog.ShowDialog();
+                comboBoxVersion.SelectedIndex = sgb_rev;
+            }
+            if (dialog.DialogResult != DialogResult.Cancel)
+            {
+                (bool success, string message) = Program.SaveIPS(comboBoxVersion.SelectedIndex, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
+                displayStatusText(success ? "Saved patch as \"" + message + "\"." : message);
+            }
+            else
+                displayStatusText("Action cancelled, patch was not saved.");
         }
 
         // Modify SGB rom file with palette and control mode
@@ -544,10 +624,11 @@ namespace SGB_Palette_Editor
         {
             setPalette(activePaletteSlot); // make sure current palette is saved
             openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\" - FILE WILL BE MODIFIED";
+            openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                (bool success, string text) = Program.SavetoFile(openFileDialog.FileName, checkBoxControls.Checked);
+                (bool success, string text) = Program.SavetoFile(openFileDialog.FileName, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
                 if (success)
                 {
                     toolStripStatusLabel.Text = "Successfully saved changes to file. " + text;
@@ -562,7 +643,84 @@ namespace SGB_Palette_Editor
         }
 
         // #####################################################################################
+        // Menu strip
+
+        private void importToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Import palettes, game presets, button config and border data from an SGB rom file.", 60000);
+        }
+
+        private void modifyToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Modify SGB rom file with your custom palettes, game presets, button config and border selection.", 60000);
+        }
+
+        private void savePatchToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Generate an ips patch and share it!", 60000);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void presetsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedIndex = 1;
+            paletteEditorToolStripMenuItem.Checked = false;
+            startupBorderToolStripMenuItem.Checked = false;
+        }
+
+        private void paletteEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedIndex = 0;
+            presetsToolStripMenuItem.Checked = false;
+            startupBorderToolStripMenuItem.Checked = false;
+        }
+
+        private void startupBorderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //refreshBorderCombobox();
+            pictureBoxGameinBorder.Image = pictureBox.Image;
+            tabControlMain.SelectedIndex = 2;
+            paletteEditorToolStripMenuItem.Checked = false;
+            presetsToolStripMenuItem.Checked = false;
+        }
+        private void controlTypeAToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxControls.Checked = controlTypeAToolStripMenuItem.Checked;
+        }
+
+        private void controlTypeAToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Change default controls to Type A.", 60000);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutBox().ShowDialog();
+        }
+
+        private void toolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            hideStatusText();
+        }
+
+        // #####################################################################################
         // Status bar
+
+        private void displayStatusText(string msg, int duration = 6000)
+        {
+            toolStripStatusLabel.Text = msg;
+            resetStatusText(duration);
+        }
+
+        private void hideStatusText()
+        {
+            toolStripStatusLabel.Text = "";
+            timer = DateTime.Now;
+        }
 
         // Reset status bar text without blocking the UI
         internal async Task resetStatusText(int delay = 6000)
@@ -572,6 +730,169 @@ namespace SGB_Palette_Editor
             if (DateTime.Now > timer)
                 toolStripStatusLabel.Text = "";
             toolStripStatusLabel.ForeColor = Color.Black;
+        }
+
+        // #####################################################################################
+        // Game presets
+
+        // Write game presets to the text boxes
+        private void refreshPresetData()
+        {
+            for (int i = 0; i < Program.gamePresets.Count; i++)
+            {
+                groupBoxPresets.Controls[2 * i + 1].Text = (Program.gamePresets[i].n - 1) / 8 + 1 + "-" + (char)('A' + ((Program.gamePresets[i].n - 1) % 8));
+                groupBoxPresets.Controls[2 * i].Text = Program.gamePresets[i].game;
+            };
+            for (int i = Program.gamePresets.Count; i < 36; i++)
+            {
+                groupBoxPresets.Controls[2 * i + 1].Text = "";
+                groupBoxPresets.Controls[2 * i].Text = "";
+            }
+        }
+
+        // Handle changes to the titles
+        private void textBoxTitle_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int i = groupBoxPresets.Controls.IndexOfKey(((TextBox)sender).Name);
+                int presetslot = i / 2;
+
+                if (((TextBox)sender).Text == "")
+                    groupBoxPresets.Controls[i + 1].Text = "";
+                else if (groupBoxPresets.Controls[i + 1].Text == "")
+                    groupBoxPresets.Controls[i + 1].Text = "1-A";
+
+                if (!((TextBox)sender).Focused)
+                    return;
+
+                if (presetslot > Program.gamePresets.Count())
+                {
+                    if (((TextBox)sender).Text != "")
+                    {
+                        TextBox nextPresetTextbox = (TextBox)groupBoxPresets.Controls[2 * Program.gamePresets.Count()];
+                        nextPresetTextbox.Focus();
+                        nextPresetTextbox.Text = ((TextBox)sender).Text;
+                        nextPresetTextbox.Select(nextPresetTextbox.Text.Length, 0);
+                        ((TextBox)sender).Text = "";
+                    }
+                    return;
+                }
+
+                if (((TextBox)sender).Text == "")
+                {
+                    Program.RemoveGamePreset(presetslot);
+                    groupBoxPresets.Controls[2 * Program.gamePresets.Count()].Text = "";
+                    refreshPresetData();
+                }
+                else
+                {
+                    if (presetslot < Program.gamePresets.Count())
+                        Program.SetGamePreset((groupBoxPresets.Controls[i].Text, Program.ConvertSlottoNumber(groupBoxPresets.Controls[i + 1].Text)), presetslot);
+                    else
+                        Program.SetGamePreset((groupBoxPresets.Controls[i].Text, Program.ConvertSlottoNumber(groupBoxPresets.Controls[i + 1].Text)));
+                }
+            }
+            catch { }
+        }
+
+        // Save preset slot
+        private void textBoxPreset_TextChanged(object sender, EventArgs e)
+        {
+            TextBox slotBox = (TextBox)sender;
+            if (((TextBox)sender).Focused && slotBox.Text.Length == 3)
+            {
+                int i = groupBoxPresets.Controls.IndexOfKey((slotBox).Name);
+                int presetslot = (i - 1) / 2;
+                slotBox.Text = slotBox.Text.ToUpper();
+                int convertedNumber = Program.ConvertSlottoNumber(slotBox.Text);
+                if (convertedNumber < 1)
+                    convertedNumber = 1;
+                else if (convertedNumber > 32)
+                    convertedNumber = 32;
+                slotBox.Text = (convertedNumber - 1) / 8 + 1 + "-" + (char)('A' + ((convertedNumber - 1) % 8));
+                slotBox.Select(3, 0);
+                if (presetslot < Program.gamePresets.Count()) // ignore if there's no game title
+                    Program.gamePresets[presetslot] = (groupBoxPresets.Controls[i - 1].Text, convertedNumber);
+            }
+        }
+
+        // Reset preset slot text box on focus leave
+        private void textBoxPreset_Leave(object sender, EventArgs e)
+        {
+            TextBox slotBox = (TextBox)sender;
+            int i = groupBoxPresets.Controls.IndexOfKey((slotBox).Name);
+            int presetslot = (i - 1) / 2;
+            if (presetslot < Program.gamePresets.Count() && groupBoxPresets.Controls[i - 1].Text != "")
+                slotBox.Text = (Program.gamePresets[presetslot].n - 1) / 8 + 1 + "-" + (char)('A' + ((Program.gamePresets[presetslot].n - 1) % 8));
+            else
+                slotBox.Text = "";
+        }
+
+        // Read game title from internal header in .gb or .gbc rom file
+        private void buttonReadGB_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Title = "Select Game Boy file";
+            openFileDialog.Filter = "Game Boy ROM files|*.gb; *.gbc|All files|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                (bool success, string gbTitle) = Program.ReadGBName(openFileDialog.FileName);
+                if (!success)
+                {
+                    displayStatusText("Unsupported game: " + gbTitle);
+                }
+                else
+                {
+                    for (int i = 0; i < 32; i++)
+                    {
+                        if (groupBoxPresets.Controls[2 * i].Text == gbTitle)
+                        {
+                            displayStatusText("Game already in list.");
+                            return;
+                        }
+                        if (groupBoxPresets.Controls[2 * i].Text == "")
+                        {
+                            groupBoxPresets.Controls[2 * i].Text = gbTitle;
+                            groupBoxPresets.Controls[2 * i + 1].Text = "1-A";
+                            Program.SetGamePreset((gbTitle, 1));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // #####################################################################################
+        // Borders
+
+        // Update combo box if loadedBorders changed
+        private void refreshBorderCombobox()
+        {
+            string[] borderNames = Program.loadedBorders.Select(b => b.name).ToArray();
+            int selectedBorderIndex = Program.loadedBorders.FindIndex(b => b.name == (string)comboBoxBorder.SelectedItem);
+            if (Program.loadedBorders.Count > 0)
+            {
+                if (!Enumerable.SequenceEqual(comboBoxBorder.Items.OfType<string>(), borderNames))
+                {
+                    comboBoxBorder.Items.Clear();
+                    comboBoxBorder.Items.AddRange(borderNames);
+                }
+                comboBoxBorder.SelectedIndex = selectedBorderIndex < 0 ? 0 : selectedBorderIndex;
+                drawBorder();
+            }
+        }
+
+        // Display selected border
+        private void comboBoxBorder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            drawBorder();
+        }
+
+        private void drawBorder()
+        {
+            //pictureBoxBorder.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("sgb_borders"+(((ComboBox)sender).SelectedIndex + 1));
+            if (Program.loadedBorders.Count > comboBoxBorder.SelectedIndex && Program.loadedBorders[comboBoxBorder.SelectedIndex].image != null)
+                pictureBoxBorder.Image = Program.loadedBorders[comboBoxBorder.SelectedIndex].image;
         }
     }
 }
