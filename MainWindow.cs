@@ -792,31 +792,37 @@ namespace SGB_Palette_Editor
             catch { }
         }
 
-        // Save the selected palette after leaving the text box
-        private void textBoxPreset_Leave(object sender, EventArgs e)
+        // Save preset slot
+        private void textBoxPreset_TextChanged(object sender, EventArgs e)
         {
             TextBox slotBox = (TextBox)sender;
-            if (slotBox.Text != "")
+            if (((TextBox)sender).Focused && slotBox.Text.Length == 3)
             {
                 int i = groupBoxPresets.Controls.IndexOfKey((slotBox).Name);
                 int presetslot = (i - 1) / 2;
-                if (groupBoxPresets.Controls[i - 1].Text == "")
-                {
-                    slotBox.Text = "";
-                }
-                else
-                {
-                    slotBox.Text = slotBox.Text.ToUpper();
-                    int convertedNumber = Program.ConvertSlottoNumber(slotBox.Text);
-                    if (convertedNumber == -1)
-                    {
-                        convertedNumber = 1;
-                        slotBox.Text = "1-A";
-                    }
-                    if (presetslot < Program.gamePresets.Count()) // ignore if there's no game title
-                        Program.gamePresets[presetslot] = (groupBoxPresets.Controls[i - 1].Text, convertedNumber);
-                }
+                slotBox.Text = slotBox.Text.ToUpper();
+                int convertedNumber = Program.ConvertSlottoNumber(slotBox.Text);
+                if (convertedNumber < 1)
+                    convertedNumber = 1;
+                else if (convertedNumber > 32)
+                    convertedNumber = 32;
+                slotBox.Text = (convertedNumber - 1) / 8 + 1 + "-" + (char)('A' + ((convertedNumber - 1) % 8));
+                slotBox.Select(3, 0);
+                if (presetslot < Program.gamePresets.Count()) // ignore if there's no game title
+                    Program.gamePresets[presetslot] = (groupBoxPresets.Controls[i - 1].Text, convertedNumber);
             }
+        }
+
+        // Reset preset slot text box on focus leave
+        private void textBoxPreset_Leave(object sender, EventArgs e)
+        {
+            TextBox slotBox = (TextBox)sender;
+            int i = groupBoxPresets.Controls.IndexOfKey((slotBox).Name);
+            int presetslot = (i - 1) / 2;
+            if (presetslot < Program.gamePresets.Count() && groupBoxPresets.Controls[i - 1].Text != "")
+                slotBox.Text = (Program.gamePresets[presetslot].n - 1) / 8 + 1 + "-" + (char)('A' + ((Program.gamePresets[presetslot].n - 1) % 8));
+            else
+                slotBox.Text = "";
         }
 
         // Read game title from internal header in .gb or .gbc rom file
@@ -844,7 +850,7 @@ namespace SGB_Palette_Editor
                         {
                             groupBoxPresets.Controls[2 * i].Text = gbTitle;
                             groupBoxPresets.Controls[2 * i + 1].Text = "1-A";
-                            Program.SetGamePreset((gbTitle, 2));
+                            Program.SetGamePreset((gbTitle, 1));
                             break;
                         }
                     }

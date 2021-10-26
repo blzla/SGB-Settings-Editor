@@ -100,9 +100,6 @@ namespace SGB_Palette_Editor
             this.groupBoxEditColor = new System.Windows.Forms.GroupBox();
             this.tabControlColorformat = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.trackBarRed = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarBlue = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarGreen = new SGB_Palette_Editor.NoFocusTrackBar();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.labelV = new System.Windows.Forms.Label();
             this.textBoxV = new System.Windows.Forms.TextBox();
@@ -110,9 +107,6 @@ namespace SGB_Palette_Editor
             this.labelH = new System.Windows.Forms.Label();
             this.textBoxS = new System.Windows.Forms.TextBox();
             this.textBoxH = new System.Windows.Forms.TextBox();
-            this.trackBarH = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarS = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarV = new SGB_Palette_Editor.NoFocusTrackBar();
             this.labelSet = new System.Windows.Forms.Label();
             this.buttonColor3 = new System.Windows.Forms.Button();
             this.panelColorbg = new System.Windows.Forms.Panel();
@@ -234,19 +228,19 @@ namespace SGB_Palette_Editor
             this.pictureBoxGameinBorder = new System.Windows.Forms.PictureBox();
             this.comboBoxBorder = new System.Windows.Forms.ComboBox();
             this.pictureBoxBorder = new System.Windows.Forms.PictureBox();
+            this.trackBarRed = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarBlue = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarGreen = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarH = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarS = new SGB_Palette_Editor.NoFocusTrackBar();
+            this.trackBarV = new SGB_Palette_Editor.NoFocusTrackBar();
             this.panelPalettebg.SuspendLayout();
             this.screenshotPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBoxEditColor.SuspendLayout();
             this.tabControlColorformat.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.groupBoxClipboard.SuspendLayout();
             this.groupBoxPalette.SuspendLayout();
@@ -262,6 +256,12 @@ namespace SGB_Palette_Editor
             this.groupBoxBorderInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).BeginInit();
             this.SuspendLayout();
             // 
             // panelClipboard1
@@ -826,39 +826,6 @@ namespace SGB_Palette_Editor
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "RGB";
             // 
-            // trackBarRed
-            // 
-            this.trackBarRed.Location = new System.Drawing.Point(46, 22);
-            this.trackBarRed.Maximum = 255;
-            this.trackBarRed.Name = "trackBarRed";
-            this.trackBarRed.Size = new System.Drawing.Size(173, 45);
-            this.trackBarRed.TabIndex = 99;
-            this.trackBarRed.TabStop = false;
-            this.trackBarRed.TickFrequency = 16;
-            this.trackBarRed.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
-            // trackBarBlue
-            // 
-            this.trackBarBlue.Location = new System.Drawing.Point(46, 102);
-            this.trackBarBlue.Maximum = 255;
-            this.trackBarBlue.Name = "trackBarBlue";
-            this.trackBarBlue.Size = new System.Drawing.Size(173, 45);
-            this.trackBarBlue.TabIndex = 99;
-            this.trackBarBlue.TabStop = false;
-            this.trackBarBlue.TickFrequency = 16;
-            this.trackBarBlue.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
-            // trackBarGreen
-            // 
-            this.trackBarGreen.Location = new System.Drawing.Point(46, 62);
-            this.trackBarGreen.Maximum = 255;
-            this.trackBarGreen.Name = "trackBarGreen";
-            this.trackBarGreen.Size = new System.Drawing.Size(173, 45);
-            this.trackBarGreen.TabIndex = 99;
-            this.trackBarGreen.TabStop = false;
-            this.trackBarGreen.TickFrequency = 16;
-            this.trackBarGreen.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Menu;
@@ -931,40 +898,6 @@ namespace SGB_Palette_Editor
             this.textBoxH.Size = new System.Drawing.Size(34, 20);
             this.textBoxH.TabIndex = 4;
             this.textBoxH.TextChanged += new System.EventHandler(this.textBoxHSV_TextChanged);
-            // 
-            // trackBarH
-            // 
-            this.trackBarH.LargeChange = 10;
-            this.trackBarH.Location = new System.Drawing.Point(67, 22);
-            this.trackBarH.Maximum = 360;
-            this.trackBarH.Name = "trackBarH";
-            this.trackBarH.Size = new System.Drawing.Size(184, 45);
-            this.trackBarH.TabIndex = 99;
-            this.trackBarH.TabStop = false;
-            this.trackBarH.TickFrequency = 20;
-            this.trackBarH.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
-            // 
-            // trackBarS
-            // 
-            this.trackBarS.Location = new System.Drawing.Point(67, 62);
-            this.trackBarS.Maximum = 100;
-            this.trackBarS.Name = "trackBarS";
-            this.trackBarS.Size = new System.Drawing.Size(184, 45);
-            this.trackBarS.TabIndex = 99;
-            this.trackBarS.TabStop = false;
-            this.trackBarS.TickFrequency = 5;
-            this.trackBarS.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
-            // 
-            // trackBarV
-            // 
-            this.trackBarV.Location = new System.Drawing.Point(67, 102);
-            this.trackBarV.Maximum = 100;
-            this.trackBarV.Name = "trackBarV";
-            this.trackBarV.Size = new System.Drawing.Size(184, 45);
-            this.trackBarV.TabIndex = 99;
-            this.trackBarV.TabStop = false;
-            this.trackBarV.TickFrequency = 5;
-            this.trackBarV.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
             // 
             // labelSet
             // 
@@ -1486,6 +1419,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset2.Name = "textBoxPreset2";
             this.textBoxPreset2.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset2.TabIndex = 4;
+            this.textBoxPreset2.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset2.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset3
@@ -1504,6 +1438,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset4.Name = "textBoxPreset4";
             this.textBoxPreset4.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset4.TabIndex = 7;
+            this.textBoxPreset4.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset4.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset5
@@ -1522,6 +1457,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset6.Name = "textBoxPreset6";
             this.textBoxPreset6.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset6.TabIndex = 10;
+            this.textBoxPreset6.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset6.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset7
@@ -1540,6 +1476,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset8.Name = "textBoxPreset8";
             this.textBoxPreset8.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset8.TabIndex = 13;
+            this.textBoxPreset8.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset8.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset9
@@ -1558,6 +1495,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset10.Name = "textBoxPreset10";
             this.textBoxPreset10.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset10.TabIndex = 16;
+            this.textBoxPreset10.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset10.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset11
@@ -1576,6 +1514,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset12.Name = "textBoxPreset12";
             this.textBoxPreset12.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset12.TabIndex = 19;
+            this.textBoxPreset12.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset12.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset13
@@ -1594,6 +1533,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset14.Name = "textBoxPreset14";
             this.textBoxPreset14.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset14.TabIndex = 22;
+            this.textBoxPreset14.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset14.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset15
@@ -1612,6 +1552,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset16.Name = "textBoxPreset16";
             this.textBoxPreset16.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset16.TabIndex = 25;
+            this.textBoxPreset16.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset16.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset17
@@ -1630,6 +1571,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset18.Name = "textBoxPreset18";
             this.textBoxPreset18.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset18.TabIndex = 28;
+            this.textBoxPreset18.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset18.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset19
@@ -1648,6 +1590,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset20.Name = "textBoxPreset20";
             this.textBoxPreset20.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset20.TabIndex = 31;
+            this.textBoxPreset20.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset20.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset21
@@ -1666,6 +1609,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset22.Name = "textBoxPreset22";
             this.textBoxPreset22.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset22.TabIndex = 34;
+            this.textBoxPreset22.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset22.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset23
@@ -1684,6 +1628,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset24.Name = "textBoxPreset24";
             this.textBoxPreset24.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset24.TabIndex = 37;
+            this.textBoxPreset24.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset24.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset25
@@ -1702,6 +1647,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset26.Name = "textBoxPreset26";
             this.textBoxPreset26.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset26.TabIndex = 40;
+            this.textBoxPreset26.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset26.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset27
@@ -1720,6 +1666,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset28.Name = "textBoxPreset28";
             this.textBoxPreset28.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset28.TabIndex = 43;
+            this.textBoxPreset28.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset28.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset29
@@ -1738,6 +1685,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset30.Name = "textBoxPreset30";
             this.textBoxPreset30.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset30.TabIndex = 46;
+            this.textBoxPreset30.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset30.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset31
@@ -1756,6 +1704,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset32.Name = "textBoxPreset32";
             this.textBoxPreset32.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset32.TabIndex = 49;
+            this.textBoxPreset32.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset32.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset33
@@ -1774,6 +1723,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset34.Name = "textBoxPreset34";
             this.textBoxPreset34.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset34.TabIndex = 52;
+            this.textBoxPreset34.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset34.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset35
@@ -1792,6 +1742,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset36.Name = "textBoxPreset36";
             this.textBoxPreset36.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset36.TabIndex = 55;
+            this.textBoxPreset36.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset36.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset37
@@ -1810,6 +1761,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset38.Name = "textBoxPreset38";
             this.textBoxPreset38.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset38.TabIndex = 58;
+            this.textBoxPreset38.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset38.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset39
@@ -1828,6 +1780,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset40.Name = "textBoxPreset40";
             this.textBoxPreset40.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset40.TabIndex = 61;
+            this.textBoxPreset40.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset40.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset41
@@ -1846,6 +1799,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset42.Name = "textBoxPreset42";
             this.textBoxPreset42.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset42.TabIndex = 64;
+            this.textBoxPreset42.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset42.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset43
@@ -1864,6 +1818,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset44.Name = "textBoxPreset44";
             this.textBoxPreset44.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset44.TabIndex = 67;
+            this.textBoxPreset44.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset44.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset45
@@ -1882,6 +1837,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset46.Name = "textBoxPreset46";
             this.textBoxPreset46.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset46.TabIndex = 70;
+            this.textBoxPreset46.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset46.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset47
@@ -1900,6 +1856,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset48.Name = "textBoxPreset48";
             this.textBoxPreset48.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset48.TabIndex = 73;
+            this.textBoxPreset48.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset48.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset49
@@ -1918,6 +1875,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset50.Name = "textBoxPreset50";
             this.textBoxPreset50.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset50.TabIndex = 76;
+            this.textBoxPreset50.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset50.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset51
@@ -1936,6 +1894,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset52.Name = "textBoxPreset52";
             this.textBoxPreset52.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset52.TabIndex = 79;
+            this.textBoxPreset52.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset52.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset53
@@ -1954,6 +1913,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset54.Name = "textBoxPreset54";
             this.textBoxPreset54.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset54.TabIndex = 82;
+            this.textBoxPreset54.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset54.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset55
@@ -1972,6 +1932,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset56.Name = "textBoxPreset56";
             this.textBoxPreset56.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset56.TabIndex = 85;
+            this.textBoxPreset56.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset56.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset57
@@ -1990,6 +1951,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset58.Name = "textBoxPreset58";
             this.textBoxPreset58.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset58.TabIndex = 88;
+            this.textBoxPreset58.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset58.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset59
@@ -2008,6 +1970,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset60.Name = "textBoxPreset60";
             this.textBoxPreset60.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset60.TabIndex = 91;
+            this.textBoxPreset60.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset60.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset61
@@ -2026,6 +1989,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset62.Name = "textBoxPreset62";
             this.textBoxPreset62.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset62.TabIndex = 94;
+            this.textBoxPreset62.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset62.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset63
@@ -2044,6 +2008,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset64.Name = "textBoxPreset64";
             this.textBoxPreset64.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset64.TabIndex = 97;
+            this.textBoxPreset64.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset64.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset65
@@ -2062,6 +2027,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset66.Name = "textBoxPreset66";
             this.textBoxPreset66.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset66.TabIndex = 100;
+            this.textBoxPreset66.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset66.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset67
@@ -2080,6 +2046,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset68.Name = "textBoxPreset68";
             this.textBoxPreset68.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset68.TabIndex = 103;
+            this.textBoxPreset68.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset68.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset69
@@ -2098,6 +2065,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset70.Name = "textBoxPreset70";
             this.textBoxPreset70.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset70.TabIndex = 106;
+            this.textBoxPreset70.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset70.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // textBoxPreset71
@@ -2116,6 +2084,7 @@ namespace SGB_Palette_Editor
             this.textBoxPreset72.Name = "textBoxPreset72";
             this.textBoxPreset72.Size = new System.Drawing.Size(36, 20);
             this.textBoxPreset72.TabIndex = 109;
+            this.textBoxPreset72.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset72.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
             // tabBorders
@@ -2228,6 +2197,73 @@ namespace SGB_Palette_Editor
             this.pictureBoxBorder.TabIndex = 1;
             this.pictureBoxBorder.TabStop = false;
             // 
+            // trackBarRed
+            // 
+            this.trackBarRed.Location = new System.Drawing.Point(46, 22);
+            this.trackBarRed.Maximum = 255;
+            this.trackBarRed.Name = "trackBarRed";
+            this.trackBarRed.Size = new System.Drawing.Size(173, 45);
+            this.trackBarRed.TabIndex = 99;
+            this.trackBarRed.TabStop = false;
+            this.trackBarRed.TickFrequency = 16;
+            this.trackBarRed.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarBlue
+            // 
+            this.trackBarBlue.Location = new System.Drawing.Point(46, 102);
+            this.trackBarBlue.Maximum = 255;
+            this.trackBarBlue.Name = "trackBarBlue";
+            this.trackBarBlue.Size = new System.Drawing.Size(173, 45);
+            this.trackBarBlue.TabIndex = 99;
+            this.trackBarBlue.TabStop = false;
+            this.trackBarBlue.TickFrequency = 16;
+            this.trackBarBlue.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarGreen
+            // 
+            this.trackBarGreen.Location = new System.Drawing.Point(46, 62);
+            this.trackBarGreen.Maximum = 255;
+            this.trackBarGreen.Name = "trackBarGreen";
+            this.trackBarGreen.Size = new System.Drawing.Size(173, 45);
+            this.trackBarGreen.TabIndex = 99;
+            this.trackBarGreen.TabStop = false;
+            this.trackBarGreen.TickFrequency = 16;
+            this.trackBarGreen.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarH
+            // 
+            this.trackBarH.LargeChange = 10;
+            this.trackBarH.Location = new System.Drawing.Point(67, 22);
+            this.trackBarH.Maximum = 360;
+            this.trackBarH.Name = "trackBarH";
+            this.trackBarH.Size = new System.Drawing.Size(184, 45);
+            this.trackBarH.TabIndex = 99;
+            this.trackBarH.TabStop = false;
+            this.trackBarH.TickFrequency = 20;
+            this.trackBarH.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
+            // trackBarS
+            // 
+            this.trackBarS.Location = new System.Drawing.Point(67, 62);
+            this.trackBarS.Maximum = 100;
+            this.trackBarS.Name = "trackBarS";
+            this.trackBarS.Size = new System.Drawing.Size(184, 45);
+            this.trackBarS.TabIndex = 99;
+            this.trackBarS.TabStop = false;
+            this.trackBarS.TickFrequency = 5;
+            this.trackBarS.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
+            // trackBarV
+            // 
+            this.trackBarV.Location = new System.Drawing.Point(67, 102);
+            this.trackBarV.Maximum = 100;
+            this.trackBarV.Name = "trackBarV";
+            this.trackBarV.Size = new System.Drawing.Size(184, 45);
+            this.trackBarV.TabIndex = 99;
+            this.trackBarV.TabStop = false;
+            this.trackBarV.TickFrequency = 5;
+            this.trackBarV.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2252,14 +2288,8 @@ namespace SGB_Palette_Editor
             this.tabControlColorformat.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.groupBoxClipboard.ResumeLayout(false);
@@ -2282,6 +2312,12 @@ namespace SGB_Palette_Editor
             this.groupBoxBorderInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -184,8 +184,6 @@ namespace SGB_Palette_Editor
             try
             {
                 int n = (slotName.First() - '1') * 8 + (slotName.Last() - 'A') + 1;
-                if (n < 1 || n > 32)
-                    n = -1;
                 return n;
             }
             catch
@@ -305,18 +303,27 @@ namespace SGB_Palette_Editor
                             return (false, false, 0, "Invalid data at offset 0x" + (0x10000 + i * 2).ToString("X5") + ".");
                         }
                     }
-                    palettes = colors.ToArray();
+                    if (!Enumerable.SequenceEqual(palettes, colors.ToArray()))
+                    {
+                        palettes = colors.ToArray();
+                        palettesChanged = true;
+                    }
 
                     // game presets
                     fs.Seek(0x3F000, SeekOrigin.Begin);
-                    gamePresets = new List<(string, int)>();
+                    List<(string, int)> fileGamePresets = new List<(string, int)>();
                     byte[] gameTitle = new byte[16];
                     for (int i = 0; i < 36; i++)
                     {
                         fs.Read(gameTitle, 0, 16);
-                        if (gameTitle[0] == 0xFF && gameTitle[0] == gameTitle[1]) // FF FF terminator
+                        if (gameTitle[0] == 0xFF && gameTitle[1] == 0xFF) // FF FF terminator
                             break;
-                        gamePresets.Add((System.Text.Encoding.Default.GetString(gameTitle).TrimEnd('\0'), fs.ReadByte()));
+                        fileGamePresets.Add((System.Text.Encoding.Default.GetString(gameTitle).TrimEnd('\0'), fs.ReadByte()));
+                    }
+                    if (!Enumerable.SequenceEqual(gamePresets, fileGamePresets))
+                    {
+                        gamePresets = fileGamePresets;
+                        gamePresetsChanged = true;
                     }
 
                     // borders
@@ -638,7 +645,7 @@ namespace SGB_Palette_Editor
                         // store border # to 7e0c03 and 0 to 7e0341 to disable the sfx
                         fs.Write(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x9C, 0x41, 0x03 }, 0, 8); // lda #$0x, sta $0c03, stz $0341
                         // jump into border change routine, after the border and audio selection
-                        fs.Write(new byte[] { 0x5C, 0x30, 0xDE, 0x00 }, 0, 4); // jml 00de28
+                        fs.Write(new byte[] { 0x5C, 0x30, 0xDE, 0x00 }, 0, 4); // jml 00de30
                         if (fs.Position < 0x3F290) // overwrite potential old patch data with \0
                             fs.Write(new byte[0x3F290 - (int)fs.Position], 0, 0x3F290 - (int)fs.Position);
 
@@ -743,10 +750,9 @@ namespace SGB_Palette_Editor
                         checksum += b;
 
 
-                    borderPart2.AddRange(new byte[] { 0x03, 0xF2, 0x70, 0x00, 0x1B, 0xA9, 0x03, 0xED, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00, 0xA9, 0x16, 0x8D, 0x2C, 0x21 });
+                    borderPart2.AddRange(new byte[] { 0x03, 0xF2, 0x70, 0x00, 0x1C, 0xA9, 0x03, 0xCD, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00, 0xA9, 0x16, 0x8D, 0x2C, 0x21 });
                     if (sgb_rev == 0)
                     {
-                        borderPart2[4] = 0x1D;
                         if (border > 14)
                             borderPart2.AddRange(new byte[] { 0xA9, 0x01, 0x8D, 0xFF, 0x07 });
                         if (border >= 1 && border <= 6)
@@ -755,7 +761,9 @@ namespace SGB_Palette_Editor
                     byte borderByte = 0x01;
                     if (border > 6)
                         borderByte = BitConverter.GetBytes((border - 6) % 9 + 1)[0];
-                    borderPart2.AddRange(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x9C, 0x41, 0x03, 0x5C, 0x30, 0xDE });
+                    borderPart2.AddRange(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x9C, 0x41, 0x03, 0x5C, 0x30, 0xDE, 0x00 });
+                    if (borderPart2.Count > 0x21)
+                        borderPart2[4] = (byte)(borderPart2.Count - 5);
 
                     foreach (byte b in borderPart2.Skip(5))
                         checksum += b;
