@@ -7,7 +7,7 @@
     <ProjectGuid>{48C32B26-CA20-4C09-B8CA-881EA6CC8480}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>SGB_Palette_Editor</RootNamespace>
-    <AssemblyName>SGB Palette Editor</AssemblyName>
+    <AssemblyName>SGB Settings Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>

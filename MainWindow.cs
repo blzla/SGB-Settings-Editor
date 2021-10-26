@@ -392,6 +392,8 @@ namespace SGB_Palette_Editor
         // Replace colors with currently active palette while drawing the screenshot
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
+            if (comboBoxGame.SelectedIndex < 0)
+                comboBoxGame.SelectedIndex = 0;
             Graphics g = e.Graphics;
             Bitmap image = screenshots[comboBoxGame.SelectedIndex].image;
 
@@ -421,6 +423,8 @@ namespace SGB_Palette_Editor
         // Easter egg
         private void pictureBox_DoubleClick(object sender, EventArgs e)
         {
+            if (comboBoxGame.SelectedIndex < 0)
+                comboBoxGame.SelectedIndex = 0;
             screenshots[comboBoxGame.SelectedIndex] = fallbackScreenshot;
             pictureBox.Refresh();
         }

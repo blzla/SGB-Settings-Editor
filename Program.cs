@@ -694,6 +694,8 @@ namespace SGB_Palette_Editor
         // potential further space saving: make a copy of the initial values and only change bytes that were changed
         public static (bool, string) SaveIPS(int sgb_rev, bool setButtonTypeA, int border = 0)
         {
+            if (sgb_rev < 0)
+                return (false, "Error. Please select SGB revision.");
             try
             {
                 List<byte> ipsData = new List<byte> { 0x50, 0x41, 0x54, 0x43, 0x48 }; // PATCH
