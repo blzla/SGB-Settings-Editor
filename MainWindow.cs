@@ -605,7 +605,7 @@ namespace SGB_Palette_Editor
         {
             setPalette(activePaletteSlot); // make sure current palette is saved
             ConfirmationDialog dialog = new ConfirmationDialog();
-            if (comboBoxBorder.SelectedIndex > 0)
+            if (comboBoxBorder.SelectedIndex > 0 || sender == savePatchToolStripMenuItem)
             {
                 dialog.ShowDialog();
                 comboBoxVersion.SelectedIndex = sgb_rev;
@@ -834,6 +834,8 @@ namespace SGB_Palette_Editor
         {
             openFileDialog.Title = "Select Game Boy file";
             openFileDialog.Filter = "Game Boy ROM files|*.gb; *.gbc|All files|*.*";
+            string sfcfilename = openFileDialog.FileName;
+            openFileDialog.FileName = "";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 (bool success, string gbTitle) = Program.ReadGBName(openFileDialog.FileName);
@@ -860,6 +862,7 @@ namespace SGB_Palette_Editor
                     }
                 }
             }
+            openFileDialog.FileName = sfcfilename;
         }
 
         // #####################################################################################

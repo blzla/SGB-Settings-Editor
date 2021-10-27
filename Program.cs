@@ -602,6 +602,11 @@ namespace SGB_Palette_Editor
 
                     // game presets
                     fs.Seek(0x3F000, SeekOrigin.Begin);
+                    // preset list needs at least 1 entry to trigger the terminator
+                    if (gamePresets.Count == 0)
+                    {
+                        gamePresets.Add(("", 1));
+                    }
                     foreach ((string game, int slot) in gamePresets)
                     {
                         byte[] gamePreset = System.Text.Encoding.Default.GetBytes(game.PadRight(17, '\0'));
@@ -719,9 +724,12 @@ namespace SGB_Palette_Editor
                 }
 
                 // Game presets
-                // Run-length encoding could save a couple bytes with the \0 padding, but it's not worth it
                 List<byte> presetData = new List<byte>();
                 presetData.AddRange(new byte[] { 0x03, 0xF0, 0x00, 0x01, 0xCD });
+                if (gamePresets.Count == 0)
+                {
+                    gamePresets.Add(("", 1));
+                }
                 foreach ((string game, int slot) in gamePresets)
                 {
                     byte[] gamePreset = System.Text.Encoding.Default.GetBytes(game.PadRight(17, '\0'));
@@ -734,6 +742,14 @@ namespace SGB_Palette_Editor
                 presetData[4] = presetDataLength[0];
                 foreach (byte b in presetData.Skip(5))
                     checksum += b;
+
+                // Zero out original presets if necessary, run-length encoded
+                if (presetData.Count < 466)
+                {
+                    byte[] startzero = BitConverter.GetBytes(0x3F000 + presetData.Count - 5);
+                    byte[] zeros = BitConverter.GetBytes(466 - presetData.Count);
+                    presetData.AddRange(new byte[] { 0x03, startzero[1], startzero[0], 0x00, 0x00, zeros[1], zeros[0], 0x00});
+                }
 
                 // Border
                 // see SavetoFile() for comments / explanation
