@@ -37,31 +37,31 @@ namespace SGB_Palette_Editor
         };
 
         // offsets for border data in the rom file. SGB1 offsets are the same for every version
-        public static readonly (string name, int tilemap, int tileset, int[] palettes, bool compressed)[] borders = new (string, int, int, int[], bool)[] {
-            ("GB (SGB2)", 0x051800, 0x05c2c0, new int[] { 0, 0, 0, 0, 0x58080, 0x57EE0, 0 }, false),
-            ("GB (Pink)", 0x051800, 0x05c2c0, new int[] { 0, 0, 0, 0, 0x56E40, 0x56E60, 0 }, false),
-            ("GB (Yellow)", 0x051800, 0x05c2c0, new int[] { 0, 0, 0, 0, 0x56E80, 0x56EA0, 0 }, false),
-            ("GB (Green)", 0x051800, 0x05c2c0, new int[] { 0, 0, 0, 0, 0x56EC0, 0x56EE0, 0 }, false),
-            ("GB (Blue)", 0x051800, 0x05c2c0, new int[] { 0, 0, 0, 0, 0x56F00, 0x56F20, 0 }, false),
-            ("GB (Red)", 0x051800, 0x05c2c0, new int[] { 0, 0, 0, 0, 0x56F40, 0x56F60, 0 }, false),
-            ("GB (Black)", 0x051800, 0x05c2c0, new int[] { 0, 0, 0, 0, 0x56F80, 0x56FA0, 0 }, false),
-            ("Black (SGB2)", 0x0, 0x0, new int[] { 0, 0, 0, 0, 0, 0, 0 }, false),
-            ("Printed Circuit Board", 0x052000, 0x059100, new int[] { 0, 0, 0, 0, 0x57080, 0x570A0, 0 }, false),
-            ("Palm Trees", 0x067000, 0x063000, new int[] { 0, 0, 0, 0, 0x67880, 0, 0 }, false),
-            ("Stone Mosaic", 0x052800, 0x04e000, new int[] { 0, 0, 0, 0, 0x57480, 0, 0 }, false),
-            ("Gears", 0x06d000, 0x068000, new int[] { 0, 0, 0, 0, 0x67a80, 0, 0 }, false),
-            ("Swamp", 0x053000, 0x048000, new int[] { 0, 0, 0, 0, 0x57a80, 0x57aa0, 0 }, false),
-            ("Dolphins", 0x053800, 0x05ccc0, new int[] { 0, 0, 0, 0, 0x57c80, 0, 0 }, false),
-            ("Chess Arena", 0x054800, 0x050000, new int[] { 0, 0, 0, 0, 0x57880, 0x578a0, 0 }, false),
-            ("GB (SGB1)", 0x01E261, 0x01D868, new int[] { 0, 0, 0, 0, 0x27071, 0, 0 }, true),
-            ("Black (SGB1)", 0x0, 0x0, new int[] { 0, 0, 0, 0, 0, 0, 0 }, false),
-            ("Windows (SGB1)", 0x01AEA5, 0x018000, new int[] { 0, 0, 0, 0, 0x1b4f4, 0x1b514, 0x1b534 }, true),
-            ("Cork Board (SGB1)", 0x025F12, 0x025335, new int[] { 0, 0, 0, 0, 0x2611c, 0, 0 }, true),
-            ("Log Cabin In The Countryside (SGB1)", 0x01C660, 0x01B674, new int[] { 0, 0, 0, 0, 0x1d5e8, 0x1d608, 0 }, true),
-            ("Movie Theater (SGB1)", 0x02DC3c, 0x02C6C8, new int[] { 0, 0, 0, 0, 0x2d8bc, 0x2d8dc, 0 }, true),
-            ("Cats (SGB1)", 0x020B27, 0x01F716, new int[] { 0, 0, 0, 0, 0x20DF3, 0x20E13, 0 }, true),
-            ("Chequered Desk With Pencils (SGB1)", 0x02997a, 0x028000, new int[] { 0, 0, 0, 0, 0x29c21, 0x29e41, 0x29c61 }, true),
-            ("Escher (SGB1)", 0x01E3cd, 0x01E90a, new int[] { 0, 0, 0, 0, 0, 0x1e7aa, 0x1e7ca }, true),
+        public static readonly (string name, int tilemap, (int addr, int chunk_length)[] tileset_chunks, int[] palettes, bool compressed)[] borders = new (string, int, (int, int)[], int[], bool)[] {
+            ("GB (SGB2)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56E00, 0x56E20, 0x580C0 }, false),
+            ("GB (Pink)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56E40, 0x56E60, 0x580C0 }, false),
+            ("GB (Yellow)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56E80, 0x56EA0, 0x580C0 }, false),
+            ("GB (Green)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56EC0, 0x56EE0, 0x580C0 }, false),
+            ("GB (Blue)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56F00, 0x56F20, 0x580C0 }, false),
+            ("GB (Red)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56F40, 0x56F60, 0x580C0 }, false),
+            ("GB (Black)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56F80, 0x56FA0, 0x580C0 }, false),
+            ("Black (SGB2)", 0x0, new (int, int)[] { (0x0, 0x0) }, new int[] { 0, 0, 0 }, false),
+            ("Printed Circuit Board", 0x052000, new (int, int)[] { (0x059100, 0x1D00) }, new int[] { 0x57080, 0x570A0, 0x570C0 }, false),
+            ("Palm Trees", 0x067000, new (int, int)[] { (0x063000, 0x4000) }, new int[] { 0x67880, 0x678A0, 0x678C0 }, false),
+            ("Stone Mosaic", 0x052800, new (int, int)[] { (0x04E000, 0x16E0), (0x04C000, 0x2000) }, new int[] { 0x57480, 0x574A0, 0x574C0 }, false),
+            ("Gears", 0x06d000, new (int, int)[] { (0x068000, 0x5000) }, new int[] { 0x67A80, 0x67AA0, 0x67AC0 }, false),
+            ("Swamp", 0x053000, new (int, int)[] { (0x048000, 0x4000) }, new int[] { 0x57A80, 0x57AA0, 0x57AC0 }, false),
+            ("Dolphins", 0x053800, new (int, int)[] { (0x05CCC0, 0x2000), (0x05E300, 0x1A80) }, new int[] { 0x57C80, 0x57CA0, 0x57CC0 }, false),
+            ("Chess Arena", 0x054800, new (int, int)[] { (0x050000, 0x1000), (0x055800, 0x2000) }, new int[] { 0x57880, 0x578A0, 0x578C0 }, false),
+            ("GB (SGB1)", 0x01E261, new (int, int)[] { (0x01D868, 0x2000) }, new int[] { 0x27071, 0x27091, 0x270B1 }, true),
+            ("Black (SGB1)", 0x0, new (int, int)[] { (0x0, 0x0) }, new int[] { 0, 0, 0 }, false),
+            ("Windows (SGB1)", 0x01AEA5, new (int, int)[] { (0x018000, 0x2000) }, new int[] { 0x1B4F4, 0x1B514, 0x1B534 }, true),
+            ("Cork Board (SGB1)", 0x025F12, new (int, int)[] { (0x025335, 0x2000) }, new int[] { 0x2611C, 0x2613C, 0x2615C }, true),
+            ("Log Cabin In The Countryside (SGB1)", 0x01C660, new (int, int)[] { (0x01B674, 0x2000) }, new int[] { 0x1D5E8, 0x1D608, 0x1D628 }, true),
+            ("Movie Theater (SGB1)", 0x02DC3C, new (int, int)[] { (0x02C6C8, 0x2000) }, new int[] { 0x2D8BC, 0x2D8DC, 0x2D8FC }, true),
+            ("Cats (SGB1)", 0x020B27, new (int, int)[] { (0x01F716, 0x2000) }, new int[] { 0x20DF3, 0x20E13, 0x20E33 }, true),
+            ("Chequered Desk With Pencils (SGB1)", 0x02997a, new (int, int)[] { (0x028000, 0x2000) }, new int[] { 0x29C21, 0x29E41, 0x29C61 }, true),
+            ("Escher (SGB1)", 0x01E3cd, new (int, int)[] { (0x01E90a, 0x2000) }, new int[] { 0x1E78A, 0x1E7AA, 0x1E7CA }, true),
         };
 
         // assembly code to set the button type
@@ -402,7 +402,6 @@ namespace SGB_Palette_Editor
                     var border = borders[i];
                     Bitmap bg = new Bitmap(256, 224);
                     Graphics g = Graphics.FromImage(bg);
-                    g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
 
                     // Shortcut for the empty borders
                     if (border.tilemap == 0)
@@ -412,17 +411,32 @@ namespace SGB_Palette_Editor
                         continue;
                     }
 
-                    // Decompress data
-                    List<byte> tileset = null;
-                    List<byte> tilemap = null;
-                    if (border.compressed)
+                    // Load tilemap and tileset
+                    byte[] tilemap, tileset;
+                    if (!border.compressed)
                     {
+                        tilemap = new byte[0x700];
+                        fs.Seek(border.tilemap, SeekOrigin.Begin);
+                        fs.Read(tilemap, 0, 0x700);
+
+                        int pos = 0, tileset_size = border.tileset_chunks.Aggregate(0, (a, b) => a + b.chunk_length);
+                        tileset = new byte[tileset_size];
+                        foreach (var (addr, chunk_length) in border.tileset_chunks)
+                        {
+                            fs.Seek(addr, SeekOrigin.Begin);
+                            fs.Read(tileset, pos, chunk_length);
+                            pos += chunk_length;
+                        }
+                    }
+                    else
+                    {
+                        // Decompress data
                         // We could check the exact amount of data we need to read, but it's faster to always read a safe amount of bytes
                         byte[] data = new byte[0x2000];
                         fs.Seek(border.tilemap, SeekOrigin.Begin);
-                        fs.Read(data, 0, 0x1000);
+                        fs.Read(data, 0, 0x700);
                         tilemap = SGBCompression.Decompress(data);
-                        fs.Seek(border.tileset, SeekOrigin.Begin);
+                        fs.Seek(border.tileset_chunks[0].addr, SeekOrigin.Begin);
                         fs.Read(data, 0, 0x2000);
                         tileset = SGBCompression.Decompress(data);
 #if DEBUG
@@ -433,21 +447,19 @@ namespace SGB_Palette_Editor
 
                     // Load palettes
                     Color[][] palettes = new Color[16][];
-                    for (int j = 0; j < 7; j++)
+                    palettes[0] = new Color[16];
+                    for (int j = 0; j < 3; j++)
                     {
-                        // only a couple of palette slots are used
-                        // slot 0 is used, but hidden by the game window, so just set it to black
-                        palettes[j] = border.palettes[j] > 0 ? loadCGRAMPalette(fs, border.palettes[j]) : new Color[16];
+                        palettes[j + 4] = loadCGRAMPalette(fs, border.palettes[j]);
                     }
 
                     // Load tiles and assemble the image
-                    fs.Seek(border.tilemap, SeekOrigin.Begin);
                     Dictionary<int, DirectBitmap> tilecache = new Dictionary<int, DirectBitmap>(); // a tile atlas would be faster
                     for (int j = 0; j < 896; j++)
                     {
                         // info on tilemap format: https://en.wikibooks.org/wiki/Super_NES_Programming/Graphics_tutorial
-                        int tile_dataLo = border.compressed ? tilemap[2 * j] : fs.ReadByte();
-                        int tile_dataHi = border.compressed ? tilemap[2 * j + 1] : fs.ReadByte();
+                        int tile_dataLo = tilemap[2 * j];
+                        int tile_dataHi = tilemap[2 * j + 1];
                         int tile_data = tile_dataLo + (tile_dataHi << 8);
                         int tile_id = tile_data & 0x1FF;
                         int palette_id = (tile_dataHi & 0x1C) >> 2;
@@ -455,7 +467,7 @@ namespace SGB_Palette_Editor
                         bool v_flip = (tile_dataHi & (1 << 7)) != 0;
                         if (!tilecache.ContainsKey(tile_data))
                         {
-                            DirectBitmap newt = tile(fs, border.tileset, tile_id, palettes[palette_id], tileset);
+                            DirectBitmap newt = tile(tileset, tile_id, palettes[palette_id]);
                             if (h_flip)
                                 newt.Bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
                             if (v_flip)
@@ -496,22 +508,11 @@ namespace SGB_Palette_Editor
         // Load 8x8 pixel tile from rom file
         // Each pixel is stored as a 4bpp palette number, with the bits distributed over 4 separate bytes (4bpp planar, composite)
         // DirectBitmap is used for performance reasons because Bitmap.SetPixel() is painfully slow
-        private static DirectBitmap tile(FileStream fs, int addr, int n, Color[] pal, List<byte> tileset = null)
+        private static DirectBitmap tile(byte[] tileset, int n, Color[] pal)
         {
             n *= 0x20;
             DirectBitmap tile = new DirectBitmap(8, 8);
-            byte[] b = new byte[32];
-            if (tileset != null)
-            {
-                b = tileset.Skip(n).Take(32).ToArray();
-            }
-            else
-            {
-                long offs = fs.Position;
-                fs.Seek(addr + n, SeekOrigin.Begin);
-                fs.Read(b, 0, 32);
-                fs.Position = offs;
-            }
+            byte[] b = tileset.Skip(n).Take(32).ToArray();
             for (int i = 0; i < 8; i++)
             {
                 int bit = 1 << i;

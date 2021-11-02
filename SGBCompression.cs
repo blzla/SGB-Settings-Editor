@@ -33,7 +33,7 @@ namespace SGB_Palette_Editor
 
     public static class SGBCompression
     {
-        public static List<byte> Decompress(byte[] data)
+        public static byte[] Decompress(byte[] data)
         {
             byte[] control = new byte[] { data[0], data[1] };
             int dataLength = BitConverter.ToInt16(data, 2);
@@ -64,14 +64,14 @@ namespace SGB_Palette_Editor
                     else
                     { // copy normal words
                         message.Add(data[i]);
-                        message.Add(data[i + 1]); // it might be possible that this index is out of range, but that's fine
+                        message.Add(data[i + 1]);
                     }
                     if (message.Count >= messageLength) // reached end of message
                         break;
                 }
             }
             catch { } // reached end of data before finishing the message, or offset of repetition action was invalid
-            return message;
+            return message.ToArray();
         }
     }
 }

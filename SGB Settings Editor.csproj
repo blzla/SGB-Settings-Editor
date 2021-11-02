@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -110,59 +125,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MetroidII.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\MysticQuest.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Tetris.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TripWorld.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\WarioLand.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Zelda.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Mario.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Mario2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NinjaGaiden.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="icon.ico" />
     <None Include="Resources\fallback.png" />
-    <None Include="Resources\sgb_borders24.png" />
-    <None Include="Resources\sgb_borders23.png" />
-    <None Include="Resources\sgb_borders22.png" />
-    <None Include="Resources\sgb_borders21.png" />
-    <None Include="Resources\sgb_borders20.png" />
-    <None Include="Resources\sgb_borders19.png" />
-    <None Include="Resources\sgb_borders18.png" />
-    <None Include="Resources\sgb_borders17.png" />
-    <None Include="Resources\sgb_borders16.png" />
-    <None Include="Resources\sgb_borders15.png" />
-    <None Include="Resources\sgb_borders14.png" />
-    <None Include="Resources\sgb_borders13.png" />
-    <None Include="Resources\sgb_borders12.png" />
-    <None Include="Resources\sgb_borders11.png" />
-    <None Include="Resources\sgb_borders10.png" />
-    <None Include="Resources\sgb_borders9.png" />
-    <None Include="Resources\sgb_borders8.png" />
-    <None Include="Resources\sgb_borders7.png" />
-    <None Include="Resources\sgb_borders6.png" />
-    <None Include="Resources\sgb_borders5.png" />
-    <None Include="Resources\sgb_borders4.png" />
-    <None Include="Resources\sgb_borders3.png" />
-    <None Include="Resources\sgb_borders2.png" />
-    <None Include="Resources\sgb_borders1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
