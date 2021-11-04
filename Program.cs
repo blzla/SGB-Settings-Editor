@@ -51,7 +51,7 @@ namespace SGB_Palette_Editor
             ("Stone Mosaic", 0x052800, new (int, int)[] { (0x04E000, 0x16E0), (0x04C000, 0x2000) }, new int[] { 0x57480, 0x574A0, 0x574C0 }, false),
             ("Gears", 0x06d000, new (int, int)[] { (0x068000, 0x5000) }, new int[] { 0x67A80, 0x67AA0, 0x67AC0 }, false),
             ("Swamp", 0x053000, new (int, int)[] { (0x048000, 0x4000) }, new int[] { 0x57A80, 0x57AA0, 0x57AC0 }, false),
-            ("Dolphins", 0x053800, new (int, int)[] { (0x05CCC0, 0x2000), (0x05E300, 0x1A80) }, new int[] { 0x57C80, 0x57CA0, 0x57CC0 }, false),
+            ("Dolphins", 0x053800, new (int, int)[] { (0x05CCC0, 0x30C0) }, new int[] { 0x57C80, 0x57CA0, 0x57CC0 }, false),
             ("Chess Arena", 0x054800, new (int, int)[] { (0x050000, 0x1000), (0x055800, 0x2000) }, new int[] { 0x57880, 0x578A0, 0x578C0 }, false),
             ("GB (SGB1)", 0x01E261, new (int, int)[] { (0x01D868, 0x2000) }, new int[] { 0x27071, 0x27091, 0x270B1 }, true),
             ("Black (SGB1)", 0x0, new (int, int)[] { (0x0, 0x0) }, new int[] { 0, 0, 0 }, false),
