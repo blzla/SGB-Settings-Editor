@@ -1,5 +1,5 @@
 ﻿
-namespace SGB_Palette_Editor
+namespace SGB_Settings_Editor
 {
     internal class NoFocusTrackBar : System.Windows.Forms.TrackBar
     {
@@ -100,9 +100,6 @@ namespace SGB_Palette_Editor
             this.groupBoxEditColor = new System.Windows.Forms.GroupBox();
             this.tabControlColorformat = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.trackBarRed = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarBlue = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarGreen = new SGB_Palette_Editor.NoFocusTrackBar();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.labelV = new System.Windows.Forms.Label();
             this.textBoxV = new System.Windows.Forms.TextBox();
@@ -110,9 +107,6 @@ namespace SGB_Palette_Editor
             this.labelH = new System.Windows.Forms.Label();
             this.textBoxS = new System.Windows.Forms.TextBox();
             this.textBoxH = new System.Windows.Forms.TextBox();
-            this.trackBarH = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarS = new SGB_Palette_Editor.NoFocusTrackBar();
-            this.trackBarV = new SGB_Palette_Editor.NoFocusTrackBar();
             this.labelSet = new System.Windows.Forms.Label();
             this.buttonColor3 = new System.Windows.Forms.Button();
             this.panelColorbg = new System.Windows.Forms.Panel();
@@ -146,6 +140,7 @@ namespace SGB_Palette_Editor
             this.paletteEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.presetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startupBorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.palettePasswordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.controlTypeAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -234,19 +229,33 @@ namespace SGB_Palette_Editor
             this.pictureBoxGameinBorder = new System.Windows.Forms.PictureBox();
             this.comboBoxBorder = new System.Windows.Forms.ComboBox();
             this.pictureBoxBorder = new System.Windows.Forms.PictureBox();
+            this.tabPasswords = new System.Windows.Forms.TabPage();
+            this.groupBoxPasswords = new System.Windows.Forms.GroupBox();
+            this.buttonPasswordSetActivePalette = new System.Windows.Forms.Button();
+            this.panelPasswordColor1 = new System.Windows.Forms.Panel();
+            this.panelPasswordColor2 = new System.Windows.Forms.Panel();
+            this.panelPasswordColor3 = new System.Windows.Forms.Panel();
+            this.panelPasswordColor4 = new System.Windows.Forms.Panel();
+            this.textBoxPasswords = new System.Windows.Forms.TextBox();
+            this.labelEnterPassword = new System.Windows.Forms.Label();
+            this.labelPasswordWarning = new System.Windows.Forms.Label();
+            this.panelPasswordColor1bg = new System.Windows.Forms.Panel();
+            this.panelPasswordColor2bg = new System.Windows.Forms.Panel();
+            this.panelPasswordColor3bg = new System.Windows.Forms.Panel();
+            this.panelPasswordColor4bg = new System.Windows.Forms.Panel();
+            this.trackBarRed = new SGB_Settings_Editor.NoFocusTrackBar();
+            this.trackBarBlue = new SGB_Settings_Editor.NoFocusTrackBar();
+            this.trackBarGreen = new SGB_Settings_Editor.NoFocusTrackBar();
+            this.trackBarH = new SGB_Settings_Editor.NoFocusTrackBar();
+            this.trackBarS = new SGB_Settings_Editor.NoFocusTrackBar();
+            this.trackBarV = new SGB_Settings_Editor.NoFocusTrackBar();
             this.panelPalettebg.SuspendLayout();
             this.screenshotPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBoxEditColor.SuspendLayout();
             this.tabControlColorformat.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.groupBoxClipboard.SuspendLayout();
             this.groupBoxPalette.SuspendLayout();
@@ -262,6 +271,18 @@ namespace SGB_Palette_Editor
             this.groupBoxBorderInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).BeginInit();
+            this.tabPasswords.SuspendLayout();
+            this.groupBoxPasswords.SuspendLayout();
+            this.panelPasswordColor1bg.SuspendLayout();
+            this.panelPasswordColor2bg.SuspendLayout();
+            this.panelPasswordColor3bg.SuspendLayout();
+            this.panelPasswordColor4bg.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).BeginInit();
             this.SuspendLayout();
             // 
             // panelClipboard1
@@ -826,39 +847,6 @@ namespace SGB_Palette_Editor
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "RGB";
             // 
-            // trackBarRed
-            // 
-            this.trackBarRed.Location = new System.Drawing.Point(46, 22);
-            this.trackBarRed.Maximum = 255;
-            this.trackBarRed.Name = "trackBarRed";
-            this.trackBarRed.Size = new System.Drawing.Size(173, 45);
-            this.trackBarRed.TabIndex = 99;
-            this.trackBarRed.TabStop = false;
-            this.trackBarRed.TickFrequency = 16;
-            this.trackBarRed.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
-            // trackBarBlue
-            // 
-            this.trackBarBlue.Location = new System.Drawing.Point(46, 102);
-            this.trackBarBlue.Maximum = 255;
-            this.trackBarBlue.Name = "trackBarBlue";
-            this.trackBarBlue.Size = new System.Drawing.Size(173, 45);
-            this.trackBarBlue.TabIndex = 99;
-            this.trackBarBlue.TabStop = false;
-            this.trackBarBlue.TickFrequency = 16;
-            this.trackBarBlue.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
-            // trackBarGreen
-            // 
-            this.trackBarGreen.Location = new System.Drawing.Point(46, 62);
-            this.trackBarGreen.Maximum = 255;
-            this.trackBarGreen.Name = "trackBarGreen";
-            this.trackBarGreen.Size = new System.Drawing.Size(173, 45);
-            this.trackBarGreen.TabIndex = 99;
-            this.trackBarGreen.TabStop = false;
-            this.trackBarGreen.TickFrequency = 16;
-            this.trackBarGreen.ValueChanged += new System.EventHandler(this.rgbsliderChange);
-            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Menu;
@@ -931,40 +919,6 @@ namespace SGB_Palette_Editor
             this.textBoxH.Size = new System.Drawing.Size(34, 20);
             this.textBoxH.TabIndex = 4;
             this.textBoxH.TextChanged += new System.EventHandler(this.textBoxHSV_TextChanged);
-            // 
-            // trackBarH
-            // 
-            this.trackBarH.LargeChange = 10;
-            this.trackBarH.Location = new System.Drawing.Point(67, 22);
-            this.trackBarH.Maximum = 360;
-            this.trackBarH.Name = "trackBarH";
-            this.trackBarH.Size = new System.Drawing.Size(184, 45);
-            this.trackBarH.TabIndex = 99;
-            this.trackBarH.TabStop = false;
-            this.trackBarH.TickFrequency = 20;
-            this.trackBarH.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
-            // 
-            // trackBarS
-            // 
-            this.trackBarS.Location = new System.Drawing.Point(67, 62);
-            this.trackBarS.Maximum = 100;
-            this.trackBarS.Name = "trackBarS";
-            this.trackBarS.Size = new System.Drawing.Size(184, 45);
-            this.trackBarS.TabIndex = 99;
-            this.trackBarS.TabStop = false;
-            this.trackBarS.TickFrequency = 5;
-            this.trackBarS.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
-            // 
-            // trackBarV
-            // 
-            this.trackBarV.Location = new System.Drawing.Point(67, 102);
-            this.trackBarV.Maximum = 100;
-            this.trackBarV.Name = "trackBarV";
-            this.trackBarV.Size = new System.Drawing.Size(184, 45);
-            this.trackBarV.TabIndex = 99;
-            this.trackBarV.TabStop = false;
-            this.trackBarV.TickFrequency = 5;
-            this.trackBarV.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
             // 
             // labelSet
             // 
@@ -1280,7 +1234,8 @@ namespace SGB_Palette_Editor
             this.viewsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.paletteEditorToolStripMenuItem,
             this.presetsToolStripMenuItem,
-            this.startupBorderToolStripMenuItem});
+            this.startupBorderToolStripMenuItem,
+            this.palettePasswordsToolStripMenuItem});
             this.viewsToolStripMenuItem.Name = "viewsToolStripMenuItem";
             this.viewsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewsToolStripMenuItem.Text = "View";
@@ -1292,7 +1247,7 @@ namespace SGB_Palette_Editor
             this.paletteEditorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.paletteEditorToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.paletteEditorToolStripMenuItem.Name = "paletteEditorToolStripMenuItem";
-            this.paletteEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.paletteEditorToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.paletteEditorToolStripMenuItem.Text = "Palette Editor";
             this.paletteEditorToolStripMenuItem.Click += new System.EventHandler(this.paletteEditorToolStripMenuItem_Click);
             // 
@@ -1301,7 +1256,7 @@ namespace SGB_Palette_Editor
             this.presetsToolStripMenuItem.CheckOnClick = true;
             this.presetsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.presetsToolStripMenuItem.Name = "presetsToolStripMenuItem";
-            this.presetsToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.presetsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.presetsToolStripMenuItem.Text = "Game Presets";
             this.presetsToolStripMenuItem.Click += new System.EventHandler(this.presetsToolStripMenuItem1_Click);
             // 
@@ -1310,9 +1265,17 @@ namespace SGB_Palette_Editor
             this.startupBorderToolStripMenuItem.CheckOnClick = true;
             this.startupBorderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.startupBorderToolStripMenuItem.Name = "startupBorderToolStripMenuItem";
-            this.startupBorderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.startupBorderToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.startupBorderToolStripMenuItem.Text = "Startup Border";
             this.startupBorderToolStripMenuItem.Click += new System.EventHandler(this.startupBorderToolStripMenuItem_Click);
+            // 
+            // palettePasswordsToolStripMenuItem
+            // 
+            this.palettePasswordsToolStripMenuItem.CheckOnClick = true;
+            this.palettePasswordsToolStripMenuItem.Name = "palettePasswordsToolStripMenuItem";
+            this.palettePasswordsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.palettePasswordsToolStripMenuItem.Text = "Palette Passwords";
+            this.palettePasswordsToolStripMenuItem.Click += new System.EventHandler(this.palettePasswordsToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -1353,6 +1316,7 @@ namespace SGB_Palette_Editor
             this.tabControlMain.Controls.Add(this.tabMain);
             this.tabControlMain.Controls.Add(this.tabPresets);
             this.tabControlMain.Controls.Add(this.tabBorders);
+            this.tabControlMain.Controls.Add(this.tabPasswords);
             this.tabControlMain.ItemSize = new System.Drawing.Size(0, 1);
             this.tabControlMain.Location = new System.Drawing.Point(0, 27);
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(0);
@@ -2264,6 +2228,208 @@ namespace SGB_Palette_Editor
             this.pictureBoxBorder.TabIndex = 1;
             this.pictureBoxBorder.TabStop = false;
             // 
+            // tabPasswords
+            // 
+            this.tabPasswords.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPasswords.Controls.Add(this.groupBoxPasswords);
+            this.tabPasswords.Location = new System.Drawing.Point(4, 5);
+            this.tabPasswords.Name = "tabPasswords";
+            this.tabPasswords.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPasswords.Size = new System.Drawing.Size(780, 381);
+            this.tabPasswords.TabIndex = 3;
+            this.tabPasswords.Text = "Passwords";
+            // 
+            // groupBoxPasswords
+            // 
+            this.groupBoxPasswords.Controls.Add(this.panelPasswordColor1bg);
+            this.groupBoxPasswords.Controls.Add(this.panelPasswordColor2bg);
+            this.groupBoxPasswords.Controls.Add(this.panelPasswordColor3bg);
+            this.groupBoxPasswords.Controls.Add(this.panelPasswordColor4bg);
+            this.groupBoxPasswords.Controls.Add(this.labelPasswordWarning);
+            this.groupBoxPasswords.Controls.Add(this.labelEnterPassword);
+            this.groupBoxPasswords.Controls.Add(this.buttonPasswordSetActivePalette);
+            this.groupBoxPasswords.Controls.Add(this.textBoxPasswords);
+            this.groupBoxPasswords.Location = new System.Drawing.Point(11, 4);
+            this.groupBoxPasswords.Name = "groupBoxPasswords";
+            this.groupBoxPasswords.Size = new System.Drawing.Size(663, 373);
+            this.groupBoxPasswords.TabIndex = 0;
+            this.groupBoxPasswords.TabStop = false;
+            this.groupBoxPasswords.Text = "Palette Passwords";
+            // 
+            // buttonPasswordSetActivePalette
+            // 
+            this.buttonPasswordSetActivePalette.Location = new System.Drawing.Point(19, 165);
+            this.buttonPasswordSetActivePalette.Name = "buttonPasswordSetActivePalette";
+            this.buttonPasswordSetActivePalette.Size = new System.Drawing.Size(117, 23);
+            this.buttonPasswordSetActivePalette.TabIndex = 1;
+            this.buttonPasswordSetActivePalette.Text = "Copy to Palette";
+            this.buttonPasswordSetActivePalette.UseVisualStyleBackColor = true;
+            this.buttonPasswordSetActivePalette.Click += new System.EventHandler(this.buttonPasswordSetActivePalette_Click);
+            // 
+            // panelPasswordColor1
+            // 
+            this.panelPasswordColor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(239)))), ((int)(((byte)(206)))));
+            this.panelPasswordColor1.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor1.Name = "panelPasswordColor1";
+            this.panelPasswordColor1.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor1.TabIndex = 2;
+            // 
+            // panelPasswordColor2
+            // 
+            this.panelPasswordColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(148)))), ((int)(((byte)(74)))));
+            this.panelPasswordColor2.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor2.Name = "panelPasswordColor2";
+            this.panelPasswordColor2.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor2.TabIndex = 3;
+            // 
+            // panelPasswordColor3
+            // 
+            this.panelPasswordColor3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(41)))), ((int)(((byte)(33)))));
+            this.panelPasswordColor3.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor3.Name = "panelPasswordColor3";
+            this.panelPasswordColor3.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor3.TabIndex = 4;
+            // 
+            // panelPasswordColor4
+            // 
+            this.panelPasswordColor4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(24)))), ((int)(((byte)(82)))));
+            this.panelPasswordColor4.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor4.Name = "panelPasswordColor4";
+            this.panelPasswordColor4.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor4.TabIndex = 5;
+            // 
+            // textBoxPasswords
+            // 
+            this.textBoxPasswords.Location = new System.Drawing.Point(142, 23);
+            this.textBoxPasswords.MaxLength = 14;
+            this.textBoxPasswords.Name = "textBoxPasswords";
+            this.textBoxPasswords.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPasswords.TabIndex = 0;
+            this.textBoxPasswords.Text = "0000-0000-0000";
+            this.textBoxPasswords.TextChanged += new System.EventHandler(this.textBoxPasswords_TextChanged);
+            // 
+            // labelEnterPassword
+            // 
+            this.labelEnterPassword.AutoSize = true;
+            this.labelEnterPassword.Location = new System.Drawing.Point(16, 26);
+            this.labelEnterPassword.Name = "labelEnterPassword";
+            this.labelEnterPassword.Size = new System.Drawing.Size(120, 13);
+            this.labelEnterPassword.TabIndex = 6;
+            this.labelEnterPassword.Text = "Enter Palette Password:";
+            // 
+            // labelPasswordWarning
+            // 
+            this.labelPasswordWarning.AutoSize = true;
+            this.labelPasswordWarning.Location = new System.Drawing.Point(19, 140);
+            this.labelPasswordWarning.Name = "labelPasswordWarning";
+            this.labelPasswordWarning.Size = new System.Drawing.Size(334, 13);
+            this.labelPasswordWarning.TabIndex = 7;
+            this.labelPasswordWarning.Text = "Warning: Password depends on palettes, using original palette colors.";
+            this.labelPasswordWarning.Visible = false;
+            // 
+            // panelPasswordColor1bg
+            // 
+            this.panelPasswordColor1bg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            this.panelPasswordColor1bg.Controls.Add(this.panelPasswordColor1);
+            this.panelPasswordColor1bg.Location = new System.Drawing.Point(19, 59);
+            this.panelPasswordColor1bg.Name = "panelPasswordColor1bg";
+            this.panelPasswordColor1bg.Size = new System.Drawing.Size(85, 71);
+            this.panelPasswordColor1bg.TabIndex = 8;
+            // 
+            // panelPasswordColor2bg
+            // 
+            this.panelPasswordColor2bg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            this.panelPasswordColor2bg.Controls.Add(this.panelPasswordColor2);
+            this.panelPasswordColor2bg.Location = new System.Drawing.Point(110, 59);
+            this.panelPasswordColor2bg.Name = "panelPasswordColor2bg";
+            this.panelPasswordColor2bg.Size = new System.Drawing.Size(85, 71);
+            this.panelPasswordColor2bg.TabIndex = 9;
+            // 
+            // panelPasswordColor3bg
+            // 
+            this.panelPasswordColor3bg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            this.panelPasswordColor3bg.Controls.Add(this.panelPasswordColor3);
+            this.panelPasswordColor3bg.Location = new System.Drawing.Point(201, 59);
+            this.panelPasswordColor3bg.Name = "panelPasswordColor3bg";
+            this.panelPasswordColor3bg.Size = new System.Drawing.Size(85, 71);
+            this.panelPasswordColor3bg.TabIndex = 10;
+            // 
+            // panelPasswordColor4bg
+            // 
+            this.panelPasswordColor4bg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            this.panelPasswordColor4bg.Controls.Add(this.panelPasswordColor4);
+            this.panelPasswordColor4bg.Location = new System.Drawing.Point(292, 60);
+            this.panelPasswordColor4bg.Name = "panelPasswordColor4bg";
+            this.panelPasswordColor4bg.Size = new System.Drawing.Size(85, 71);
+            this.panelPasswordColor4bg.TabIndex = 10;
+            // 
+            // trackBarRed
+            // 
+            this.trackBarRed.Location = new System.Drawing.Point(46, 22);
+            this.trackBarRed.Maximum = 255;
+            this.trackBarRed.Name = "trackBarRed";
+            this.trackBarRed.Size = new System.Drawing.Size(173, 45);
+            this.trackBarRed.TabIndex = 99;
+            this.trackBarRed.TabStop = false;
+            this.trackBarRed.TickFrequency = 16;
+            this.trackBarRed.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarBlue
+            // 
+            this.trackBarBlue.Location = new System.Drawing.Point(46, 102);
+            this.trackBarBlue.Maximum = 255;
+            this.trackBarBlue.Name = "trackBarBlue";
+            this.trackBarBlue.Size = new System.Drawing.Size(173, 45);
+            this.trackBarBlue.TabIndex = 99;
+            this.trackBarBlue.TabStop = false;
+            this.trackBarBlue.TickFrequency = 16;
+            this.trackBarBlue.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarGreen
+            // 
+            this.trackBarGreen.Location = new System.Drawing.Point(46, 62);
+            this.trackBarGreen.Maximum = 255;
+            this.trackBarGreen.Name = "trackBarGreen";
+            this.trackBarGreen.Size = new System.Drawing.Size(173, 45);
+            this.trackBarGreen.TabIndex = 99;
+            this.trackBarGreen.TabStop = false;
+            this.trackBarGreen.TickFrequency = 16;
+            this.trackBarGreen.ValueChanged += new System.EventHandler(this.rgbsliderChange);
+            // 
+            // trackBarH
+            // 
+            this.trackBarH.LargeChange = 10;
+            this.trackBarH.Location = new System.Drawing.Point(67, 22);
+            this.trackBarH.Maximum = 360;
+            this.trackBarH.Name = "trackBarH";
+            this.trackBarH.Size = new System.Drawing.Size(184, 45);
+            this.trackBarH.TabIndex = 99;
+            this.trackBarH.TabStop = false;
+            this.trackBarH.TickFrequency = 20;
+            this.trackBarH.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
+            // trackBarS
+            // 
+            this.trackBarS.Location = new System.Drawing.Point(67, 62);
+            this.trackBarS.Maximum = 100;
+            this.trackBarS.Name = "trackBarS";
+            this.trackBarS.Size = new System.Drawing.Size(184, 45);
+            this.trackBarS.TabIndex = 99;
+            this.trackBarS.TabStop = false;
+            this.trackBarS.TickFrequency = 5;
+            this.trackBarS.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
+            // trackBarV
+            // 
+            this.trackBarV.Location = new System.Drawing.Point(67, 102);
+            this.trackBarV.Maximum = 100;
+            this.trackBarV.Name = "trackBarV";
+            this.trackBarV.Size = new System.Drawing.Size(184, 45);
+            this.trackBarV.TabIndex = 99;
+            this.trackBarV.TabStop = false;
+            this.trackBarV.TickFrequency = 5;
+            this.trackBarV.ValueChanged += new System.EventHandler(this.trackBarHSV_ValueChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2288,14 +2454,8 @@ namespace SGB_Palette_Editor
             this.tabControlColorformat.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.groupBoxClipboard.ResumeLayout(false);
@@ -2318,6 +2478,19 @@ namespace SGB_Palette_Editor
             this.groupBoxBorderInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGameinBorder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBorder)).EndInit();
+            this.tabPasswords.ResumeLayout(false);
+            this.groupBoxPasswords.ResumeLayout(false);
+            this.groupBoxPasswords.PerformLayout();
+            this.panelPasswordColor1bg.ResumeLayout(false);
+            this.panelPasswordColor2bg.ResumeLayout(false);
+            this.panelPasswordColor3bg.ResumeLayout(false);
+            this.panelPasswordColor4bg.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarRed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGreen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2354,9 +2527,9 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.Label labelPalette;
         private System.Windows.Forms.Label labelHexcolor;
         private System.Windows.Forms.Label labelSnescolor;
-        private NoFocusTrackBar trackBarRed;
-        private NoFocusTrackBar trackBarGreen;
-        private NoFocusTrackBar trackBarBlue;
+        private SGB_Settings_Editor.NoFocusTrackBar trackBarRed;
+        private SGB_Settings_Editor.NoFocusTrackBar trackBarGreen;
+        private SGB_Settings_Editor.NoFocusTrackBar trackBarBlue;
         private System.Windows.Forms.Button buttonStore2;
         private System.Windows.Forms.Button buttonLoad1;
         private System.Windows.Forms.Button buttonLoad2;
@@ -2396,9 +2569,9 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.Button buttonResetPalette;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox groupBoxExport;
-        private NoFocusTrackBar trackBarH;
-        private NoFocusTrackBar trackBarS;
-        private NoFocusTrackBar trackBarV;
+        private SGB_Settings_Editor.NoFocusTrackBar trackBarH;
+        private SGB_Settings_Editor.NoFocusTrackBar trackBarS;
+        private SGB_Settings_Editor.NoFocusTrackBar trackBarV;
         private System.Windows.Forms.TextBox textBoxH;
         private System.Windows.Forms.TextBox textBoxS;
         private System.Windows.Forms.TextBox textBoxV;
@@ -2418,6 +2591,7 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.TabPage tabMain;
         private System.Windows.Forms.TabPage tabPresets;
         private System.Windows.Forms.TabPage tabBorders;
+        private System.Windows.Forms.TabPage tabPasswords;
         private System.Windows.Forms.TextBox textBoxPreset1;
         private System.Windows.Forms.TextBox textBoxPreset2;
         private System.Windows.Forms.TextBox textBoxPreset25;
@@ -2510,6 +2684,20 @@ namespace SGB_Palette_Editor
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem controlTypeAToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBoxBorderInfo;
+        private System.Windows.Forms.ToolStripMenuItem palettePasswordsToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBoxPasswords;
+        private System.Windows.Forms.Button buttonPasswordSetActivePalette;
+        private System.Windows.Forms.Panel panelPasswordColor1; 
+        private System.Windows.Forms.Panel panelPasswordColor2;
+        private System.Windows.Forms.Panel panelPasswordColor3;
+        private System.Windows.Forms.Panel panelPasswordColor4;
+        private System.Windows.Forms.TextBox textBoxPasswords;
+        private System.Windows.Forms.Label labelPasswordWarning;
+        private System.Windows.Forms.Label labelEnterPassword;
+        private System.Windows.Forms.Panel panelPasswordColor1bg;
+        private System.Windows.Forms.Panel panelPasswordColor3bg;
+        private System.Windows.Forms.Panel panelPasswordColor4bg;
+        private System.Windows.Forms.Panel panelPasswordColor2bg;
     }
 }
 

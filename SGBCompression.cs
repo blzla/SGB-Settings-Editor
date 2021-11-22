@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SGB_Palette_Editor
+namespace SGB_Settings_Editor
 {
     // SGB 1 Compression
     // Used in: Super Game Boy, Super Game Boy 2 (SGB2 exclusive borders are not compressed)

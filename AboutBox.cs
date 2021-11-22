@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SGB_Palette_Editor
+namespace SGB_Settings_Editor
 {
     partial class AboutBox : Form
     {

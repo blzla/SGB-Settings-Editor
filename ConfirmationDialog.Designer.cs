@@ -1,5 +1,5 @@
 ﻿
-namespace SGB_Palette_Editor
+namespace SGB_Settings_Editor
 {
     partial class ConfirmationDialog
     {

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{48C32B26-CA20-4C09-B8CA-881EA6CC8480}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SGB_Palette_Editor</RootNamespace>
+    <RootNamespace>SGB_Settings_Editor</RootNamespace>
     <AssemblyName>SGB Settings Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,7 +51,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SGB_Palette_Editor.Program</StartupObject>
+    <StartupObject>SGB_Settings_Editor.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
@@ -79,6 +79,7 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Passwords.cs" />
     <Compile Include="ConfirmationDialog.cs">
       <SubType>Form</SubType>
     </Compile>

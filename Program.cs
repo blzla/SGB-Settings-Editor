@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace SGB_Palette_Editor
+namespace SGB_Settings_Editor
 {
     public static class Program
     {
@@ -72,7 +72,7 @@ namespace SGB_Palette_Editor
         // Static variables to store data
 
         // SGB palette colors in 15bit BGR format
-        private static Int32[] palettes = new Int32[] {
+        private static ushort[] palettes = new ushort[] {
             26559, 9819, 4277, 10342, 25467, 15065, 2390, 0, 32543, 10877, 12531, 19687, 22527, 9752, 31, 106,
             23423, 16143, 8749, 4331, 32699, 10812, 21, 2304, 10240, 30336, 495, 12287, 29631, 18175, 272, 102,
             21310, 9784, 485, 0, 32767, 11199, 223, 11274, 32543, 17981, 29903, 19621, 21503, 992, 223, 10240,
@@ -143,7 +143,7 @@ namespace SGB_Palette_Editor
                 int sfcColor = ConvertRGBtoSFC(palette[j].r, palette[j].g, palette[j].b);
                 if (palettes[4 * i + j] != sfcColor)
                 {
-                    palettes[4 * i + j] = ConvertRGBtoSFC(palette[j].r, palette[j].g, palette[j].b);
+                    palettes[4 * i + j] = (ushort) ConvertRGBtoSFC(palette[j].r, palette[j].g, palette[j].b);
                     palettesChanged = true;
                 }
             }
@@ -292,11 +292,11 @@ namespace SGB_Palette_Editor
                     bool buttonTypeA = fs.ReadByte() == 0x0C;
 
                     // palettes
-                    List<int> colors = new List<int> { };
+                    List<ushort> colors = new List<ushort> { };
                     fs.Seek(0x10000, SeekOrigin.Begin);
                     for (int i = 0; i < 128; i++)
                     {
-                        int color = fs.ReadByte() + (fs.ReadByte() << 8);
+                        ushort color = (ushort) (fs.ReadByte() + (fs.ReadByte() << 8));
                         colors.Add(color);
                         if (color > 0x7FFF || color < 0) // invalid bytes || EOF
                         {

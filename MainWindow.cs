@@ -9,11 +9,10 @@ using System.Windows.Forms;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-namespace SGB_Palette_Editor
+namespace SGB_Settings_Editor
 {
     public partial class MainWindow : Form
     {
-
         private int activePaletteSlot = 0;
 
         private Color[] ActivePalette = new Color[]
@@ -417,7 +416,6 @@ namespace SGB_Palette_Editor
             attr.SetRemapTable(colorMap);
             Rectangle rect = new Rectangle(0, 0, image.Width, image.Height);
             g.DrawImage(image, rect, 0, 0, rect.Width, rect.Height, GraphicsUnit.Pixel, attr);
-
         }
 
         // Easter egg
@@ -665,18 +663,20 @@ namespace SGB_Palette_Editor
             Environment.Exit(0);
         }
 
-        private void presetsToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            tabControlMain.SelectedIndex = 1;
-            paletteEditorToolStripMenuItem.Checked = false;
-            startupBorderToolStripMenuItem.Checked = false;
-        }
-
         private void paletteEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedIndex = 0;
             presetsToolStripMenuItem.Checked = false;
             startupBorderToolStripMenuItem.Checked = false;
+            palettePasswordsToolStripMenuItem.Checked = false;
+        }
+
+        private void presetsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedIndex = 1;
+            paletteEditorToolStripMenuItem.Checked = false;
+            startupBorderToolStripMenuItem.Checked = false;
+            palettePasswordsToolStripMenuItem.Checked = false;
         }
 
         private void startupBorderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -686,7 +686,18 @@ namespace SGB_Palette_Editor
             tabControlMain.SelectedIndex = 2;
             paletteEditorToolStripMenuItem.Checked = false;
             presetsToolStripMenuItem.Checked = false;
+            palettePasswordsToolStripMenuItem.Checked = false;
         }
+
+        private void palettePasswordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedIndex = 3;
+            paletteEditorToolStripMenuItem.Checked = false;
+            presetsToolStripMenuItem.Checked = false;
+            startupBorderToolStripMenuItem.Checked = false;
+            textBoxPasswords.Focus();
+        }
+
         private void controlTypeAToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             checkBoxControls.Checked = controlTypeAToolStripMenuItem.Checked;
@@ -896,6 +907,58 @@ namespace SGB_Palette_Editor
             //pictureBoxBorder.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("sgb_borders"+(((ComboBox)sender).SelectedIndex + 1));
             if (Program.loadedBorders.Count > comboBoxBorder.SelectedIndex && Program.loadedBorders[comboBoxBorder.SelectedIndex].image != null)
                 pictureBoxBorder.Image = Program.loadedBorders[comboBoxBorder.SelectedIndex].image;
+        }
+
+        // #####################################################################################
+        // Palette Passwords
+
+        // Convert password input to colors
+        private void textBoxPasswords_TextChanged(object sender, EventArgs e)
+        {
+            var (valid, paletteDependant, palette) = Passwords.ConvertPassword(textBoxPasswords.Text);
+
+            int dashes = textBoxPasswords.Text.Count(c => c == '-');
+            if (textBoxPasswords.Text.Length - dashes > 12)
+            {
+                textBoxPasswords.Text = textBoxPasswords.Text.Substring(0, 12 + dashes);
+                textBoxPasswords.Select(12 + dashes, 0);
+            }
+
+            if (valid)
+            {
+                if (dashes == 0)
+                {
+                    textBoxPasswords.Text = textBoxPasswords.Text.Substring(0, 4) + "-" + textBoxPasswords.Text.Substring(4, 4) + "-" + textBoxPasswords.Text.Substring(8, 4);
+                    textBoxPasswords.Select(14, 0);
+                }
+
+                Panel[] colorPanels = groupBoxPasswords.Controls.OfType<Panel>().ToArray();
+                for (int i = 0; i < 4; i++)
+                {
+                    Color c = Program.ConvertTupletoColor(Program.ConvertSFCtoRGB(palette[i]));
+                    colorPanels[i].Controls[0].BackColor = c;
+                    toolTip.SetToolTip(colorPanels[i].Controls[0], "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2"));
+                }
+                labelPasswordWarning.Visible = paletteDependant;
+            }
+        }
+
+        // Copy colors from password panels to active palette
+        private void buttonPasswordSetActivePalette_Click(object sender, EventArgs e)
+        {
+            Panel[] colorPanels = groupBoxPasswords.Controls.OfType<Panel>().ToArray();
+            for (int i = 0; i < 4; i++)
+            {
+                ActivePalette[i] = colorPanels[i].Controls[0].BackColor;
+                panelPalettebg.Controls[i].BackColor = ActivePalette[i];
+            }
+
+            pictureBox.Refresh();
+            buttonResetPalette.Enabled = true;
+
+            tabControlMain.SelectedIndex = 0;
+            palettePasswordsToolStripMenuItem.Checked = false;
+            paletteEditorToolStripMenuItem.Checked = true;
         }
     }
 }
