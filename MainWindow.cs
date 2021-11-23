@@ -691,6 +691,8 @@ namespace SGB_Settings_Editor
 
         private void palettePasswordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            setPalette(activePaletteSlot);
+            ConvertPalettePassword();
             tabControlMain.SelectedIndex = 3;
             paletteEditorToolStripMenuItem.Checked = false;
             presetsToolStripMenuItem.Checked = false;
@@ -912,10 +914,10 @@ namespace SGB_Settings_Editor
         // #####################################################################################
         // Palette Passwords
 
-        // Convert password input to colors
-        private void textBoxPasswords_TextChanged(object sender, EventArgs e)
+        // Convert password input and update color panels
+        private void ConvertPalettePassword()
         {
-            var (valid, paletteDependant, palette) = Passwords.ConvertPassword(textBoxPasswords.Text);
+            var (valid, paletteDependant, palette) = Passwords.ConvertPassword(textBoxPasswords.Text, checkBoxPasswordCustom.Checked);
 
             int dashes = textBoxPasswords.Text.Count(c => c == '-');
             if (textBoxPasswords.Text.Length - dashes > 12)
@@ -941,6 +943,16 @@ namespace SGB_Settings_Editor
                 }
                 labelPasswordWarning.Visible = paletteDependant;
             }
+        }
+
+        private void textBoxPasswords_TextChanged(object sender, EventArgs e)
+        {
+            ConvertPalettePassword();
+        }
+
+        private void checkBoxPasswordCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            ConvertPalettePassword();
         }
 
         // Copy colors from password panels to active palette

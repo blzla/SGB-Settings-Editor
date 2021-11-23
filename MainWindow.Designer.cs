@@ -231,18 +231,19 @@ namespace SGB_Settings_Editor
             this.pictureBoxBorder = new System.Windows.Forms.PictureBox();
             this.tabPasswords = new System.Windows.Forms.TabPage();
             this.groupBoxPasswords = new System.Windows.Forms.GroupBox();
-            this.buttonPasswordSetActivePalette = new System.Windows.Forms.Button();
-            this.panelPasswordColor1 = new System.Windows.Forms.Panel();
-            this.panelPasswordColor2 = new System.Windows.Forms.Panel();
-            this.panelPasswordColor3 = new System.Windows.Forms.Panel();
-            this.panelPasswordColor4 = new System.Windows.Forms.Panel();
-            this.textBoxPasswords = new System.Windows.Forms.TextBox();
-            this.labelEnterPassword = new System.Windows.Forms.Label();
-            this.labelPasswordWarning = new System.Windows.Forms.Label();
             this.panelPasswordColor1bg = new System.Windows.Forms.Panel();
+            this.panelPasswordColor1 = new System.Windows.Forms.Panel();
             this.panelPasswordColor2bg = new System.Windows.Forms.Panel();
+            this.panelPasswordColor2 = new System.Windows.Forms.Panel();
             this.panelPasswordColor3bg = new System.Windows.Forms.Panel();
+            this.panelPasswordColor3 = new System.Windows.Forms.Panel();
             this.panelPasswordColor4bg = new System.Windows.Forms.Panel();
+            this.panelPasswordColor4 = new System.Windows.Forms.Panel();
+            this.labelPasswordWarning = new System.Windows.Forms.Label();
+            this.labelEnterPassword = new System.Windows.Forms.Label();
+            this.buttonPasswordSetActivePalette = new System.Windows.Forms.Button();
+            this.textBoxPasswords = new System.Windows.Forms.TextBox();
+            this.checkBoxPasswordCustom = new System.Windows.Forms.CheckBox();
             this.trackBarRed = new SGB_Settings_Editor.NoFocusTrackBar();
             this.trackBarBlue = new SGB_Settings_Editor.NoFocusTrackBar();
             this.trackBarGreen = new SGB_Settings_Editor.NoFocusTrackBar();
@@ -2241,6 +2242,7 @@ namespace SGB_Settings_Editor
             // 
             // groupBoxPasswords
             // 
+            this.groupBoxPasswords.Controls.Add(this.checkBoxPasswordCustom);
             this.groupBoxPasswords.Controls.Add(this.panelPasswordColor1bg);
             this.groupBoxPasswords.Controls.Add(this.panelPasswordColor2bg);
             this.groupBoxPasswords.Controls.Add(this.panelPasswordColor3bg);
@@ -2256,77 +2258,6 @@ namespace SGB_Settings_Editor
             this.groupBoxPasswords.TabStop = false;
             this.groupBoxPasswords.Text = "Palette Passwords";
             // 
-            // buttonPasswordSetActivePalette
-            // 
-            this.buttonPasswordSetActivePalette.Location = new System.Drawing.Point(19, 165);
-            this.buttonPasswordSetActivePalette.Name = "buttonPasswordSetActivePalette";
-            this.buttonPasswordSetActivePalette.Size = new System.Drawing.Size(117, 23);
-            this.buttonPasswordSetActivePalette.TabIndex = 1;
-            this.buttonPasswordSetActivePalette.Text = "Copy to Palette";
-            this.buttonPasswordSetActivePalette.UseVisualStyleBackColor = true;
-            this.buttonPasswordSetActivePalette.Click += new System.EventHandler(this.buttonPasswordSetActivePalette_Click);
-            // 
-            // panelPasswordColor1
-            // 
-            this.panelPasswordColor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(239)))), ((int)(((byte)(206)))));
-            this.panelPasswordColor1.Location = new System.Drawing.Point(1, 1);
-            this.panelPasswordColor1.Name = "panelPasswordColor1";
-            this.panelPasswordColor1.Size = new System.Drawing.Size(83, 69);
-            this.panelPasswordColor1.TabIndex = 2;
-            // 
-            // panelPasswordColor2
-            // 
-            this.panelPasswordColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(148)))), ((int)(((byte)(74)))));
-            this.panelPasswordColor2.Location = new System.Drawing.Point(1, 1);
-            this.panelPasswordColor2.Name = "panelPasswordColor2";
-            this.panelPasswordColor2.Size = new System.Drawing.Size(83, 69);
-            this.panelPasswordColor2.TabIndex = 3;
-            // 
-            // panelPasswordColor3
-            // 
-            this.panelPasswordColor3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(41)))), ((int)(((byte)(33)))));
-            this.panelPasswordColor3.Location = new System.Drawing.Point(1, 1);
-            this.panelPasswordColor3.Name = "panelPasswordColor3";
-            this.panelPasswordColor3.Size = new System.Drawing.Size(83, 69);
-            this.panelPasswordColor3.TabIndex = 4;
-            // 
-            // panelPasswordColor4
-            // 
-            this.panelPasswordColor4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(24)))), ((int)(((byte)(82)))));
-            this.panelPasswordColor4.Location = new System.Drawing.Point(1, 1);
-            this.panelPasswordColor4.Name = "panelPasswordColor4";
-            this.panelPasswordColor4.Size = new System.Drawing.Size(83, 69);
-            this.panelPasswordColor4.TabIndex = 5;
-            // 
-            // textBoxPasswords
-            // 
-            this.textBoxPasswords.Location = new System.Drawing.Point(142, 23);
-            this.textBoxPasswords.MaxLength = 14;
-            this.textBoxPasswords.Name = "textBoxPasswords";
-            this.textBoxPasswords.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPasswords.TabIndex = 0;
-            this.textBoxPasswords.Text = "0000-0000-0000";
-            this.textBoxPasswords.TextChanged += new System.EventHandler(this.textBoxPasswords_TextChanged);
-            // 
-            // labelEnterPassword
-            // 
-            this.labelEnterPassword.AutoSize = true;
-            this.labelEnterPassword.Location = new System.Drawing.Point(16, 26);
-            this.labelEnterPassword.Name = "labelEnterPassword";
-            this.labelEnterPassword.Size = new System.Drawing.Size(120, 13);
-            this.labelEnterPassword.TabIndex = 6;
-            this.labelEnterPassword.Text = "Enter Palette Password:";
-            // 
-            // labelPasswordWarning
-            // 
-            this.labelPasswordWarning.AutoSize = true;
-            this.labelPasswordWarning.Location = new System.Drawing.Point(19, 140);
-            this.labelPasswordWarning.Name = "labelPasswordWarning";
-            this.labelPasswordWarning.Size = new System.Drawing.Size(334, 13);
-            this.labelPasswordWarning.TabIndex = 7;
-            this.labelPasswordWarning.Text = "Warning: Password depends on palettes, using original palette colors.";
-            this.labelPasswordWarning.Visible = false;
-            // 
             // panelPasswordColor1bg
             // 
             this.panelPasswordColor1bg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
@@ -2335,6 +2266,14 @@ namespace SGB_Settings_Editor
             this.panelPasswordColor1bg.Name = "panelPasswordColor1bg";
             this.panelPasswordColor1bg.Size = new System.Drawing.Size(85, 71);
             this.panelPasswordColor1bg.TabIndex = 8;
+            // 
+            // panelPasswordColor1
+            // 
+            this.panelPasswordColor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(239)))), ((int)(((byte)(206)))));
+            this.panelPasswordColor1.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor1.Name = "panelPasswordColor1";
+            this.panelPasswordColor1.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor1.TabIndex = 2;
             // 
             // panelPasswordColor2bg
             // 
@@ -2345,6 +2284,14 @@ namespace SGB_Settings_Editor
             this.panelPasswordColor2bg.Size = new System.Drawing.Size(85, 71);
             this.panelPasswordColor2bg.TabIndex = 9;
             // 
+            // panelPasswordColor2
+            // 
+            this.panelPasswordColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(148)))), ((int)(((byte)(74)))));
+            this.panelPasswordColor2.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor2.Name = "panelPasswordColor2";
+            this.panelPasswordColor2.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor2.TabIndex = 3;
+            // 
             // panelPasswordColor3bg
             // 
             this.panelPasswordColor3bg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
@@ -2354,6 +2301,14 @@ namespace SGB_Settings_Editor
             this.panelPasswordColor3bg.Size = new System.Drawing.Size(85, 71);
             this.panelPasswordColor3bg.TabIndex = 10;
             // 
+            // panelPasswordColor3
+            // 
+            this.panelPasswordColor3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(41)))), ((int)(((byte)(33)))));
+            this.panelPasswordColor3.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor3.Name = "panelPasswordColor3";
+            this.panelPasswordColor3.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor3.TabIndex = 4;
+            // 
             // panelPasswordColor4bg
             // 
             this.panelPasswordColor4bg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
@@ -2362,6 +2317,65 @@ namespace SGB_Settings_Editor
             this.panelPasswordColor4bg.Name = "panelPasswordColor4bg";
             this.panelPasswordColor4bg.Size = new System.Drawing.Size(85, 71);
             this.panelPasswordColor4bg.TabIndex = 10;
+            // 
+            // panelPasswordColor4
+            // 
+            this.panelPasswordColor4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(24)))), ((int)(((byte)(82)))));
+            this.panelPasswordColor4.Location = new System.Drawing.Point(1, 1);
+            this.panelPasswordColor4.Name = "panelPasswordColor4";
+            this.panelPasswordColor4.Size = new System.Drawing.Size(83, 69);
+            this.panelPasswordColor4.TabIndex = 5;
+            // 
+            // labelPasswordWarning
+            // 
+            this.labelPasswordWarning.AutoSize = true;
+            this.labelPasswordWarning.Location = new System.Drawing.Point(19, 183);
+            this.labelPasswordWarning.Name = "labelPasswordWarning";
+            this.labelPasswordWarning.Size = new System.Drawing.Size(467, 13);
+            this.labelPasswordWarning.TabIndex = 7;
+            this.labelPasswordWarning.Text = "Warning: This password uses colors from base palettes. Changing the palettes will" +
+    " alter the colors.";
+            this.labelPasswordWarning.Visible = false;
+            // 
+            // labelEnterPassword
+            // 
+            this.labelEnterPassword.AutoSize = true;
+            this.labelEnterPassword.Location = new System.Drawing.Point(16, 26);
+            this.labelEnterPassword.Name = "labelEnterPassword";
+            this.labelEnterPassword.Size = new System.Drawing.Size(120, 13);
+            this.labelEnterPassword.TabIndex = 6;
+            this.labelEnterPassword.Text = "Enter Palette Password:";
+            // 
+            // buttonPasswordSetActivePalette
+            // 
+            this.buttonPasswordSetActivePalette.Location = new System.Drawing.Point(19, 142);
+            this.buttonPasswordSetActivePalette.Name = "buttonPasswordSetActivePalette";
+            this.buttonPasswordSetActivePalette.Size = new System.Drawing.Size(117, 23);
+            this.buttonPasswordSetActivePalette.TabIndex = 1;
+            this.buttonPasswordSetActivePalette.Text = "Copy to Palette";
+            this.buttonPasswordSetActivePalette.UseVisualStyleBackColor = true;
+            this.buttonPasswordSetActivePalette.Click += new System.EventHandler(this.buttonPasswordSetActivePalette_Click);
+            // 
+            // textBoxPasswords
+            // 
+            this.textBoxPasswords.Location = new System.Drawing.Point(142, 23);
+            this.textBoxPasswords.MaxLength = 14;
+            this.textBoxPasswords.Name = "textBoxPasswords";
+            this.textBoxPasswords.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPasswords.TabIndex = 0;
+            this.textBoxPasswords.Text = "7207-2072-0720";
+            this.textBoxPasswords.TextChanged += new System.EventHandler(this.textBoxPasswords_TextChanged);
+            // 
+            // checkBoxPasswordCustom
+            // 
+            this.checkBoxPasswordCustom.AutoSize = true;
+            this.checkBoxPasswordCustom.Location = new System.Drawing.Point(253, 25);
+            this.checkBoxPasswordCustom.Name = "checkBoxPasswordCustom";
+            this.checkBoxPasswordCustom.Size = new System.Drawing.Size(176, 17);
+            this.checkBoxPasswordCustom.TabIndex = 11;
+            this.checkBoxPasswordCustom.Text = "Use colors from custom palettes\r\n";
+            this.checkBoxPasswordCustom.UseVisualStyleBackColor = true;
+            this.checkBoxPasswordCustom.CheckedChanged += new System.EventHandler(this.checkBoxPasswordCustom_CheckedChanged);
             // 
             // trackBarRed
             // 
@@ -2698,6 +2712,7 @@ namespace SGB_Settings_Editor
         private System.Windows.Forms.Panel panelPasswordColor3bg;
         private System.Windows.Forms.Panel panelPasswordColor4bg;
         private System.Windows.Forms.Panel panelPasswordColor2bg;
+        private System.Windows.Forms.CheckBox checkBoxPasswordCustom;
     }
 }
 

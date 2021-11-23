@@ -15,6 +15,8 @@ namespace SGB_Settings_Editor
         [STAThread]
         static void Main()
         {
+            Array.Copy(palettes, default_palettes, 128);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());
@@ -82,6 +84,7 @@ namespace SGB_Settings_Editor
             14014, 32431, 26650, 15360, 31678, 12957, 7656, 1059, 29599, 27291, 29331, 1, 24575, 26418, 15785, 9345,
             22399, 16060, 17775, 6272, 27479, 28187, 20496, 7, 3990, 11415, 69, 12800, 26623, 12055, 8752, 5448
         };
+        private static ushort[] default_palettes = new ushort[128];
         private static bool palettesChanged = false;
 
         // Default game presets
@@ -147,6 +150,12 @@ namespace SGB_Settings_Editor
                     palettesChanged = true;
                 }
             }
+        }
+
+        // Return single color from palette
+        public static ushort GetPaletteValue(int i, int n, bool original = false)
+        {
+            return original ? default_palettes[4 * i + n] : palettes[4 * i + n];
         }
 
         // Store game preset in 'gamePresets'
