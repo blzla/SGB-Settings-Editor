@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SGB_Settings_Editor
+﻿namespace SGB_Settings_Editor
 {
     // Convert SGB passwords to color palette
     public static class Passwords
@@ -177,8 +175,7 @@ namespace SGB_Settings_Editor
             A = (ushort)(A << 5);
             A = (ushort)((cc & 0x7c1f) | A);
             cc = A;
-            A &= 0x001f;
-            A = sub(A);
+            A = sub((ushort)(A & 0x001f));
             A = (ushort)((cc & 0x7fe0) | A);
             return A;
         }
