@@ -666,15 +666,17 @@ namespace SGB_Settings_Editor
         private void paletteEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedIndex = 0;
+            paletteEditorToolStripMenuItem.Checked = true;
             presetsToolStripMenuItem.Checked = false;
             startupBorderToolStripMenuItem.Checked = false;
             palettePasswordsToolStripMenuItem.Checked = false;
         }
 
-        private void presetsToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void presetsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedIndex = 1;
             paletteEditorToolStripMenuItem.Checked = false;
+            presetsToolStripMenuItem.Checked = true;
             startupBorderToolStripMenuItem.Checked = false;
             palettePasswordsToolStripMenuItem.Checked = false;
         }
@@ -686,6 +688,7 @@ namespace SGB_Settings_Editor
             tabControlMain.SelectedIndex = 2;
             paletteEditorToolStripMenuItem.Checked = false;
             presetsToolStripMenuItem.Checked = false;
+            startupBorderToolStripMenuItem.Checked = true;
             palettePasswordsToolStripMenuItem.Checked = false;
         }
 
@@ -697,6 +700,7 @@ namespace SGB_Settings_Editor
             paletteEditorToolStripMenuItem.Checked = false;
             presetsToolStripMenuItem.Checked = false;
             startupBorderToolStripMenuItem.Checked = false;
+            palettePasswordsToolStripMenuItem.Checked = true;
             textBoxPasswords.Focus();
         }
 
@@ -968,9 +972,14 @@ namespace SGB_Settings_Editor
             pictureBox.Refresh();
             buttonResetPalette.Enabled = true;
 
-            tabControlMain.SelectedIndex = 0;
-            palettePasswordsToolStripMenuItem.Checked = false;
-            paletteEditorToolStripMenuItem.Checked = true;
+            paletteEditorToolStripMenuItem_Click(sender, e);
+        }
+
+        // Move clicked on color to edit slot
+        private void panelPasswordColor_Click(object sender, EventArgs e)
+        {
+            setColorinputs(((Panel)sender).BackColor, true, true);
+            paletteEditorToolStripMenuItem_Click(sender, e);
         }
     }
 }

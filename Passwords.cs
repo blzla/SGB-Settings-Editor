@@ -80,60 +80,48 @@
             return change_shade(base_color, shade);
         }
 
-        private delegate ushort subroutine(ushort A);
+        private delegate int subroutine(int c);
 
         // $00:E629
-        // reverse engineered
-        private static ushort sub0(ushort A)
+        private static int light3(int c)
         {
-            return (ushort)(0x001f - ((0x001f - A) >> 2));
+            return 24 + (c >> 2);
         }
 
         // $00:E642
-        // reverse engineered
-        private static ushort sub1(ushort A)
+        private static int light2(int c)
         {
-            return (ushort)(0x001f - (((0x001f - A) >> 1) & 0xfffe));
+            return 17 + 2 * (c >> 2);
         }
 
         // $00:E65D
-        // reverse engineered
-        private static ushort sub2(ushort A)
+        private static int light1(int c)
         {
-            A = (ushort)((0x001f - A) >> 2);
-            A = (ushort)((A << 1) + A);
-            A = (ushort)(0x001f - A);
-            return A;
+            return 10 + 3 * (c >> 2);
         }
 
         // $00:E67E
-        // reverse engineered
-        private static ushort sub3(ushort A)
+        private static int nochange(int c)
         {
-            return A;
+            return c;
         }
 
         // $00:E67F
-        // reverse engineered
-        private static ushort sub4(ushort A)
+        private static int dark1(int c)
         {
-            A = (ushort)(A >> 2);
-            A = (ushort)((A << 1) + A);
-            return A;
+            return 3 * (c >> 2);
         }
 
         // $00:E692
-        // reverse engineered
-        private static ushort sub5(ushort A)
+        private static int dark2(int c)
         {
-            return (ushort)((A >> 1) & 0xfffe);
+            return 2 * (c >> 2);
         }
 
         // $00:E69F
-        // reverse engineered
-        private static ushort sub6(ushort A)
+        private static int dark3(int c)
         {
-            return (ushort)(A >> 2);
+            return c >> 2;
         }
 
         // $00:E5B9
@@ -144,40 +132,32 @@
             switch (shade)
             {
                 case 0:
-                    sub = new subroutine(sub0);
+                    sub = new subroutine(light3);
                     break;
                 case 1:
-                    sub = new subroutine(sub1);
+                    sub = new subroutine(light2);
                     break;
                 case 2:
-                    sub = new subroutine(sub2);
+                    sub = new subroutine(light1);
                     break;
                 case 4:
-                    sub = new subroutine(sub4);
+                    sub = new subroutine(dark1);
                     break;
                 case 5:
-                    sub = new subroutine(sub5);
+                    sub = new subroutine(dark2);
                     break;
                 case 6:
-                    sub = new subroutine(sub6);
+                    sub = new subroutine(dark3);
                     break;
                 default:
-                    sub = new subroutine(sub3);
+                    sub = new subroutine(nochange);
                     break;
             }
 
-            ushort A, cc;
-            A = sub((ushort)((base_color >> 10) & 0x001f));
-            A = (ushort)(A << 10);
-            A = (ushort)((base_color & 0x03ff) | A);
-            cc = A;
-            A = sub((ushort)((A >> 5) & 0x001f));
-            A = (ushort)(A << 5);
-            A = (ushort)((cc & 0x7c1f) | A);
-            cc = A;
-            A = sub((ushort)(A & 0x001f));
-            A = (ushort)((cc & 0x7fe0) | A);
-            return A;
+            int r = base_color & 0x001f;
+            int g = (base_color & 0x03e0) >> 5;
+            int b = (base_color & 0x7c00) >> 10;
+            return (ushort)(sub(r) + (sub(g) << 5) + (sub(b) << 10));
         }
     }
 }
