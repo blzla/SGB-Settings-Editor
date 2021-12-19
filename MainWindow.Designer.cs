@@ -69,12 +69,10 @@ namespace SGB_Settings_Editor
             this.panelClipboard6 = new System.Windows.Forms.Panel();
             this.panelClipboard7 = new System.Windows.Forms.Panel();
             this.panelClipboard8 = new System.Windows.Forms.Panel();
-            this.buttonIps = new System.Windows.Forms.Button();
             this.labelGame = new System.Windows.Forms.Label();
             this.comboBoxGame = new System.Windows.Forms.ComboBox();
             this.labelClick = new System.Windows.Forms.Label();
             this.buttonStore1 = new System.Windows.Forms.Button();
-            this.comboBoxVersion = new System.Windows.Forms.ComboBox();
             this.labelPalette = new System.Windows.Forms.Label();
             this.labelHexcolor = new System.Windows.Forms.Label();
             this.labelSnescolor = new System.Windows.Forms.Label();
@@ -128,17 +126,20 @@ namespace SGB_Settings_Editor
             this.buttonStore3 = new System.Windows.Forms.Button();
             this.buttonLoad3 = new System.Windows.Forms.Button();
             this.groupBoxPalette = new System.Windows.Forms.GroupBox();
+            this.labelPaletteInputBox = new System.Windows.Forms.Label();
             this.buttonResetPalette = new System.Windows.Forms.Button();
+            this.textBoxCurrentPalette = new System.Windows.Forms.TextBox();
             this.labelStore = new System.Windows.Forms.Label();
             this.labelLoad = new System.Windows.Forms.Label();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.buttonReadGB = new System.Windows.Forms.Button();
             this.groupBoxExport = new System.Windows.Forms.GroupBox();
-            this.labelVersion = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importPalettesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportPalettesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -153,6 +154,7 @@ namespace SGB_Settings_Editor
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
+            this.groupBoxControls = new System.Windows.Forms.GroupBox();
             this.tabPresets = new System.Windows.Forms.TabPage();
             this.groupBoxPresets = new System.Windows.Forms.GroupBox();
             this.textBoxPreset1 = new System.Windows.Forms.TextBox();
@@ -227,6 +229,7 @@ namespace SGB_Settings_Editor
             this.textBoxPreset70 = new System.Windows.Forms.TextBox();
             this.textBoxPreset71 = new System.Windows.Forms.TextBox();
             this.textBoxPreset72 = new System.Windows.Forms.TextBox();
+            this.labelPresetsInfo = new System.Windows.Forms.Label();
             this.tabBorders = new System.Windows.Forms.TabPage();
             this.groupBoxBorder = new System.Windows.Forms.GroupBox();
             this.groupBoxBorderInfo = new System.Windows.Forms.GroupBox();
@@ -250,6 +253,10 @@ namespace SGB_Settings_Editor
             this.labelEnterPassword = new System.Windows.Forms.Label();
             this.buttonPasswordSetActivePalette = new System.Windows.Forms.Button();
             this.textBoxPasswords = new System.Windows.Forms.TextBox();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripMenuDivider1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuDivider2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportPalettescsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelPalettebg.SuspendLayout();
             this.screenshotPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -271,6 +278,7 @@ namespace SGB_Settings_Editor
             this.menuStrip.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabMain.SuspendLayout();
+            this.groupBoxControls.SuspendLayout();
             this.tabPresets.SuspendLayout();
             this.groupBoxPresets.SuspendLayout();
             this.tabBorders.SuspendLayout();
@@ -374,7 +382,7 @@ namespace SGB_Settings_Editor
             this.comboBoxPaletteslot.Location = new System.Drawing.Point(106, 19);
             this.comboBoxPaletteslot.Name = "comboBoxPaletteslot";
             this.comboBoxPaletteslot.Size = new System.Drawing.Size(70, 21);
-            this.comboBoxPaletteslot.TabIndex = 11;
+            this.comboBoxPaletteslot.TabIndex = 0;
             this.comboBoxPaletteslot.Text = "1-A";
             this.comboBoxPaletteslot.SelectedValueChanged += new System.EventHandler(this.comboBoxPaletteslot_SelectedValueChanged);
             // 
@@ -519,17 +527,6 @@ namespace SGB_Settings_Editor
             this.panelClipboard8.TabIndex = 99;
             this.panelClipboard8.Click += new System.EventHandler(this.storagepanelClick);
             // 
-            // buttonIps
-            // 
-            this.buttonIps.Location = new System.Drawing.Point(255, 87);
-            this.buttonIps.Name = "buttonIps";
-            this.buttonIps.Size = new System.Drawing.Size(125, 23);
-            this.buttonIps.TabIndex = 25;
-            this.buttonIps.Text = "Generate ips patch";
-            this.toolTip.SetToolTip(this.buttonIps, "Generate an ips patch and share it!");
-            this.buttonIps.UseVisualStyleBackColor = true;
-            this.buttonIps.Click += new System.EventHandler(this.buttonIps_Click);
-            // 
             // labelGame
             // 
             this.labelGame.AutoSize = true;
@@ -560,30 +557,13 @@ namespace SGB_Settings_Editor
             // 
             // buttonStore1
             // 
-            this.buttonStore1.Location = new System.Drawing.Point(24, 143);
+            this.buttonStore1.Location = new System.Drawing.Point(24, 194);
             this.buttonStore1.Name = "buttonStore1";
             this.buttonStore1.Size = new System.Drawing.Size(44, 23);
-            this.buttonStore1.TabIndex = 14;
+            this.buttonStore1.TabIndex = 3;
             this.buttonStore1.Text = "Slot 1";
             this.buttonStore1.UseVisualStyleBackColor = true;
             this.buttonStore1.Click += new System.EventHandler(this.buttonStorePalette_Click);
-            // 
-            // comboBoxVersion
-            // 
-            this.comboBoxVersion.FormattingEnabled = true;
-            this.comboBoxVersion.Items.AddRange(new object[] {
-            "Super Game Boy 2 (Japan)",
-            "Super Game Boy (World) (Rev 2)",
-            "Super Game Boy (Japan, USA) (Rev 1)",
-            "Super Game Boy (Japan)",
-            "Super Game Boy (Japan, USA) (Beta)"});
-            this.comboBoxVersion.Location = new System.Drawing.Point(188, 54);
-            this.comboBoxVersion.Name = "comboBoxVersion";
-            this.comboBoxVersion.Size = new System.Drawing.Size(192, 21);
-            this.comboBoxVersion.TabIndex = 22;
-            this.comboBoxVersion.Text = "Super Game Boy 2 (Japan)";
-            this.toolTip.SetToolTip(this.comboBoxVersion, "Optional, only used for patch export.");
-            this.comboBoxVersion.SelectedIndexChanged += new System.EventHandler(this.comboBoxVersion_SelectedIndexChanged);
             // 
             // labelPalette
             // 
@@ -615,30 +595,30 @@ namespace SGB_Settings_Editor
             // 
             // buttonStore2
             // 
-            this.buttonStore2.Location = new System.Drawing.Point(74, 143);
+            this.buttonStore2.Location = new System.Drawing.Point(74, 194);
             this.buttonStore2.Name = "buttonStore2";
             this.buttonStore2.Size = new System.Drawing.Size(44, 23);
-            this.buttonStore2.TabIndex = 15;
+            this.buttonStore2.TabIndex = 4;
             this.buttonStore2.Text = "Slot 2";
             this.buttonStore2.UseVisualStyleBackColor = true;
             this.buttonStore2.Click += new System.EventHandler(this.buttonStorePalette_Click);
             // 
             // buttonLoad1
             // 
-            this.buttonLoad1.Location = new System.Drawing.Point(24, 189);
+            this.buttonLoad1.Location = new System.Drawing.Point(24, 240);
             this.buttonLoad1.Name = "buttonLoad1";
             this.buttonLoad1.Size = new System.Drawing.Size(44, 23);
-            this.buttonLoad1.TabIndex = 17;
+            this.buttonLoad1.TabIndex = 6;
             this.buttonLoad1.Text = "Slot 1";
             this.buttonLoad1.UseVisualStyleBackColor = true;
             this.buttonLoad1.Click += new System.EventHandler(this.buttonLoadPalette_Click);
             // 
             // buttonLoad2
             // 
-            this.buttonLoad2.Location = new System.Drawing.Point(74, 189);
+            this.buttonLoad2.Location = new System.Drawing.Point(74, 240);
             this.buttonLoad2.Name = "buttonLoad2";
             this.buttonLoad2.Size = new System.Drawing.Size(44, 23);
-            this.buttonLoad2.TabIndex = 18;
+            this.buttonLoad2.TabIndex = 7;
             this.buttonLoad2.Text = "Slot 2";
             this.buttonLoad2.UseVisualStyleBackColor = true;
             this.buttonLoad2.Click += new System.EventHandler(this.buttonLoadPalette_Click);
@@ -650,23 +630,21 @@ namespace SGB_Settings_Editor
             // 
             // buttonImport
             // 
-            this.buttonImport.Location = new System.Drawing.Point(25, 87);
+            this.buttonImport.Location = new System.Drawing.Point(30, 32);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(100, 23);
-            this.buttonImport.TabIndex = 23;
-            this.buttonImport.Text = "Import from .sfc";
-            this.toolTip.SetToolTip(this.buttonImport, "Import palettes from SGB rom file.");
+            this.buttonImport.Size = new System.Drawing.Size(140, 23);
+            this.buttonImport.TabIndex = 0;
+            this.buttonImport.Text = "Import settings from .sfc";
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // buttonModify
             // 
-            this.buttonModify.Location = new System.Drawing.Point(141, 87);
+            this.buttonModify.Location = new System.Drawing.Point(195, 32);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(100, 23);
-            this.buttonModify.TabIndex = 24;
-            this.buttonModify.Text = "Modify .sfc";
-            this.toolTip.SetToolTip(this.buttonModify, "Modify SGB rom file with your custom palettes.");
+            this.buttonModify.Size = new System.Drawing.Size(140, 23);
+            this.buttonModify.TabIndex = 1;
+            this.buttonModify.Text = "Save settings to .sfc";
             this.buttonModify.UseVisualStyleBackColor = true;
             this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
             // 
@@ -674,7 +652,7 @@ namespace SGB_Settings_Editor
             // 
             this.screenshotPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
             this.screenshotPanel.Controls.Add(this.pictureBox);
-            this.screenshotPanel.Location = new System.Drawing.Point(15, 54);
+            this.screenshotPanel.Location = new System.Drawing.Point(15, 52);
             this.screenshotPanel.Name = "screenshotPanel";
             this.screenshotPanel.Size = new System.Drawing.Size(162, 146);
             this.screenshotPanel.TabIndex = 99;
@@ -1020,7 +998,7 @@ namespace SGB_Settings_Editor
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 420);
+            this.statusStrip.Location = new System.Drawing.Point(0, 419);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(788, 22);
             this.statusStrip.SizingGrip = false;
@@ -1035,11 +1013,11 @@ namespace SGB_Settings_Editor
             // checkBoxControls
             // 
             this.checkBoxControls.AutoSize = true;
-            this.checkBoxControls.Location = new System.Drawing.Point(26, 27);
+            this.checkBoxControls.Location = new System.Drawing.Point(15, 19);
             this.checkBoxControls.Name = "checkBoxControls";
-            this.checkBoxControls.Size = new System.Drawing.Size(187, 17);
-            this.checkBoxControls.TabIndex = 21;
-            this.checkBoxControls.Text = "Change default controls to Type A";
+            this.checkBoxControls.Size = new System.Drawing.Size(152, 17);
+            this.checkBoxControls.TabIndex = 2;
+            this.checkBoxControls.Text = "Change controls to Type A";
             this.toolTip.SetToolTip(this.checkBoxControls, "Type A: SNES B button = Game Boy A button");
             this.checkBoxControls.UseVisualStyleBackColor = true;
             this.checkBoxControls.CheckedChanged += new System.EventHandler(this.checkBoxControls_CheckedChanged);
@@ -1120,27 +1098,29 @@ namespace SGB_Settings_Editor
             // 
             // buttonStore3
             // 
-            this.buttonStore3.Location = new System.Drawing.Point(124, 143);
+            this.buttonStore3.Location = new System.Drawing.Point(124, 194);
             this.buttonStore3.Name = "buttonStore3";
             this.buttonStore3.Size = new System.Drawing.Size(44, 23);
-            this.buttonStore3.TabIndex = 16;
+            this.buttonStore3.TabIndex = 5;
             this.buttonStore3.Text = "Slot 3";
             this.buttonStore3.UseVisualStyleBackColor = true;
             this.buttonStore3.Click += new System.EventHandler(this.buttonStorePalette_Click);
             // 
             // buttonLoad3
             // 
-            this.buttonLoad3.Location = new System.Drawing.Point(124, 189);
+            this.buttonLoad3.Location = new System.Drawing.Point(124, 240);
             this.buttonLoad3.Name = "buttonLoad3";
             this.buttonLoad3.Size = new System.Drawing.Size(44, 23);
-            this.buttonLoad3.TabIndex = 19;
+            this.buttonLoad3.TabIndex = 8;
             this.buttonLoad3.Text = "Slot 3";
             this.buttonLoad3.UseVisualStyleBackColor = true;
             this.buttonLoad3.Click += new System.EventHandler(this.buttonLoadPalette_Click);
             // 
             // groupBoxPalette
             // 
+            this.groupBoxPalette.Controls.Add(this.labelPaletteInputBox);
             this.groupBoxPalette.Controls.Add(this.buttonResetPalette);
+            this.groupBoxPalette.Controls.Add(this.textBoxCurrentPalette);
             this.groupBoxPalette.Controls.Add(this.buttonStore3);
             this.groupBoxPalette.Controls.Add(this.labelStore);
             this.groupBoxPalette.Controls.Add(this.buttonStore1);
@@ -1155,10 +1135,19 @@ namespace SGB_Settings_Editor
             this.groupBoxPalette.Controls.Add(this.labelClick);
             this.groupBoxPalette.Location = new System.Drawing.Point(366, 4);
             this.groupBoxPalette.Name = "groupBoxPalette";
-            this.groupBoxPalette.Size = new System.Drawing.Size(190, 225);
+            this.groupBoxPalette.Size = new System.Drawing.Size(190, 277);
             this.groupBoxPalette.TabIndex = 1;
             this.groupBoxPalette.TabStop = false;
             this.groupBoxPalette.Text = "Palette";
+            // 
+            // labelPaletteInputBox
+            // 
+            this.labelPaletteInputBox.AutoSize = true;
+            this.labelPaletteInputBox.Location = new System.Drawing.Point(12, 128);
+            this.labelPaletteInputBox.Name = "labelPaletteInputBox";
+            this.labelPaletteInputBox.Size = new System.Drawing.Size(140, 13);
+            this.labelPaletteInputBox.TabIndex = 100;
+            this.labelPaletteInputBox.Text = "Palette String (copy && paste)";
             // 
             // buttonResetPalette
             // 
@@ -1166,16 +1155,25 @@ namespace SGB_Settings_Editor
             this.buttonResetPalette.Location = new System.Drawing.Point(106, 54);
             this.buttonResetPalette.Name = "buttonResetPalette";
             this.buttonResetPalette.Size = new System.Drawing.Size(70, 23);
-            this.buttonResetPalette.TabIndex = 13;
+            this.buttonResetPalette.TabIndex = 1;
             this.buttonResetPalette.Text = "Reset";
             this.toolTip.SetToolTip(this.buttonResetPalette, "Reset current palette.");
             this.buttonResetPalette.UseVisualStyleBackColor = true;
             this.buttonResetPalette.Click += new System.EventHandler(this.buttonResetPalette_Click);
             // 
+            // textBoxCurrentPalette
+            // 
+            this.textBoxCurrentPalette.Location = new System.Drawing.Point(24, 148);
+            this.textBoxCurrentPalette.MaxLength = 16;
+            this.textBoxCurrentPalette.Name = "textBoxCurrentPalette";
+            this.textBoxCurrentPalette.Size = new System.Drawing.Size(144, 20);
+            this.textBoxCurrentPalette.TabIndex = 2;
+            this.textBoxCurrentPalette.TextChanged += new System.EventHandler(this.textBoxCurrentPalette_TextChanged);
+            // 
             // labelStore
             // 
             this.labelStore.AutoSize = true;
-            this.labelStore.Location = new System.Drawing.Point(12, 126);
+            this.labelStore.Location = new System.Drawing.Point(12, 177);
             this.labelStore.Name = "labelStore";
             this.labelStore.Size = new System.Drawing.Size(89, 13);
             this.labelStore.TabIndex = 99;
@@ -1184,7 +1182,7 @@ namespace SGB_Settings_Editor
             // labelLoad
             // 
             this.labelLoad.AutoSize = true;
-            this.labelLoad.Location = new System.Drawing.Point(12, 172);
+            this.labelLoad.Location = new System.Drawing.Point(12, 223);
             this.labelLoad.Name = "labelLoad";
             this.labelLoad.Size = new System.Drawing.Size(100, 13);
             this.labelLoad.TabIndex = 99;
@@ -1197,7 +1195,7 @@ namespace SGB_Settings_Editor
             this.groupBoxPreview.Controls.Add(this.labelGame);
             this.groupBoxPreview.Location = new System.Drawing.Point(576, 4);
             this.groupBoxPreview.Name = "groupBoxPreview";
-            this.groupBoxPreview.Size = new System.Drawing.Size(191, 225);
+            this.groupBoxPreview.Size = new System.Drawing.Size(191, 215);
             this.groupBoxPreview.TabIndex = 2;
             this.groupBoxPreview.TabStop = false;
             this.groupBoxPreview.Text = "Preview";
@@ -1215,27 +1213,14 @@ namespace SGB_Settings_Editor
             // 
             // groupBoxExport
             // 
-            this.groupBoxExport.Controls.Add(this.labelVersion);
             this.groupBoxExport.Controls.Add(this.buttonImport);
             this.groupBoxExport.Controls.Add(this.buttonModify);
-            this.groupBoxExport.Controls.Add(this.buttonIps);
-            this.groupBoxExport.Controls.Add(this.comboBoxVersion);
-            this.groupBoxExport.Controls.Add(this.checkBoxControls);
-            this.groupBoxExport.Location = new System.Drawing.Point(366, 242);
+            this.groupBoxExport.Location = new System.Drawing.Point(366, 292);
             this.groupBoxExport.Name = "groupBoxExport";
-            this.groupBoxExport.Size = new System.Drawing.Size(401, 125);
-            this.groupBoxExport.TabIndex = 3;
+            this.groupBoxExport.Size = new System.Drawing.Size(401, 75);
+            this.groupBoxExport.TabIndex = 4;
             this.groupBoxExport.TabStop = false;
             this.groupBoxExport.Text = "Import / Export";
-            // 
-            // labelVersion
-            // 
-            this.labelVersion.AutoSize = true;
-            this.labelVersion.Location = new System.Drawing.Point(23, 57);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(163, 13);
-            this.labelVersion.TabIndex = 99;
-            this.labelVersion.Text = "Select SGB version for ips patch:";
             // 
             // menuStrip
             // 
@@ -1257,6 +1242,11 @@ namespace SGB_Settings_Editor
             this.importToolStripMenuItem,
             this.modifyToolStripMenuItem,
             this.savePatchToolStripMenuItem,
+            this.toolStripMenuDivider1,
+            this.importPalettesToolStripMenuItem,
+            this.exportPalettesToolStripMenuItem,
+            this.exportPalettescsvToolStripMenuItem,
+            this.toolStripMenuDivider2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -1265,16 +1255,34 @@ namespace SGB_Settings_Editor
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem.Text = "Load Data";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.buttonImport_Click);
             this.importToolStripMenuItem.MouseEnter += new System.EventHandler(this.importToolStripMenuItem_MouseEnter);
             this.importToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
+            // importPalettesToolStripMenuItem
+            // 
+            this.importPalettesToolStripMenuItem.Name = "importPalettesToolStripMenuItem";
+            this.importPalettesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importPalettesToolStripMenuItem.Text = "Import Palettes";
+            this.importPalettesToolStripMenuItem.Click += new System.EventHandler(this.importPalettesToolStripMenuItem_Click);
+            this.importPalettesToolStripMenuItem.MouseEnter += new System.EventHandler(this.importPalettesToolStripMenuItem_MouseEnter);
+            this.importPalettesToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            // 
+            // exportPalettesToolStripMenuItem
+            // 
+            this.exportPalettesToolStripMenuItem.Name = "exportPalettesToolStripMenuItem";
+            this.exportPalettesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportPalettesToolStripMenuItem.Text = "Export Palettes";
+            this.exportPalettesToolStripMenuItem.Click += new System.EventHandler(this.exportPalettesToolStripMenuItem_Click);
+            this.exportPalettesToolStripMenuItem.MouseEnter += new System.EventHandler(this.exportPalettesToolStripMenuItem_MouseEnter);
+            this.exportPalettesToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            // 
             // modifyToolStripMenuItem
             // 
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.modifyToolStripMenuItem.Text = "Modify Rom File";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.buttonModify_Click);
             this.modifyToolStripMenuItem.MouseEnter += new System.EventHandler(this.modifyToolStripMenuItem_MouseEnter);
@@ -1283,7 +1291,7 @@ namespace SGB_Settings_Editor
             // savePatchToolStripMenuItem
             // 
             this.savePatchToolStripMenuItem.Name = "savePatchToolStripMenuItem";
-            this.savePatchToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.savePatchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.savePatchToolStripMenuItem.Text = "Save IPS Patch";
             this.savePatchToolStripMenuItem.Click += new System.EventHandler(this.buttonIps_Click);
             this.savePatchToolStripMenuItem.MouseEnter += new System.EventHandler(this.savePatchToolStripMenuItem_MouseEnter);
@@ -1292,7 +1300,7 @@ namespace SGB_Settings_Editor
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1314,7 +1322,7 @@ namespace SGB_Settings_Editor
             this.paletteEditorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.paletteEditorToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.paletteEditorToolStripMenuItem.Name = "paletteEditorToolStripMenuItem";
-            this.paletteEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paletteEditorToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.paletteEditorToolStripMenuItem.Text = "Palette Editor";
             this.paletteEditorToolStripMenuItem.Click += new System.EventHandler(this.paletteEditorToolStripMenuItem_Click);
             // 
@@ -1322,7 +1330,7 @@ namespace SGB_Settings_Editor
             // 
             this.presetsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.presetsToolStripMenuItem.Name = "presetsToolStripMenuItem";
-            this.presetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.presetsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.presetsToolStripMenuItem.Text = "Game Presets";
             this.presetsToolStripMenuItem.Click += new System.EventHandler(this.presetsToolStripMenuItem_Click);
             // 
@@ -1330,14 +1338,14 @@ namespace SGB_Settings_Editor
             // 
             this.startupBorderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.startupBorderToolStripMenuItem.Name = "startupBorderToolStripMenuItem";
-            this.startupBorderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startupBorderToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.startupBorderToolStripMenuItem.Text = "Startup Border";
             this.startupBorderToolStripMenuItem.Click += new System.EventHandler(this.startupBorderToolStripMenuItem_Click);
             // 
             // palettePasswordsToolStripMenuItem
             // 
             this.palettePasswordsToolStripMenuItem.Name = "palettePasswordsToolStripMenuItem";
-            this.palettePasswordsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.palettePasswordsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.palettePasswordsToolStripMenuItem.Text = "Palette Passwords";
             this.palettePasswordsToolStripMenuItem.Click += new System.EventHandler(this.palettePasswordsToolStripMenuItem_Click);
             // 
@@ -1393,6 +1401,7 @@ namespace SGB_Settings_Editor
             // tabMain
             // 
             this.tabMain.BackColor = System.Drawing.SystemColors.Control;
+            this.tabMain.Controls.Add(this.groupBoxControls);
             this.tabMain.Controls.Add(this.groupBoxClipboard);
             this.tabMain.Controls.Add(this.groupBoxExport);
             this.tabMain.Controls.Add(this.groupBoxEditColor);
@@ -1404,6 +1413,16 @@ namespace SGB_Settings_Editor
             this.tabMain.Size = new System.Drawing.Size(780, 381);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main";
+            // 
+            // groupBoxControls
+            // 
+            this.groupBoxControls.Controls.Add(this.checkBoxControls);
+            this.groupBoxControls.Location = new System.Drawing.Point(576, 233);
+            this.groupBoxControls.Name = "groupBoxControls";
+            this.groupBoxControls.Size = new System.Drawing.Size(191, 48);
+            this.groupBoxControls.TabIndex = 3;
+            this.groupBoxControls.TabStop = false;
+            this.groupBoxControls.Text = "Controls";
             // 
             // tabPresets
             // 
@@ -1491,6 +1510,7 @@ namespace SGB_Settings_Editor
             this.groupBoxPresets.Controls.Add(this.textBoxPreset71);
             this.groupBoxPresets.Controls.Add(this.textBoxPreset72);
             this.groupBoxPresets.Controls.Add(this.buttonReadGB);
+            this.groupBoxPresets.Controls.Add(this.labelPresetsInfo);
             this.groupBoxPresets.Location = new System.Drawing.Point(11, 4);
             this.groupBoxPresets.Name = "groupBoxPresets";
             this.groupBoxPresets.Size = new System.Drawing.Size(663, 373);
@@ -2182,6 +2202,15 @@ namespace SGB_Settings_Editor
             this.textBoxPreset72.TextChanged += new System.EventHandler(this.textBoxPreset_TextChanged);
             this.textBoxPreset72.Leave += new System.EventHandler(this.textBoxPreset_Leave);
             // 
+            // labelPresetsInfo
+            // 
+            this.labelPresetsInfo.AutoSize = true;
+            this.labelPresetsInfo.Location = new System.Drawing.Point(435, 346);
+            this.labelPresetsInfo.Name = "labelPresetsInfo";
+            this.labelPresetsInfo.Size = new System.Drawing.Size(209, 13);
+            this.labelPresetsInfo.TabIndex = 112;
+            this.labelPresetsInfo.Text = "(SGB enhanced games are not supported.)";
+            // 
             // tabBorders
             // 
             this.tabBorders.BackColor = System.Drawing.SystemColors.Control;
@@ -2316,7 +2345,7 @@ namespace SGB_Settings_Editor
             this.groupBoxPasswords.Controls.Add(this.textBoxPasswords);
             this.groupBoxPasswords.Location = new System.Drawing.Point(11, 4);
             this.groupBoxPasswords.Name = "groupBoxPasswords";
-            this.groupBoxPasswords.Size = new System.Drawing.Size(663, 373);
+            this.groupBoxPasswords.Size = new System.Drawing.Size(663, 363);
             this.groupBoxPasswords.TabIndex = 0;
             this.groupBoxPasswords.TabStop = false;
             this.groupBoxPasswords.Text = "Palette Passwords";
@@ -2444,18 +2473,37 @@ namespace SGB_Settings_Editor
             this.textBoxPasswords.Text = "7207-2072-0720";
             this.textBoxPasswords.TextChanged += new System.EventHandler(this.textBoxPasswords_TextChanged);
             // 
+            // toolStripMenuDivider1
+            // 
+            this.toolStripMenuDivider1.Name = "toolStripMenuDivider1";
+            this.toolStripMenuDivider1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripMenuDivider2
+            // 
+            this.toolStripMenuDivider2.Name = "toolStripMenuDivider2";
+            this.toolStripMenuDivider2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // exportPalettescsvToolStripMenuItem
+            // 
+            this.exportPalettescsvToolStripMenuItem.Name = "exportPalettescsvToolStripMenuItem";
+            this.exportPalettescsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportPalettescsvToolStripMenuItem.Text = "Export Palettes (csv)";
+            this.exportPalettescsvToolStripMenuItem.Click += new System.EventHandler(this.exportPalettescsvToolStripMenuItem_Click);
+            this.exportPalettescsvToolStripMenuItem.MouseEnter += new System.EventHandler(this.exportPalettescsvToolStripMenuItem_MouseEnter);
+            this.exportPalettescsvToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(788, 442);
+            this.ClientSize = new System.Drawing.Size(788, 441);
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.MaximumSize = new System.Drawing.Size(804, 481);
+            this.MaximumSize = new System.Drawing.Size(804, 480);
             this.MinimumSize = new System.Drawing.Size(160, 144);
             this.Name = "MainWindow";
             this.Text = "SGB Settings Editor";
@@ -2484,11 +2532,12 @@ namespace SGB_Settings_Editor
             this.groupBoxPreview.ResumeLayout(false);
             this.groupBoxPreview.PerformLayout();
             this.groupBoxExport.ResumeLayout(false);
-            this.groupBoxExport.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
+            this.groupBoxControls.ResumeLayout(false);
+            this.groupBoxControls.PerformLayout();
             this.tabPresets.ResumeLayout(false);
             this.groupBoxPresets.ResumeLayout(false);
             this.groupBoxPresets.PerformLayout();
@@ -2533,7 +2582,6 @@ namespace SGB_Settings_Editor
         private System.Windows.Forms.Panel panelClipboard6;
         private System.Windows.Forms.Panel panelClipboard7;
         private System.Windows.Forms.Panel panelClipboard8;
-        private System.Windows.Forms.Button buttonIps;
         private System.Windows.Forms.Label labelGame;
         private System.Windows.Forms.ComboBox comboBoxGame;
         private System.Windows.Forms.Label labelClick;
@@ -2595,7 +2643,6 @@ namespace SGB_Settings_Editor
         private System.Windows.Forms.Label labelV;
         private System.Windows.Forms.Label labelS;
         private System.Windows.Forms.Label labelH;
-        private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Panel panelColorbg;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem viewsToolStripMenuItem;
@@ -2694,7 +2741,6 @@ namespace SGB_Settings_Editor
         private System.Windows.Forms.ToolStripMenuItem savePatchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label labelBordersInfo;
-        private System.Windows.Forms.ComboBox comboBoxVersion;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem controlTypeAToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBoxBorderInfo;
@@ -2713,6 +2759,16 @@ namespace SGB_Settings_Editor
         private System.Windows.Forms.Panel panelPasswordColor4bg;
         private System.Windows.Forms.Panel panelPasswordColor2bg;
         private System.Windows.Forms.CheckBox checkBoxPasswordCustom;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.TextBox textBoxCurrentPalette;
+        private System.Windows.Forms.ToolStripMenuItem exportPalettesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importPalettesToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBoxControls;
+        private System.Windows.Forms.Label labelPaletteInputBox;
+        private System.Windows.Forms.Label labelPresetsInfo;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuDivider1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuDivider2;
+        private System.Windows.Forms.ToolStripMenuItem exportPalettescsvToolStripMenuItem;
     }
 }
 

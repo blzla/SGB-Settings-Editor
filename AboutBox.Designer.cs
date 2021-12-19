@@ -59,10 +59,10 @@ namespace SGB_Settings_Editor
             // linkLabel
             // 
             this.linkLabel.AutoSize = true;
-            this.linkLabel.LinkArea = new System.Windows.Forms.LinkArea(283, 44);
+            this.linkLabel.LinkArea = new System.Windows.Forms.LinkArea(273, 44);
             this.linkLabel.Location = new System.Drawing.Point(6, 19);
             this.linkLabel.Name = "linkLabel";
-            this.linkLabel.Size = new System.Drawing.Size(456, 117);
+            this.linkLabel.Size = new System.Drawing.Size(452, 117);
             this.linkLabel.TabIndex = 26;
             this.linkLabel.TabStop = true;
             this.linkLabel.Text = resources.GetString("linkLabel.Text");

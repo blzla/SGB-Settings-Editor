@@ -38,7 +38,8 @@ namespace SGB_Settings_Editor
             new Color[] { Color.FromArgb(245, 245, 245), Color.FromArgb(172, 171, 177), Color.FromArgb(82, 83, 98), Color.FromArgb(12, 12, 12) }
         );
 
-        static protected internal int sgb_rev = 0;
+        static internal int sgb_rev = 0;
+        private string loaded_rom_file = "";
 
         private DateTime timer = new DateTime();
 
@@ -81,7 +82,7 @@ namespace SGB_Settings_Editor
                     textboxRGB.Text = rgb_input;
                     textboxRGB.Select(6, 0);
                 }
-                int rgb24 = Int32.Parse(rgb_input, System.Globalization.NumberStyles.HexNumber);
+                int rgb24 = int.Parse(rgb_input, System.Globalization.NumberStyles.HexNumber);
                 int r = (rgb24 >> 16) % 256;
                 int g = (rgb24 >> 8) % 256;
                 int b = rgb24 % 256;
@@ -105,7 +106,7 @@ namespace SGB_Settings_Editor
                     return;
                 else if (bgr15_input.Length < 4)
                     bgr15_input = bgr15_input.PadRight(4, '0');
-                int bgr15 = Int32.Parse(bgr15_input, System.Globalization.NumberStyles.HexNumber);
+                int bgr15 = int.Parse(bgr15_input, System.Globalization.NumberStyles.HexNumber);
                 if (bgr15 > 0x7FFF)
                 {
                     bgr15 = 0x7FFF;
@@ -140,13 +141,13 @@ namespace SGB_Settings_Editor
                 return;
             try
             {
-                setColorinputs(Color.FromArgb(Int32.Parse(textBoxRDec.Text), Int32.Parse(textBoxGDec.Text), Int32.Parse(textBoxBDec.Text)));
+                setColorinputs(Color.FromArgb(int.Parse(textBoxRDec.Text), int.Parse(textBoxGDec.Text), int.Parse(textBoxBDec.Text)));
             }
             catch
             {
                 try
                 {
-                    int value = Int32.Parse(activeTextBox.Text);
+                    int value = int.Parse(activeTextBox.Text);
                     if (value < 0)
                         activeTextBox.Text = "0";
                     else
@@ -166,7 +167,7 @@ namespace SGB_Settings_Editor
                 return;
             try
             {
-                setColorinputs(Color.FromArgb(Int32.Parse(textBoxRHex.Text, System.Globalization.NumberStyles.HexNumber), Int32.Parse(textBoxGHex.Text, System.Globalization.NumberStyles.HexNumber), Int32.Parse(textBoxBHex.Text, System.Globalization.NumberStyles.HexNumber)));
+                setColorinputs(Color.FromArgb(int.Parse(textBoxRHex.Text, System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxGHex.Text, System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBHex.Text, System.Globalization.NumberStyles.HexNumber)));
             }
             catch
             {
@@ -285,6 +286,7 @@ namespace SGB_Settings_Editor
             }
 
             pictureBox.Refresh();
+            updatePaletteTextBox();
             buttonResetPalette.Enabled = false;
         }
 
@@ -306,6 +308,15 @@ namespace SGB_Settings_Editor
             return false;
         }
 
+        // Update palette string field
+        private void updatePaletteTextBox()
+        {
+            textBoxCurrentPalette.Text = $"{Program.ConvertColortoSFC(ActivePalette[0]):X4}" +
+                $"{Program.ConvertColortoSFC(ActivePalette[1]):X4}" +
+                $"{Program.ConvertColortoSFC(ActivePalette[2]):X4}" +
+                $"{Program.ConvertColortoSFC(ActivePalette[3]):X4}";
+        }
+
         // Move edited color to palette
         private void buttonSetColor_Click(object sender, EventArgs e)
         {
@@ -313,6 +324,7 @@ namespace SGB_Settings_Editor
             ActivePalette[i] = panelActiveColor.BackColor;
             panelPalettebg.Controls[i].BackColor = panelActiveColor.BackColor;
             pictureBox.Refresh();
+            updatePaletteTextBox();
             buttonResetPalette.Enabled = true;
         }
 
@@ -367,6 +379,7 @@ namespace SGB_Settings_Editor
             }
             buttonResetPalette.Enabled = true;
             pictureBox.Refresh();
+            updatePaletteTextBox();
         }
 
         // Save active palette to clipboard
@@ -443,7 +456,7 @@ namespace SGB_Settings_Editor
             {
                 DirectoryInfo screenshotFolder = new DirectoryInfo("gb_screenshots/");
                 string[] filetypes = new[] { "*.png", "*.bmp" };
-                List<FileInfo> files = filetypes.SelectMany(screenshotFolder.EnumerateFiles).Take(32).OrderBy(o => o.Name).ToList();
+                List<FileInfo> files = filetypes.SelectMany(screenshotFolder.EnumerateFiles).Take(256).OrderBy(o => o.Name).ToList();
 
                 foreach (FileInfo file in files)
                 {
@@ -514,12 +527,6 @@ namespace SGB_Settings_Editor
         // #####################################################################################
         // Import / Export section
 
-        // Store SGB version in variable so it's accessible in the dialog
-        private void comboBoxVersion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            sgb_rev = comboBoxVersion.SelectedIndex;
-        }
-
         // Sync controls check box with menu 
         private void checkBoxControls_CheckedChanged(object sender, EventArgs e)
         {
@@ -529,27 +536,21 @@ namespace SGB_Settings_Editor
         // Import data from SGB rom file
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\"";
+            openFileDialog.Title = "Select Super Game Boy rom file.";
             openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
+            openFileDialog.FileName = "";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 UseWaitCursor = true;
                 (bool success, bool buttonTypeA, int border, string text) = Program.LoadDatafromFile(openFileDialog.FileName);
                 if (success)
                 {
-                    for (int i = 0; i < Program.sgbRevisions.Length; i++)
-                    {
-                        if (openFileDialog.SafeFileName.StartsWith(Program.sgbRevisions[i]))
-                        {
-                            comboBoxVersion.SelectedIndex = i;
-                            break;
-                        }
-                    }
                     getPalette(activePaletteSlot);
                     displayStatusText("Successfully loaded data from file.");
                     checkBoxControls.Checked = buttonTypeA;
                     refreshPresetData();
                     refreshBorderCombobox();
+                    loaded_rom_file = Path.GetFileName(openFileDialog.FileName);
                     if (border < comboBoxBorder.Items.Count)
                     {
                         comboBoxBorder.SelectedIndex = border;
@@ -571,8 +572,9 @@ namespace SGB_Settings_Editor
         // Import border images from SGB rom file without changing any settings
         private void buttonImportImages_Click(object sender, EventArgs e)
         {
-            openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\"";
+            openFileDialog.Title = "Select Super Game Boy rom file.";
             openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
+            openFileDialog.FileName = "";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 UseWaitCursor = true;
@@ -603,14 +605,10 @@ namespace SGB_Settings_Editor
         {
             setPalette(activePaletteSlot); // make sure current palette is saved
             ConfirmationDialog dialog = new ConfirmationDialog();
-            if (comboBoxBorder.SelectedIndex > 0 || sender == savePatchToolStripMenuItem)
-            {
-                dialog.ShowDialog();
-                comboBoxVersion.SelectedIndex = sgb_rev;
-            }
+            dialog.ShowDialog();
             if (dialog.DialogResult != DialogResult.Cancel)
             {
-                (bool success, string message) = Program.SaveIPS(comboBoxVersion.SelectedIndex, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
+                (bool success, string message) = Program.SaveIPS(sgb_rev, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
                 displayStatusText(success ? "Saved patch as \"" + message + "\"." : message);
             }
             else
@@ -621,12 +619,13 @@ namespace SGB_Settings_Editor
         private void buttonModify_Click(object sender, EventArgs e)
         {
             setPalette(activePaletteSlot); // make sure current palette is saved
-            openFileDialog.Title = "Select \"" + comboBoxVersion.Text + ".sfc\" - FILE WILL BE MODIFIED";
-            openFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
-            DialogResult result = openFileDialog.ShowDialog();
+            saveFileDialog.Title = "Select Super Game Boy rom file - FILE WILL BE MODIFIED";
+            saveFileDialog.Filter = "SNES ROM files|*.sfc; *.bin|All files|*.*";
+            saveFileDialog.FileName = loaded_rom_file;
+            DialogResult result = saveFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                (bool success, string text) = Program.SavetoFile(openFileDialog.FileName, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
+                (bool success, string text) = Program.SavetoFile(saveFileDialog.FileName, checkBoxControls.Checked, Program.loadedBorders.Count > 0 ? Program.loadedBorders[comboBoxBorder.SelectedIndex].i : comboBoxBorder.SelectedIndex);
                 if (success)
                 {
                     toolStripStatusLabel.Text = "Successfully saved changes to file. " + text;
@@ -637,6 +636,131 @@ namespace SGB_Settings_Editor
                     toolStripStatusLabel.Text = "Error while writing to file: " + text;
                 }
                 resetStatusText();
+            }
+        }
+
+        // Parse palette string
+        private void textBoxCurrentPalette_TextChanged(object sender, EventArgs e)
+        {
+            if (!((TextBox)sender).Focused || textBoxCurrentPalette.Text.Length != 16)
+                return;
+
+            try
+            {
+                if (!long.TryParse(textBoxCurrentPalette.Text, System.Globalization.NumberStyles.HexNumber, null, out long dontcare))
+                    return;
+
+                bool palette_change = false;
+
+                for (int i = 0; i < 4; i++)
+                {
+                    Color c = Program.ConvertSFCtoColor(int.Parse(textBoxCurrentPalette.Text.Substring(i * 4, 4), System.Globalization.NumberStyles.HexNumber));
+                    if (c != ActivePalette[i])
+                    {
+                        ActivePalette[i] = c;
+                        panelPalettebg.Controls[i].BackColor = ActivePalette[i];
+                        palette_change = true;
+                    }
+                }
+
+                if (palette_change)
+                {
+                    pictureBox.Refresh();
+                    updatePaletteTextBox();
+                    textBoxCurrentPalette.Select(16, 0);
+                    buttonResetPalette.Enabled = true;
+                    displayStatusText("Palette ok", 5000);
+                }
+            }
+            catch { }
+        }
+
+        // Export palettes to .pal file
+        private void exportPalettesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            saveFileDialog.Title = "Save As";
+            saveFileDialog.Filter = "Palette files|*.pal|All files|*.*";
+            saveFileDialog.FileName = "sgb_palettes.pal";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                setPalette(activePaletteSlot); // save current palette
+
+                byte[] palettes = new byte[256];
+                for (int i = 0; i < 32; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        byte[] p = BitConverter.GetBytes(Program.GetPaletteValue(i, j));
+                        palettes[i * 8 + j * 2] = p[0];
+                        palettes[i * 8 + j * 2 + 1] = p[1];
+                    }
+                }
+                try
+                {
+                    File.WriteAllBytes(saveFileDialog.FileName, palettes.ToArray());
+                    displayStatusText("Exported palettes to file.", 5000);
+                }
+                catch
+                {
+                    displayStatusText("Could not write to file.", 5000);
+                }
+            }
+        }
+
+        // Export palettes as .csv
+        private void exportPalettescsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog.Title = "Save As";
+            saveFileDialog.Filter = "CSV files|*.csv; *.txt|All files|*.*";
+            saveFileDialog.FileName = "sgb_palettes.csv";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                setPalette(activePaletteSlot); // save current palette
+
+                String palettes_export = "color1,color2,color3,color4\r\n";
+                for (int i = 0; i < 32; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        Color c = Program.ConvertSFCtoColor(Program.GetPaletteValue(i, j));
+                        palettes_export += $"#{c.R:X2}{c.G:X2}{c.B:X2}{(j < 3 ? "," : (i < 31 ? "\r\n" : ""))}";
+                    }
+                }
+                try
+                {
+                    File.WriteAllText(saveFileDialog.FileName, palettes_export);
+                    displayStatusText("Exported palettes to csv file.", 5000);
+                }
+                catch
+                {
+                    displayStatusText("Could not write to file.", 5000);
+                }
+            }
+        }
+
+        // Import palettes from .pal file
+        private void importPalettesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Title = "Open sgb_palettes.pal";
+            openFileDialog.Filter = "Palette files|*.pal|All files|*.*";
+            openFileDialog.FileName = "sgb_palettes.pal";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (comboBoxPaletteslot.SelectedIndex < 0)
+                    comboBoxPaletteslot.SelectedIndex = 0;
+
+                using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
+                {
+                    bool success = Program.loadPalettesfromFileStream(fs, 0x0000);
+
+                    if (success)
+                        displayStatusText("Imported palettes from file.", 5000);
+                    else
+                        displayStatusText("Could not import palettes from file.", 5000);
+
+                    getPalette(comboBoxPaletteslot.SelectedIndex);
+                }
             }
         }
 
@@ -655,7 +779,21 @@ namespace SGB_Settings_Editor
 
         private void savePatchToolStripMenuItem_MouseEnter(object sender, EventArgs e)
         {
-            displayStatusText("Generate an ips patch and share it!", 60000);
+            displayStatusText("Generate an ips patch and share it! (Custom border images are not included)", 60000);
+        }
+
+        private void importPalettesToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Import all palettes from a .pal file.", 60000);
+        }
+
+        private void exportPalettesToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Export all palettes as a .pal file.", 60000);
+        }
+        private void exportPalettescsvToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            displayStatusText("Export all palettes as a .csv file.", 60000);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -701,7 +839,7 @@ namespace SGB_Settings_Editor
             presetsToolStripMenuItem.Checked = false;
             startupBorderToolStripMenuItem.Checked = false;
             palettePasswordsToolStripMenuItem.Checked = true;
-            textBoxPasswords.Focus();
+            //textBoxPasswords.Focus();
         }
 
         private void controlTypeAToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
@@ -851,7 +989,6 @@ namespace SGB_Settings_Editor
         {
             openFileDialog.Title = "Select Game Boy file";
             openFileDialog.Filter = "Game Boy ROM files|*.gb; *.gbc|All files|*.*";
-            string sfcfilename = openFileDialog.FileName;
             openFileDialog.FileName = "";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -879,7 +1016,6 @@ namespace SGB_Settings_Editor
                     }
                 }
             }
-            openFileDialog.FileName = sfcfilename;
         }
 
         // #####################################################################################
@@ -941,7 +1077,7 @@ namespace SGB_Settings_Editor
                 Panel[] colorPanels = groupBoxPasswords.Controls.OfType<Panel>().ToArray();
                 for (int i = 0; i < 4; i++)
                 {
-                    Color c = Program.ConvertTupletoColor(Program.ConvertSFCtoRGB(palette[i]));
+                    Color c = Program.ConvertSFCtoColor(palette[i]);
                     colorPanels[i].Controls[0].BackColor = c;
                     toolTip.SetToolTip(colorPanels[i].Controls[0], "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2"));
                 }
@@ -970,6 +1106,7 @@ namespace SGB_Settings_Editor
             }
 
             pictureBox.Refresh();
+            updatePaletteTextBox();
             buttonResetPalette.Enabled = true;
 
             paletteEditorToolStripMenuItem_Click(sender, e);

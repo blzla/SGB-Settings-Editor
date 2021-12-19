@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SGB_Settings_Editor
 {
@@ -10,8 +11,8 @@ namespace SGB_Settings_Editor
     // 6 byte header
     // AA AA BB BB CC CC
     // A = control word
-    // B = size of compressed data in bytes
-    // C = size of original data in bytes, must be even
+    // B = size of compressed data in bytes - 2
+    // C = size of original data in bytes, should be even (never read)
     //
     // Data
     // Contains normal data and 5 byte repetition actions that start with the control word.
@@ -37,7 +38,7 @@ namespace SGB_Settings_Editor
         {
             byte[] control = new byte[] { data[0], data[1] };
             int dataLength = BitConverter.ToInt16(data, 2);
-            int messageLength = BitConverter.ToInt16(data, 4); // I didn't actually verify that this is the length, but it looks reasonable and works
+            int messageLength = BitConverter.ToInt16(data, 4) + 2;
 
             List<byte> message = new List<byte>();
 
@@ -72,6 +73,97 @@ namespace SGB_Settings_Editor
             }
             catch { } // reached end of data before finishing the message, or offset of repetition action was invalid
             return message.ToArray();
+        }
+
+        public static byte[] Compress(byte[] data)
+        {
+            if (data.Length > 0xFFFF) // max size
+                return data;
+
+            if (data.Length % 2 == 1)
+                data = data.Concat(new byte[] { 0x00 }).ToArray();
+
+            byte[] control = FindControlWord(data);
+            if (control == null) // couldn't find control word
+                return data;
+
+            List<byte> buffer = new List<byte>();
+            ushort pointer = 0;
+
+            while (pointer < data.Length)
+            {
+                var (count, offset) = RepeatingBytes(data, pointer);
+                if (count >= 4)
+                {
+                    buffer.AddRange(control);
+                    buffer.AddRange(BitConverter.GetBytes(offset));
+                    buffer.Add(count);
+                    pointer += (ushort)(count * 2);
+                }
+                else
+                {
+                    buffer.Add(data[pointer]);
+                    buffer.Add(data[pointer + 1]);
+                    pointer += 2;
+                }
+            }
+
+            byte[] messageLength = BitConverter.GetBytes(data.Length > 4 ? data.Length - 2 : 2);
+            byte[] compressedLength = BitConverter.GetBytes(buffer.Count);
+
+            byte[] header = new byte[] {
+                control[0], control[1], compressedLength[0], compressedLength[1], messageLength[0], messageLength[1]
+            };
+
+            buffer.InsertRange(0, header);
+
+            return buffer.ToArray();
+        }
+
+        private static byte[] FindControlWord(byte[] data)
+        {
+            byte[] control = null;
+            for (ushort i = 0; i <= 0xFFFF; i++)
+            {
+                byte[] controlBytes = BitConverter.GetBytes(i);
+                bool unused = true;
+                for (int j = 0; j < data.Length; j += 2)
+                {
+                    if (data[j] == controlBytes[0] && data[j + 1] == controlBytes[1])
+                    {
+                        unused = false;
+                        break;
+                    }
+                }
+                if (unused)
+                {
+                    control = controlBytes;
+                    break;
+                }
+            }
+            return control;
+        }
+
+        private static (byte count, ushort offset) RepeatingBytes(byte[] data, ushort pointer)
+        {
+            byte maxCount = 0;
+            ushort maxCountOffset = 0;
+            for (ushort i = 0; i < pointer - 1; i++) // search from beginning of message to 1 word behind current position
+            {
+                int j = 0;
+                byte count = 0;
+                while (((pointer + j + 1) < data.Length) && data[i + j] == data[pointer + j] && data[i + j + 1] == data[pointer + j + 1] && count < 0xFE)
+                {
+                    count++;
+                    j += 2;
+                    if (count > maxCount)
+                    {
+                        maxCount = count;
+                        maxCountOffset = i;
+                    }
+                }
+            }
+            return (maxCount, maxCountOffset);
         }
     }
 }

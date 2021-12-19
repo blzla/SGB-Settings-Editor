@@ -157,7 +157,7 @@
             int r = base_color & 0x001f;
             int g = (base_color & 0x03e0) >> 5;
             int b = (base_color & 0x7c00) >> 10;
-            return (ushort)(sub(r) + (sub(g) << 5) + (sub(b) << 10));
+            return (ushort)(sub(r) | (sub(g) << 5) | (sub(b) << 10));
         }
     }
 }

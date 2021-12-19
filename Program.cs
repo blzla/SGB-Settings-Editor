@@ -40,30 +40,30 @@ namespace SGB_Settings_Editor
 
         // offsets for border data in the rom file. SGB1 offsets are the same for every version
         public static readonly (string name, int tilemap, (int addr, int chunk_length)[] tileset_chunks, int[] palettes, bool compressed)[] borders = new (string, int, (int, int)[], int[], bool)[] {
-            ("GB (SGB2)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56E00, 0x56E20, 0x580C0 }, false),
-            ("GB (Pink)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56E40, 0x56E60, 0x580C0 }, false),
-            ("GB (Yellow)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56E80, 0x56EA0, 0x580C0 }, false),
-            ("GB (Green)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56EC0, 0x56EE0, 0x580C0 }, false),
-            ("GB (Blue)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56F00, 0x56F20, 0x580C0 }, false),
-            ("GB (Red)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56F40, 0x56F60, 0x580C0 }, false),
-            ("GB (Black)", 0x051800, new (int, int)[] { (0x05C2C0, 0x1000) }, new int[] { 0x56F80, 0x56FA0, 0x580C0 }, false),
+            ("GB (SGB2)", 0x51800, new (int, int)[] { (0x5C2C0, 0x1000) }, new int[] { 0x56E00, 0x56E20, 0x580C0 }, false),
+            ("GB (Pink)", 0x51800, new (int, int)[] { (0x5C2C0, 0x1000) }, new int[] { 0x56E40, 0x56E60, 0x580C0 }, false),
+            ("GB (Yellow)", 0x51800, new (int, int)[] { (0x5C2C0, 0x1000) }, new int[] { 0x56E80, 0x56EA0, 0x580C0 }, false),
+            ("GB (Green)", 0x51800, new (int, int)[] { (0x5C2C0, 0x1000) }, new int[] { 0x56EC0, 0x56EE0, 0x580C0 }, false),
+            ("GB (Blue)", 0x51800, new (int, int)[] { (0x5C2C0, 0x1000) }, new int[] { 0x56F00, 0x56F20, 0x580C0 }, false),
+            ("GB (Red)", 0x51800, new (int, int)[] { (0x5C2C0, 0x1000) }, new int[] { 0x56F40, 0x56F60, 0x580C0 }, false),
+            ("GB (Black)", 0x51800, new (int, int)[] { (0x5C2C0, 0x1000) }, new int[] { 0x56F80, 0x56FA0, 0x580C0 }, false),
             ("Black (SGB2)", 0x0, new (int, int)[] { (0x0, 0x0) }, new int[] { 0, 0, 0 }, false),
-            ("Printed Circuit Board", 0x052000, new (int, int)[] { (0x059100, 0x1D00) }, new int[] { 0x57080, 0x570A0, 0x570C0 }, false),
-            ("Palm Trees", 0x067000, new (int, int)[] { (0x063000, 0x4000) }, new int[] { 0x67880, 0x678A0, 0x678C0 }, false),
-            ("Stone Mosaic", 0x052800, new (int, int)[] { (0x04E000, 0x16E0), (0x04C000, 0x2000) }, new int[] { 0x57480, 0x574A0, 0x574C0 }, false),
-            ("Gears", 0x06d000, new (int, int)[] { (0x068000, 0x5000) }, new int[] { 0x67A80, 0x67AA0, 0x67AC0 }, false),
-            ("Swamp", 0x053000, new (int, int)[] { (0x048000, 0x4000) }, new int[] { 0x57A80, 0x57AA0, 0x57AC0 }, false),
-            ("Dolphins", 0x053800, new (int, int)[] { (0x05CCC0, 0x30C0) }, new int[] { 0x57C80, 0x57CA0, 0x57CC0 }, false),
-            ("Chess Arena", 0x054800, new (int, int)[] { (0x050000, 0x1000), (0x055800, 0x2000) }, new int[] { 0x57880, 0x578A0, 0x578C0 }, false),
-            ("GB (SGB1)", 0x01E261, new (int, int)[] { (0x01D868, 0x2000) }, new int[] { 0x27071, 0x27091, 0x270B1 }, true),
+            ("Printed Circuit Board", 0x52000, new (int, int)[] { (0x59100, 0x1D00), (0x73180, 0x1000), (0x74180, 0x1000), (0x75180, 0x620) }, new int[] { 0x57080, 0x570A0, 0x570C0 }, false),
+            ("Palm Trees", 0x67000, new (int, int)[] { (0x63000, 0x4000), (0x757A0, 0x320) }, new int[] { 0x67880, 0x678A0, 0x678C0 }, false),
+            ("Stone Mosaic", 0x52800, new (int, int)[] { (0x4E000, 0x1800), (0x4C000, 0x2000), (0x75AC0, 0xB20) }, new int[] { 0x57480, 0x574A0, 0x574C0 }, false),
+            ("Gears", 0x6D000, new (int, int)[] { (0x68000, 0x5000) }, new int[] { 0x67A80, 0x67AA0, 0x67AC0 }, false),
+            ("Swamp", 0x53000, new (int, int)[] { (0x48000, 0x4000), (0x765E0, 0x320) }, new int[] { 0x57A80, 0x57AA0, 0x57AC0 }, false),
+            ("Dolphins", 0x53800, new (int, int)[] { (0x5CCC0, 0x3140), (0x76900, 0xFE0), (0x77E00, 0x200) }, new int[] { 0x57C80, 0x57CA0, 0x57CC0 }, false),
+            ("Chess Arena", 0x54800, new (int, int)[] { (0x50000, 0x1000), (0x55800, 0x1400), (0x7F600, 0xA00), (0x778E0, 0x520), (0x78000, 0x1000) }, new int[] { 0x57880, 0x578A0, 0x578C0 }, false),
+            ("GB (SGB1)", 0x8159, new (int, int)[] { (0x8129, 0x3308) }, new int[] { 0x27071, 0x27091, 0x270B1 }, true),
             ("Black (SGB1)", 0x0, new (int, int)[] { (0x0, 0x0) }, new int[] { 0, 0, 0 }, false),
-            ("Windows (SGB1)", 0x01AEA5, new (int, int)[] { (0x018000, 0x2000) }, new int[] { 0x1B4F4, 0x1B514, 0x1B534 }, true),
-            ("Cork Board (SGB1)", 0x025F12, new (int, int)[] { (0x025335, 0x2000) }, new int[] { 0x2611C, 0x2613C, 0x2615C }, true),
-            ("Log Cabin In The Countryside (SGB1)", 0x01C660, new (int, int)[] { (0x01B674, 0x2000) }, new int[] { 0x1D5E8, 0x1D608, 0x1D628 }, true),
-            ("Movie Theater (SGB1)", 0x02DC3C, new (int, int)[] { (0x02C6C8, 0x2000) }, new int[] { 0x2D8BC, 0x2D8DC, 0x2D8FC }, true),
-            ("Cats (SGB1)", 0x020B27, new (int, int)[] { (0x01F716, 0x2000) }, new int[] { 0x20DF3, 0x20E13, 0x20E33 }, true),
-            ("Chequered Desk With Pencils (SGB1)", 0x02997a, new (int, int)[] { (0x028000, 0x2000) }, new int[] { 0x29C21, 0x29E41, 0x29C61 }, true),
-            ("Escher (SGB1)", 0x01E3cd, new (int, int)[] { (0x01E90a, 0x2000) }, new int[] { 0x1E78A, 0x1E7AA, 0x1E7CA }, true),
+            ("Windows (SGB1)", 0x9C1F, new (int, int)[] { (0x9B3B, 0x3308) }, new int[] { 0x1B4F4, 0x1B514, 0x1B534 }, true),
+            ("Cork Board (SGB1)", 0xB7E4, new (int, int)[] { (0xB7B4, 0x3308) }, new int[] { 0x2611C, 0x2613C, 0x2615C }, true),
+            ("Log Cabin In The Countryside (SGB1)", 0xA744, new (int, int)[] { (0xA6B7, 0x3308) }, new int[] { 0x1D5E8, 0x1D608, 0x1D628 }, true),
+            ("Movie Theater (SGB1)", 0xCF75, new (int, int)[] { (0xCF45, 0x3308) }, new int[] { 0x2D8BC, 0x2D8DC, 0x2D8FC }, true),
+            ("Cats (SGB1)", 0xB90D, new (int, int)[] { (0xB8DD, 0x3308) }, new int[] { 0x20DF3, 0x20E13, 0x20E33 }, true),
+            ("Chequered Desk With Pencils (SGB1)", 0xD3CE, new (int, int)[] { (0xD37B, 0x3308) }, new int[] { 0x29C21, 0x29E41, 0x29C61 }, true),
+            ("Escher (SGB1)", 0xC734, new (int, int)[] { (0xC704, 0x3308) }, new int[] { 0x1E78A, 0x1E7AA, 0x1E7CA }, true),
         };
 
         // assembly code to set the button type
@@ -206,6 +206,11 @@ namespace SGB_Settings_Editor
 
         // Convert 24 bit RGB value to 15 bit BGR value
         // Algorithm from: https://wiki.superfamicom.org/palettes
+        public static int ConvertColortoSFC(Color c)
+        {
+            return ConvertRGBtoSFC(c.R, c.G, c.B);
+        }
+
         public static int ConvertRGBtoSFC(int r, int g, int b)
         {
             int bgr15 = (b >> 3 << 10) + (g >> 3 << 5) + (r >> 3);
@@ -223,16 +228,17 @@ namespace SGB_Settings_Editor
             int r = bgr15 % 32 << 3;
             int g = (bgr15 >> 5) % 32 << 3;
             int b = bgr15 >> 10 % 32 << 3;
-            r += r / 32; /// adjust for higher precision
+            // adjust for higher precision
+            r += r / 32;
             g += g / 32;
             b += b / 32;
             return (r, g, b);
         }
 
-        // Convert (r, g, b) tuple to Color
-        public static Color ConvertTupletoColor((int r, int g, int b) c)
+        public static Color ConvertSFCtoColor(int bgr15)
         {
-            return Color.FromArgb(c.r, c.g, c.b);
+            var (r, g, b) = ConvertSFCtoRGB(bgr15);
+            return Color.FromArgb(r, g, b);
         }
 
         // Convert Color to HSV values
@@ -271,6 +277,16 @@ namespace SGB_Settings_Editor
                 return Color.FromArgb(v, p, q);
         }
 
+        // Convert LoROM address to file offset
+        // (not accurate for all address ranges)
+        public static int ConvertLoROMAddress(byte bank, ushort address)
+        {
+            if (bank >= 0x80)
+                bank -= 0x80;
+
+            return (bank * 0x8000) + (address - 0x8000);
+        }
+
         // #####################################################################################
         // Data loading from file
 
@@ -301,22 +317,9 @@ namespace SGB_Settings_Editor
                     bool buttonTypeA = fs.ReadByte() == 0x0C;
 
                     // palettes
-                    List<ushort> colors = new List<ushort> { };
-                    fs.Seek(0x10000, SeekOrigin.Begin);
-                    for (int i = 0; i < 128; i++)
-                    {
-                        ushort color = (ushort) (fs.ReadByte() + (fs.ReadByte() << 8));
-                        colors.Add(color);
-                        if (color > 0x7FFF || color < 0) // invalid bytes || EOF
-                        {
-                            return (false, false, 0, "Invalid data at offset 0x" + (0x10000 + i * 2).ToString("X5") + ".");
-                        }
-                    }
-                    if (!Enumerable.SequenceEqual(palettes, colors.ToArray()))
-                    {
-                        palettes = colors.ToArray();
-                        palettesChanged = true;
-                    }
+                    bool palettesOk = loadPalettesfromFileStream(fs, 0x10000);
+                    if (!palettesOk)
+                        return (false, false, 0, "Invalid bytes in palette data.");
 
                     // game presets
                     fs.Seek(0x3F000, SeekOrigin.Begin);
@@ -361,6 +364,32 @@ namespace SGB_Settings_Editor
             {
                 return (false, false, 0, "File system error. Check if file is locked.");
             }
+        }
+
+        // Load palettes from file
+        internal static bool loadPalettesfromFileStream(FileStream fs, int offset)
+        {
+            try
+            {
+                ushort[] colors = new ushort[128];
+                fs.Seek(offset, SeekOrigin.Begin);
+                for (int i = 0; i < 128; i++)
+                {
+                    ushort color = (ushort)(fs.ReadByte() + (fs.ReadByte() << 8));
+                    colors[i] = color;
+                    if (color > 0x7FFF || color < 0) // invalid bytes || EOF
+                    {
+                        return false;
+                    }
+                }
+                if (!Enumerable.SequenceEqual(palettes, colors))
+                {
+                    palettes = colors;
+                    palettesChanged = true;
+                }
+            }
+            catch { }
+            return true;
         }
 
         // Like LoadDatafromFile, but don't change any settings
@@ -439,18 +468,49 @@ namespace SGB_Settings_Editor
                     }
                     else
                     {
-                        // Decompress data
+                        // Read location of data from file and then decompress it
                         // We could check the exact amount of data we need to read, but it's faster to always read a safe amount of bytes
-                        byte[] data = new byte[0x2000];
+
+                        byte[] data = new byte[0x3308];
+                        byte[] buf = new byte[256]; 
                         fs.Seek(border.tilemap, SeekOrigin.Begin);
+                        byte tilemap_bank = (byte)fs.ReadByte();
+                        ushort tilemap_address = 0x0000;
+                        fs.Read(buf, 0, 256);
+                        for (int j = 0; j < 254; j++)
+                        {
+                            if (buf[j] == 0xC2 && buf[j + 1] == 0x20 && buf[j + 2] == 0xA9)
+                            {
+                                fs.Seek(border.tilemap + j + 4, SeekOrigin.Begin);
+                                fs.Read(buf, 0, 2);
+                                tilemap_address = BitConverter.ToUInt16(buf, 0);
+                                break;
+                            }
+                        }
+                        fs.Seek(ConvertLoROMAddress(tilemap_bank, tilemap_address), SeekOrigin.Begin);
                         fs.Read(data, 0, 0x700);
                         tilemap = SGBCompression.Decompress(data);
+
                         fs.Seek(border.tileset_chunks[0].addr, SeekOrigin.Begin);
-                        fs.Read(data, 0, 0x2000);
+                        byte tileset_bank = (byte)fs.ReadByte();
+                        ushort tileset_address = 0x0000;
+                        fs.Read(buf, 0, 256);
+                        for (int j = 0; j < 254; j++)
+                        {
+                            if (buf[j] == 0xC2 && buf[j + 1] == 0x20 && buf[j + 2] == 0xA9)
+                            {
+                                fs.Seek(border.tileset_chunks[0].addr + j + 4, SeekOrigin.Begin);
+                                fs.Read(buf, 0, 2);
+                                tileset_address = BitConverter.ToUInt16(buf, 0);
+                                break;
+                            }
+                        }
+                        fs.Seek(ConvertLoROMAddress(tileset_bank, tileset_address), SeekOrigin.Begin);
+                        fs.Read(data, 0, border.tileset_chunks[0].chunk_length);
                         tileset = SGBCompression.Decompress(data);
 #if DEBUG
                         //File.WriteAllBytes("tilemap.bin", tilemap);
-                        //File.WriteAllBytes("tiledata.bin", tileset);
+                        //File.WriteAllBytes("tileset.bin", tileset);
 #endif
                     }
 
@@ -470,7 +530,7 @@ namespace SGB_Settings_Editor
                         int tile_dataLo = tilemap[2 * j];
                         int tile_dataHi = tilemap[2 * j + 1];
                         int tile_data = tile_dataLo + (tile_dataHi << 8);
-                        int tile_id = tile_data & 0x1FF;
+                        int tile_id = tile_data & 0x3FF;
                         int palette_id = (tile_dataHi & 0x1C) >> 2;
                         bool h_flip = (tile_dataHi & (1 << 6)) != 0;
                         bool v_flip = (tile_dataHi & (1 << 7)) != 0;
@@ -508,7 +568,7 @@ namespace SGB_Settings_Editor
             for (int i = 0; i < 16; i++)
             {
                 fs.Read(buffer, 0, 2);
-                palette[i] = ConvertTupletoColor(ConvertSFCtoRGB(BitConverter.ToInt32(buffer, 0)));
+                palette[i] = ConvertSFCtoColor(BitConverter.ToInt32(buffer, 0));
             }
 
             return palette;
@@ -521,16 +581,20 @@ namespace SGB_Settings_Editor
         {
             n *= 0x20;
             DirectBitmap tile = new DirectBitmap(8, 8);
-            byte[] b = tileset.Skip(n).Take(32).ToArray();
-            for (int i = 0; i < 8; i++)
+            try
             {
-                int bit = 1 << i;
-                for (int j = 0; j < 8; j++)
+                byte[] b = tileset.Skip(n).Take(32).ToArray();
+                for (int i = 0; i < 8; i++)
                 {
-                    int pal_i = ((b[2 * j] & bit) | ((b[2 * j + 1] & bit) << 1) | ((b[2 * j + 16] & bit) << 2) | ((b[2 * j + 17] & bit) << 3)) >> i;
-                    tile.SetPixel(7 - i, j, pal[pal_i]);
+                    int bit = 1 << i;
+                    for (int j = 0; j < 8; j++)
+                    {
+                        int pal_i = ((b[2 * j] & bit) | ((b[2 * j + 1] & bit) << 1) | ((b[2 * j + 16] & bit) << 2) | ((b[2 * j + 17] & bit) << 3)) >> i;
+                        tile.SetPixel(7 - i, j, pal[pal_i]);
+                    }
                 }
             }
+            catch { }
             return tile;
         }
 
@@ -628,21 +692,22 @@ namespace SGB_Settings_Editor
                     fs.Write(new byte[] { 0xFF, 0xFF }, 0, 2);
                     fs.Write(new byte[17 * (36 - gamePresets.Count())], 0, 17 * (36 - gamePresets.Count())); // overwrite potential old patch data with \0
 
-                    // sgb1 + 2 border change
-                    // EXPERIMENTAL
-                    // the jump from 00:D0AB happens during ram initialization, jumping later would result in the wrong item highlighted in the menu
-                    // but do we skip anything important? no idea. seems to work though
+                    // border change on startup
                     if ((sgb_rev == 0 && border > 0) || (sgb_rev > 0 && border > 0 && border != 15))
                     {
                         fs.Seek(0x50AB, SeekOrigin.Begin);
-                        // move button initialization ahead
+                        // always initialize & move button initialization ahead (for backwards compatibility)
                         fs.Write(setButtonTypeA ? buttonTypeA : buttonTypeB, 0, 12);
+                        fs.Write(new byte[] { 0x80, 0x04, 0xEA, 0xEA, 0xEA, 0xEA }, 0, 6);
                         // then jump to custom code at 87:F270
-                        fs.Write(new byte[] { 0x5C, 0x70, 0xF2, 0x87, 0xEA, 0xEA }, 0, 6); // jml $87f270, nop slide
+                        fs.Seek(0x50E9, SeekOrigin.Begin);
+                        fs.Write(new byte[] { 0x5C, 0x6C, 0xF2, 0x87 }, 0, 4); // jml $87f26C
 
-                        fs.Seek(0x03F270, SeekOrigin.Begin);
+                        fs.Seek(0x03F26C, SeekOrigin.Begin);
+                        // overwritten code
+                        fs.Write(new byte[] { 0x22, 0x46, 0xD5, 0x01 }, 0, 4);
                         // abort border change if game is SGB enhanced (do all enhanced games have a special border?)
-                        fs.Write(new byte[] { 0xA9, 0x03, 0xCD, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00 }, 0, 11); // lda #$03, cmp $064C, bne $f287, jml $00d0bd
+                        fs.Write(new byte[] { 0xA9, 0x03, 0xCD, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xED, 0xD0, 0x00 }, 0, 11); // lda #$03, cmp $064C, bne $04, jml $00d0ed
                         // enable BG3 for game display
                         fs.Write(new byte[] { 0xA9, 0x16, 0x8D, 0x2C, 0x21 }, 0, 5); // lda #$16, sta $212c
                         if (sgb_rev == 0) // 0 = SGB2
@@ -661,8 +726,8 @@ namespace SGB_Settings_Editor
                         fs.Write(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x9C, 0x41, 0x03 }, 0, 8); // lda #$0x, sta $0c03, stz $0341
                         // jump into border change routine, after the border and audio selection
                         fs.Write(new byte[] { 0x5C, 0x30, 0xDE, 0x00 }, 0, 4); // jml 00de30
-                        if (fs.Position < 0x3F290) // overwrite potential old patch data with \0
-                            fs.Write(new byte[0x3F290 - (int)fs.Position], 0, 0x3F290 - (int)fs.Position);
+                        // overwrite potential old patch data with \0
+                        fs.Write(new byte[0x3F2A0 - (int)fs.Position], 0, 0x3F2A0 - (int)fs.Position);
 
                         // keep BG1 (bottom menu) disabled during border transition (lda #$16, sta $212c)
                         fs.Seek(sgb_rev == 0 ? 0x441F8 : 0x4E79, SeekOrigin.Begin);
@@ -672,8 +737,10 @@ namespace SGB_Settings_Editor
                     { // remove changes in case file was already patched before
                         fs.Seek(0x50AB, SeekOrigin.Begin);
                         fs.Write(new byte[] { 0xAD, 0x0D, 0x0F, 0xF0, 0x01, 0x60 }, 0, 6);
-                        fs.Seek(0x03F270, SeekOrigin.Begin);
-                        byte[] zero = new byte[0x3F290 - (int)fs.Position];
+                        fs.Seek(0x50E9, SeekOrigin.Begin);
+                        fs.Write(new byte[] { 0x22, 0x46, 0xD5, 0x01 }, 0, 4);
+                        fs.Seek(0x03F26C, SeekOrigin.Begin);
+                        byte[] zero = new byte[0x3F2A0 - (int)fs.Position];
                         fs.Write(zero, 0, zero.Length);
                         fs.Seek(sgb_rev == 0 ? 0x441F8 : 0x4E79, SeekOrigin.Begin);
                         fs.WriteByte(0x17);
@@ -720,8 +787,9 @@ namespace SGB_Settings_Editor
                 // Control type
                 if (setButtonTypeA && !borderChange)
                 {
-                    checksum += 441;
-                    ipsData.AddRange(new byte[] { 0x00, 0x50, 0xB1, 0x00, 0x0C, 0xE8, 0x8E, 0x04, 0x0C, 0xCA, 0x9C, 0x4D, 0x0C, 0x9C, 0x4E, 0x0C, 0xEA });
+                    checksum += 176;
+                    ipsData.AddRange(new byte[] { 0x00, 0x50, 0xAB, 0x00, 0x12, 0xAD, 0x0D, 0x0F, 0xF0, 0x01, 0x60 } );
+                    ipsData.AddRange(buttonTypeA);
                 }
 
                 // Palettes
@@ -771,14 +839,16 @@ namespace SGB_Settings_Editor
                 {
                     borderPart1.AddRange(new byte[] { 0x00, 0x50, 0xAB, 0x00, 0x12 });
                     borderPart1.AddRange(setButtonTypeA ? buttonTypeA : buttonTypeB);
-                    borderPart1.AddRange(new byte[] { 0x5C, 0x70, 0xF2, 0x87, 0xEA, 0xEA });
+                    borderPart1.AddRange(new byte[] { 0x80, 0x04, 0xEA, 0xEA, 0xEA, 0xEA });
 
                     checksum -= 1414;
                     foreach (byte b in borderPart1.Skip(5))
                         checksum += b;
 
+                    borderPart1.AddRange(new byte[] { 0x00, 0x50, 0xE9, 0x00, 0x04, 0x5C, 0x6C, 0xF2, 0x87 });
+                    checksum += 259;
 
-                    borderPart2.AddRange(new byte[] { 0x03, 0xF2, 0x70, 0x00, 0x1C, 0xA9, 0x03, 0xCD, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xBD, 0xD0, 0x00, 0xA9, 0x16, 0x8D, 0x2C, 0x21 });
+                    borderPart2.AddRange(new byte[] { 0x03, 0xF2, 0x6C, 0x00, 0x20, 0x22, 0x46, 0xD5, 0x0, 0xA9, 0x03, 0xCD, 0x4C, 0x06, 0xD0, 0x04, 0x5C, 0xED, 0xD0, 0x00, 0xA9, 0x16, 0x8D, 0x2C, 0x21 });
                     if (sgb_rev == 0)
                     {
                         if (border > 14)
@@ -790,7 +860,7 @@ namespace SGB_Settings_Editor
                     if (border > 6)
                         borderByte = BitConverter.GetBytes((border - 6) % 9 + 1)[0];
                     borderPart2.AddRange(new byte[] { 0xA9, borderByte, 0x8D, 0x03, 0x0C, 0x9C, 0x41, 0x03, 0x5C, 0x30, 0xDE, 0x00 });
-                    if (borderPart2.Count > 0x21)
+                    if (borderPart2.Count > 0x25)
                         borderPart2[4] = (byte)(borderPart2.Count - 5);
 
                     foreach (byte b in borderPart2.Skip(5))
@@ -827,7 +897,7 @@ namespace SGB_Settings_Editor
 
                 if (ipsData.Count > 17) // only write patch if a section changed
                 {
-                    String fileName = sgbRevisions[sgb_rev] + " (Custom).ips";
+                    string fileName = sgbRevisions[sgb_rev] + " (Custom).ips";
                     System.IO.File.WriteAllBytes(fileName, ipsData.ToArray());
                     return (true, fileName);
                 }
