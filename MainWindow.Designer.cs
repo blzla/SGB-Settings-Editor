@@ -138,10 +138,13 @@ namespace SGB_Settings_Editor
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importPalettesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportPalettesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuDivider1 = new System.Windows.Forms.ToolStripSeparator();
+            this.importPalettesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportPalettesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportPalettescsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuDivider2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -254,9 +257,7 @@ namespace SGB_Settings_Editor
             this.buttonPasswordSetActivePalette = new System.Windows.Forms.Button();
             this.textBoxPasswords = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripMenuDivider1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuDivider2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportPalettescsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonSaveBorderpng = new System.Windows.Forms.Button();
             this.panelPalettebg.SuspendLayout();
             this.screenshotPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -1261,6 +1262,29 @@ namespace SGB_Settings_Editor
             this.importToolStripMenuItem.MouseEnter += new System.EventHandler(this.importToolStripMenuItem_MouseEnter);
             this.importToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
+            // modifyToolStripMenuItem
+            // 
+            this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modifyToolStripMenuItem.Text = "Modify Rom File";
+            this.modifyToolStripMenuItem.Click += new System.EventHandler(this.buttonModify_Click);
+            this.modifyToolStripMenuItem.MouseEnter += new System.EventHandler(this.modifyToolStripMenuItem_MouseEnter);
+            this.modifyToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            // 
+            // savePatchToolStripMenuItem
+            // 
+            this.savePatchToolStripMenuItem.Name = "savePatchToolStripMenuItem";
+            this.savePatchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.savePatchToolStripMenuItem.Text = "Save IPS Patch";
+            this.savePatchToolStripMenuItem.Click += new System.EventHandler(this.buttonIps_Click);
+            this.savePatchToolStripMenuItem.MouseEnter += new System.EventHandler(this.savePatchToolStripMenuItem_MouseEnter);
+            this.savePatchToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            // 
+            // toolStripMenuDivider1
+            // 
+            this.toolStripMenuDivider1.Name = "toolStripMenuDivider1";
+            this.toolStripMenuDivider1.Size = new System.Drawing.Size(177, 6);
+            // 
             // importPalettesToolStripMenuItem
             // 
             this.importPalettesToolStripMenuItem.Name = "importPalettesToolStripMenuItem";
@@ -1279,23 +1303,19 @@ namespace SGB_Settings_Editor
             this.exportPalettesToolStripMenuItem.MouseEnter += new System.EventHandler(this.exportPalettesToolStripMenuItem_MouseEnter);
             this.exportPalettesToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
-            // modifyToolStripMenuItem
+            // exportPalettescsvToolStripMenuItem
             // 
-            this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.modifyToolStripMenuItem.Text = "Modify Rom File";
-            this.modifyToolStripMenuItem.Click += new System.EventHandler(this.buttonModify_Click);
-            this.modifyToolStripMenuItem.MouseEnter += new System.EventHandler(this.modifyToolStripMenuItem_MouseEnter);
-            this.modifyToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            this.exportPalettescsvToolStripMenuItem.Name = "exportPalettescsvToolStripMenuItem";
+            this.exportPalettescsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportPalettescsvToolStripMenuItem.Text = "Export Palettes (csv)";
+            this.exportPalettescsvToolStripMenuItem.Click += new System.EventHandler(this.exportPalettescsvToolStripMenuItem_Click);
+            this.exportPalettescsvToolStripMenuItem.MouseEnter += new System.EventHandler(this.exportPalettescsvToolStripMenuItem_MouseEnter);
+            this.exportPalettescsvToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
             // 
-            // savePatchToolStripMenuItem
+            // toolStripMenuDivider2
             // 
-            this.savePatchToolStripMenuItem.Name = "savePatchToolStripMenuItem";
-            this.savePatchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.savePatchToolStripMenuItem.Text = "Save IPS Patch";
-            this.savePatchToolStripMenuItem.Click += new System.EventHandler(this.buttonIps_Click);
-            this.savePatchToolStripMenuItem.MouseEnter += new System.EventHandler(this.savePatchToolStripMenuItem_MouseEnter);
-            this.savePatchToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            this.toolStripMenuDivider2.Name = "toolStripMenuDivider2";
+            this.toolStripMenuDivider2.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -2224,6 +2244,7 @@ namespace SGB_Settings_Editor
             // 
             // groupBoxBorder
             // 
+            this.groupBoxBorder.Controls.Add(this.buttonSaveBorderpng);
             this.groupBoxBorder.Controls.Add(this.groupBoxBorderInfo);
             this.groupBoxBorder.Controls.Add(this.buttonBoarderImportFile);
             this.groupBoxBorder.Controls.Add(this.pictureBoxGameinBorder);
@@ -2242,7 +2263,7 @@ namespace SGB_Settings_Editor
             this.groupBoxBorderInfo.Location = new System.Drawing.Point(291, 25);
             this.groupBoxBorderInfo.Name = "groupBoxBorderInfo";
             this.groupBoxBorderInfo.Size = new System.Drawing.Size(229, 123);
-            this.groupBoxBorderInfo.TabIndex = 5;
+            this.groupBoxBorderInfo.TabIndex = 3;
             this.groupBoxBorderInfo.TabStop = false;
             this.groupBoxBorderInfo.Text = "Info";
             // 
@@ -2252,17 +2273,17 @@ namespace SGB_Settings_Editor
             this.labelBordersInfo.Location = new System.Drawing.Point(6, 19);
             this.labelBordersInfo.Name = "labelBordersInfo";
             this.labelBordersInfo.Size = new System.Drawing.Size(217, 91);
-            this.labelBordersInfo.TabIndex = 4;
+            this.labelBordersInfo.TabIndex = 0;
             this.labelBordersInfo.Text = "Import data from your SGB rom file to see the\r\navailable borders. (optional)\r\n\r\nS" +
     "uper Game Boy 2 can have any border.\r\n\r\nSGB enhanced games will still show their" +
     "\r\noriginal special borders.";
             // 
             // buttonBoarderImportFile
             // 
-            this.buttonBoarderImportFile.Location = new System.Drawing.Point(65, 282);
+            this.buttonBoarderImportFile.Location = new System.Drawing.Point(310, 172);
             this.buttonBoarderImportFile.Name = "buttonBoarderImportFile";
-            this.buttonBoarderImportFile.Size = new System.Drawing.Size(160, 23);
-            this.buttonBoarderImportFile.TabIndex = 3;
+            this.buttonBoarderImportFile.Size = new System.Drawing.Size(189, 23);
+            this.buttonBoarderImportFile.TabIndex = 1;
             this.buttonBoarderImportFile.Text = "Import border images from rom";
             this.buttonBoarderImportFile.UseVisualStyleBackColor = true;
             this.buttonBoarderImportFile.Click += new System.EventHandler(this.buttonImportImages_Click);
@@ -2473,24 +2494,15 @@ namespace SGB_Settings_Editor
             this.textBoxPasswords.Text = "7207-2072-0720";
             this.textBoxPasswords.TextChanged += new System.EventHandler(this.textBoxPasswords_TextChanged);
             // 
-            // toolStripMenuDivider1
+            // buttonSaveBorderpng
             // 
-            this.toolStripMenuDivider1.Name = "toolStripMenuDivider1";
-            this.toolStripMenuDivider1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripMenuDivider2
-            // 
-            this.toolStripMenuDivider2.Name = "toolStripMenuDivider2";
-            this.toolStripMenuDivider2.Size = new System.Drawing.Size(177, 6);
-            // 
-            // exportPalettescsvToolStripMenuItem
-            // 
-            this.exportPalettescsvToolStripMenuItem.Name = "exportPalettescsvToolStripMenuItem";
-            this.exportPalettescsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportPalettescsvToolStripMenuItem.Text = "Export Palettes (csv)";
-            this.exportPalettescsvToolStripMenuItem.Click += new System.EventHandler(this.exportPalettescsvToolStripMenuItem_Click);
-            this.exportPalettescsvToolStripMenuItem.MouseEnter += new System.EventHandler(this.exportPalettescsvToolStripMenuItem_MouseEnter);
-            this.exportPalettescsvToolStripMenuItem.MouseLeave += new System.EventHandler(this.toolStripMenuItem_MouseLeave);
+            this.buttonSaveBorderpng.Location = new System.Drawing.Point(65, 295);
+            this.buttonSaveBorderpng.Name = "buttonSaveBorderpng";
+            this.buttonSaveBorderpng.Size = new System.Drawing.Size(160, 23);
+            this.buttonSaveBorderpng.TabIndex = 2;
+            this.buttonSaveBorderpng.Text = "Save border as png";
+            this.buttonSaveBorderpng.UseVisualStyleBackColor = true;
+            this.buttonSaveBorderpng.Click += new System.EventHandler(this.buttonSaveBorderpng_Click);
             // 
             // MainWindow
             // 
@@ -2769,6 +2781,7 @@ namespace SGB_Settings_Editor
         private System.Windows.Forms.ToolStripSeparator toolStripMenuDivider1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuDivider2;
         private System.Windows.Forms.ToolStripMenuItem exportPalettescsvToolStripMenuItem;
+        private System.Windows.Forms.Button buttonSaveBorderpng;
     }
 }
 

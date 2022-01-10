@@ -1051,6 +1051,33 @@ namespace SGB_Settings_Editor
                 pictureBoxBorder.Image = Program.loadedBorders[comboBoxBorder.SelectedIndex].image;
         }
 
+        // Save currently displayed border as png file
+        private void buttonSaveBorderpng_Click(object sender, EventArgs e)
+        {
+            if(pictureBoxBorder.Image == null)
+            {
+                displayStatusText("Error: No border loaded.");
+                return;
+            }
+
+            saveFileDialog.Title = "Save as";
+            saveFileDialog.Filter = "PNG Image|*.png";
+            saveFileDialog.FileName = "border.png";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    pictureBoxBorder.Image.Save(saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                }
+                catch
+                {
+                    displayStatusText("Error: Could not save file.");
+                    return;
+                }
+                displayStatusText($"Image saved as { saveFileDialog.FileName }");
+            }
+        }
+
         // #####################################################################################
         // Palette Passwords
 
